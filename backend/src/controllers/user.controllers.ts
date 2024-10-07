@@ -246,16 +246,61 @@ export const requestTokenToRecoverPassword = async (
       token: token.token,
     });
 
-    await prisma.token.delete({
-      where: {
-        id: token.id,
-      },
-    });
-
     res.status(200).json({ message: "Token enviado con exito" });
     return;
   } catch (error) {
     res.status(500).json({ message: "Error al solicitar el token" });
+    return;
+  }
+};
+
+// Reset Password
+export const resetPassword = async (req: Request, res: Response) => {
+  try {
+    const { password } = req.body;
+    const { token } = req.params;
+
+    const tokenExists = await prisma.token.findFirst({
+      where: {
+        token,
+      },
+      include: {
+        user: true,
+      },
+    });
+
+    if (!tokenExists) {
+      res.status(400).json({ message: "El token no existe" });
+      return;
+    }
+
+    if (tokenExists.expired_at < new Date()) {
+      res.status(400).json({ message: "El token ha expirado" });
+      return;
+    }
+
+    const hashedPassword = await hashPassword(password);
+
+    await prisma.user.update({
+      where: {
+        id: tokenExists.user_id,
+      },
+      data: {
+        password: hashedPassword,
+      },
+    });
+
+    await prisma.token.delete({
+      where: {
+        id: tokenExists.id,
+      },
+    });
+
+    res.status(200).json({ message: "Contraseña cambiada con exito" });
+    return;
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: "Error al resetear la contraseña" });
     return;
   }
 };

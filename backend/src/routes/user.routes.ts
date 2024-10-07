@@ -5,8 +5,9 @@ import {
   login,
   requestNewConfirmationToken,
   requestTokenToRecoverPassword,
+  resetPassword,
 } from "../controllers/user.controllers";
-import { body } from "express-validator";
+import { body, param } from "express-validator";
 import { validateErrors } from "../middlewares/validateErrors.middleware";
 
 const router = Router();
@@ -98,6 +99,35 @@ router.post(
     .withMessage("El email no es válido"),
   validateErrors,
   requestTokenToRecoverPassword
+);
+
+router.post(
+  "/reset-password/:token",
+  body("password")
+    .notEmpty()
+    .withMessage("La contraseña es requerida")
+    .isString()
+    .withMessage("La contraseña debe ser una cadena de texto")
+    .matches(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/)
+    .withMessage(
+      "La contraseña debe tener al menos 8 caracteres, una mayúscula, una minúscula y un número"
+    ),
+  body("confirm_password")
+    .notEmpty()
+    .withMessage("El campo es requerido")
+    .custom((value, { req }) => {
+      if (value !== req.body.password) {
+        throw new Error("Las contraseñas no coinciden");
+      }
+      return true;
+    }),
+  param("token")
+    .notEmpty()
+    .withMessage("El token es requerido")
+    .isNumeric()
+    .withMessage("El token debe ser un número"),
+  validateErrors,
+  resetPassword
 );
 
 export default router;
