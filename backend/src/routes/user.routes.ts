@@ -1,5 +1,9 @@
 import { Router } from "express";
-import { confirmAccount, createAccount } from "../controllers/user.controllers";
+import {
+  confirmAccount,
+  createAccount,
+  requestNewConfirmationToken,
+} from "../controllers/user.controllers";
 import { body } from "express-validator";
 import { validateErrors } from "../middlewares/validateErrors.middleware";
 
@@ -58,6 +62,17 @@ router.post(
     .withMessage("El token debe ser una cadena de texto"),
   validateErrors,
   confirmAccount
+);
+
+router.post(
+  "/request-new-confirmation-token",
+  body("email")
+    .notEmpty()
+    .withMessage("El correo electrónico es requerido")
+    .matches(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/)
+    .withMessage("El correo electrónico no es válido"),
+  validateErrors,
+  requestNewConfirmationToken
 );
 
 export default router;

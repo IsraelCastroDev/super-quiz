@@ -119,3 +119,47 @@ export const confirmAccount = async (req: Request, res: Response) => {
     return;
   }
 };
+
+export const requestNewConfirmationToken = async (
+  req: Request,
+  res: Response
+) => {
+  try {
+    const { email } = req.body;
+
+    const user = await prisma.user.findUnique({
+      where: {
+        email,
+      },
+    });
+
+    if (!user) {
+      res.status(400).json({ message: "El usuario no existe" });
+      return;
+    }
+
+    const expirationDate = new Date();
+    expirationDate.setHours(expirationDate.getHours() + 2);
+
+    const token = await prisma.token.create({
+      data: {
+        token: generateToken(),
+        user_id: user.id,
+        expired_at: expirationDate,
+      },
+    });
+
+    await sendConfirmEmail({
+      email: user.email,
+      name: user.name,
+      token: token.token,
+    });
+
+    res.status(200).json({ message: "Token enviado con exito" });
+    return;
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: "Error al solicitar el token" });
+    return;
+  }
+};
