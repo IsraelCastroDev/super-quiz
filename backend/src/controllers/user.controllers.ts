@@ -5,6 +5,7 @@ import { generateToken } from "../utils/token";
 import { sendConfirmEmail } from "../services/mail/mail";
 import { generateJWT } from "../utils/jwt";
 
+// Create Account
 export const createAccount = async (req: Request, res: Response) => {
   try {
     const { name, lastname, username, email, password, role } = req.body;
@@ -76,6 +77,7 @@ export const createAccount = async (req: Request, res: Response) => {
   }
 };
 
+// Confirm Account
 export const confirmAccount = async (req: Request, res: Response) => {
   try {
     const { token } = req.body;
@@ -121,6 +123,7 @@ export const confirmAccount = async (req: Request, res: Response) => {
   }
 };
 
+// Request New Confirmation Token
 export const requestNewConfirmationToken = async (
   req: Request,
   res: Response
@@ -165,6 +168,7 @@ export const requestNewConfirmationToken = async (
   }
 };
 
+// Login
 export const login = async (req: Request, res: Response) => {
   try {
     const { email, password } = req.body;
