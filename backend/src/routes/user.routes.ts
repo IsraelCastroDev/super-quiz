@@ -2,6 +2,7 @@ import { Router } from "express";
 import {
   confirmAccount,
   createAccount,
+  login,
   requestNewConfirmationToken,
 } from "../controllers/user.controllers";
 import { body } from "express-validator";
@@ -73,6 +74,18 @@ router.post(
     .withMessage("El correo electrónico no es válido"),
   validateErrors,
   requestNewConfirmationToken
+);
+
+router.post(
+  "/login",
+  body("email")
+    .notEmpty()
+    .withMessage("El email es requerido")
+    .matches(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/)
+    .withMessage("El correo electrónico no es válido"),
+  body("password").notEmpty().withMessage("La contraseña es requerida"),
+  validateErrors,
+  login
 );
 
 export default router;

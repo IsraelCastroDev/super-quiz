@@ -1,8 +1,9 @@
 import { Request, Response } from "express";
 import { prisma } from "../config/prisma";
-import { hashPassword } from "../utils/user";
+import { comparePassword, hashPassword } from "../utils/user";
 import { generateToken } from "../utils/token";
 import { sendConfirmEmail } from "../services/mail/mail";
+import { generateJWT } from "../utils/jwt";
 
 export const createAccount = async (req: Request, res: Response) => {
   try {
@@ -160,6 +161,44 @@ export const requestNewConfirmationToken = async (
   } catch (error) {
     console.log(error);
     res.status(500).json({ message: "Error al solicitar el token" });
+    return;
+  }
+};
+
+export const login = async (req: Request, res: Response) => {
+  try {
+    const { email, password } = req.body;
+
+    const userExists = await prisma.user.findUnique({
+      where: { email },
+    });
+
+    if (!userExists) {
+      res.status(400).json({ message: "El usuario no existe" });
+      return;
+    }
+
+    if (!userExists.confirm) {
+      res.status(400).json({ message: "Esta cuenta no ha sido confirmada" });
+      return;
+    }
+
+    const isCorrectPassword = await comparePassword(
+      password,
+      userExists.password
+    );
+
+    if (!isCorrectPassword) {
+      res.status(400).json({ message: "La contraseña es incorrecta" });
+      return;
+    }
+
+    const token = generateJWT({ id: userExists.id });
+
+    res.status(200).send(token);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: "Error al iniciar sesion" });
     return;
   }
 };
