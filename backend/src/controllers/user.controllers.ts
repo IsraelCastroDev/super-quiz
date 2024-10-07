@@ -2,7 +2,10 @@ import { Request, Response } from "express";
 import { prisma } from "../config/prisma";
 import { comparePassword, hashPassword } from "../utils/user";
 import { generateToken } from "../utils/token";
-import { sendConfirmEmail } from "../services/mail/mail";
+import {
+  sendConfirmEmail,
+  sendResetPasswordEmail,
+} from "../services/mail/mail";
 import { generateJWT } from "../utils/jwt";
 
 // Create Account
@@ -203,6 +206,56 @@ export const login = async (req: Request, res: Response) => {
   } catch (error) {
     console.log(error);
     res.status(500).json({ message: "Error al iniciar sesion" });
+    return;
+  }
+};
+
+// Request Token To Recover Password
+export const requestTokenToRecoverPassword = async (
+  req: Request,
+  res: Response
+) => {
+  try {
+    const { email } = req.body;
+
+    const user = await prisma.user.findUnique({
+      where: {
+        email,
+      },
+    });
+
+    if (!user) {
+      res.status(400).json({ message: "El usuario no existe" });
+      return;
+    }
+
+    const expirationDate = new Date();
+    expirationDate.setHours(expirationDate.getHours() + 2);
+
+    const token = await prisma.token.create({
+      data: {
+        token: generateToken(),
+        user_id: user.id,
+        expired_at: expirationDate,
+      },
+    });
+
+    await sendResetPasswordEmail({
+      email: user.email,
+      name: user.name,
+      token: token.token,
+    });
+
+    await prisma.token.delete({
+      where: {
+        id: token.id,
+      },
+    });
+
+    res.status(200).json({ message: "Token enviado con exito" });
+    return;
+  } catch (error) {
+    res.status(500).json({ message: "Error al solicitar el token" });
     return;
   }
 };

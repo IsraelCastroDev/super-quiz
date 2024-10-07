@@ -4,6 +4,7 @@ import {
   createAccount,
   login,
   requestNewConfirmationToken,
+  requestTokenToRecoverPassword,
 } from "../controllers/user.controllers";
 import { body } from "express-validator";
 import { validateErrors } from "../middlewares/validateErrors.middleware";
@@ -29,9 +30,9 @@ router.post(
     .withMessage("El nombre de usuario debe ser una cadena de texto"),
   body("email")
     .notEmpty()
-    .withMessage("El correo electrónico es requerido")
+    .withMessage("El email es requerido")
     .matches(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/)
-    .withMessage("El correo electrónico no es válido"),
+    .withMessage("El email no es válido"),
   body("password")
     .notEmpty()
     .withMessage("La contraseña es requerida")
@@ -69,9 +70,9 @@ router.post(
   "/request-new-confirmation-token",
   body("email")
     .notEmpty()
-    .withMessage("El correo electrónico es requerido")
+    .withMessage("El email es requerido")
     .matches(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/)
-    .withMessage("El correo electrónico no es válido"),
+    .withMessage("El email no es válido"),
   validateErrors,
   requestNewConfirmationToken
 );
@@ -82,10 +83,21 @@ router.post(
     .notEmpty()
     .withMessage("El email es requerido")
     .matches(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/)
-    .withMessage("El correo electrónico no es válido"),
+    .withMessage("El email no es válido"),
   body("password").notEmpty().withMessage("La contraseña es requerida"),
   validateErrors,
   login
+);
+
+router.post(
+  "/request-token-to-recover-password",
+  body("email")
+    .notEmpty()
+    .withMessage("El email es requerido")
+    .matches(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/)
+    .withMessage("El email no es válido"),
+  validateErrors,
+  requestTokenToRecoverPassword
 );
 
 export default router;
