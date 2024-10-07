@@ -12,3 +12,33 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model User {
+  id        Int      @id @default(autoincrement())
+  name      String
+  lastname  String
+  username  String   @unique
+  email     String   @unique
+  password  String
+  confirm   Boolean  @default(false)
+  role_id   Int
+  role      Role     @relation(fields: [role_id], references: [id], onDelete: Cascade)
+  token     Token[]
+  crated_at DateTime @default(now())
+}
+
+model Token {
+  id         Int      @id @default(autoincrement())
+  token      String
+  user_id    Int
+  user       User     @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  created_at DateTime @default(now())
+  expired_at DateTime
+}
+
+model Role {
+  id          Int    @id @default(autoincrement())
+  name        String
+  description String
+  users       User[]
+}
