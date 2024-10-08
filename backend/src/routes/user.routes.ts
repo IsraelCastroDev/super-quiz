@@ -1,12 +1,5 @@
 import { Router } from "express";
-import {
-  confirmAccount,
-  createAccount,
-  login,
-  requestNewConfirmationToken,
-  requestTokenToRecoverPassword,
-  resetPassword,
-} from "../controllers/user.controllers";
+import { UserController } from "../controllers/UserController";
 import { body, param } from "express-validator";
 import { validateErrors } from "../middlewares/validateErrors.middleware";
 
@@ -53,7 +46,7 @@ router.post(
       return true;
     }),
   validateErrors,
-  createAccount
+  UserController.createAccount
 );
 
 router.post(
@@ -64,7 +57,7 @@ router.post(
     .isString()
     .withMessage("El token debe ser una cadena de texto"),
   validateErrors,
-  confirmAccount
+  UserController.confirmAccount
 );
 
 router.post(
@@ -75,7 +68,7 @@ router.post(
     .matches(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/)
     .withMessage("El email no es válido"),
   validateErrors,
-  requestNewConfirmationToken
+  UserController.requestNewConfirmationToken
 );
 
 router.post(
@@ -87,7 +80,7 @@ router.post(
     .withMessage("El email no es válido"),
   body("password").notEmpty().withMessage("La contraseña es requerida"),
   validateErrors,
-  login
+  UserController.login
 );
 
 router.post(
@@ -98,7 +91,7 @@ router.post(
     .matches(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/)
     .withMessage("El email no es válido"),
   validateErrors,
-  requestTokenToRecoverPassword
+  UserController.requestTokenToRecoverPassword
 );
 
 router.post(
@@ -127,7 +120,7 @@ router.post(
     .isNumeric()
     .withMessage("El token debe ser un número"),
   validateErrors,
-  resetPassword
+  UserController.resetPassword
 );
 
 export default router;
