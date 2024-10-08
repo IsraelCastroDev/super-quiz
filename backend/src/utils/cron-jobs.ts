@@ -1,12 +1,10 @@
 import cron from "node-cron";
-import { prisma } from "../config/prisma";
+import Token from "../models/Token";
 
 async function deleteExpiredTokens() {
-  await prisma.token.deleteMany({
-    where: {
-      expired_at: {
-        lte: new Date(),
-      },
+  await Token.deleteMany({
+    expired_at: {
+      lte: new Date(),
     },
   });
 }

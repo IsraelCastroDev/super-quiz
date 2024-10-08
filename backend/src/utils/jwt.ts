@@ -1,8 +1,8 @@
-import { User } from "@prisma/client";
 import jwt from "jsonwebtoken";
+import { UserType } from "../models/User";
 
 interface UserPayload {
-  id: User["id"];
+  id: UserType["id"];
 }
 
 export const generateJWT = (payload: UserPayload) => {
