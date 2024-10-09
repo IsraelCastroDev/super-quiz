@@ -3,7 +3,7 @@
     "target": "ESNext",
     "lib": ["ESNext"],
     "module": "CommonJS",
-    "typeRoots": ["./src/types/*", "node_modules/@types/*"],
+    "typeRoots": ["./src/types", "node_modules/@types"],
     "sourceMap": true,
     "declaration": true,
     "moduleResolution": "Node",
@@ -14,5 +14,5 @@
     "strict": true,
     "skipLibCheck": true
   },
-  "include": ["src", "src/types/express/*.d.ts"]
+  "include": ["src/**/*", "src/types/express/*.d.ts"]
 }
