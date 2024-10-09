@@ -1,11 +1,11 @@
-import mongoose, { Document, Schema, Types } from "mongoose";
+import mongoose, { Document, PopulatedDoc, Schema, Types } from "mongoose";
 
 export type QuizType = Document & {
   title: string;
-  score: number;
+  score?: number;
   created_at: Date;
   user: Types.ObjectId;
-  question: Types.ObjectId;
+  questions: PopulatedDoc<QuizType & Document>[];
 };
 
 const QuizSchema: Schema = new Schema(
@@ -13,7 +13,7 @@ const QuizSchema: Schema = new Schema(
     title: { type: String, required: true, trim: true },
     score: { type: Number, required: true, trim: true },
     user: { type: Types.ObjectId, ref: "User" },
-    question: { type: Types.ObjectId, ref: "Question" },
+    questions: [{ type: Types.ObjectId, ref: "Question" }],
   },
   { timestamps: true }
 );
