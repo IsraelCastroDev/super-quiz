@@ -167,7 +167,15 @@ export class UserController {
 
       const token = generateJWT({ id: userExists._id });
 
-      res.status(200).send(token);
+      res.cookie("authToken", token, {
+        httpOnly: true,
+        secure: false,
+        sameSite: "strict",
+        maxAge: 7 * 24 * 60 * 60 * 1000,
+      });
+
+      res.status(200).json({ message: "Inicio de sesion exitoso" });
+      return;
     } catch (error) {
       console.log(error);
       res.status(500).json({ message: "Error al iniciar sesion" });
