@@ -1,28 +1,24 @@
 import { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
-import { prisma } from "../config/prisma";
+import User from "../models/User";
 
 export async function authenticate(
   req: Request,
   res: Response,
   next: NextFunction
 ) {
-  const { token } = req.cookies;
+  const { authToken } = req.cookies;
 
-  if (!token) {
+  if (!authToken) {
     res.status(401).json({ message: "No autorizado" });
     return;
   }
 
   try {
-    const decoded = jwt.verify(token, process.env.JWT_SECRET!);
+    const decoded = jwt.verify(authToken, process.env.JWT_SECRET!);
 
     if (typeof decoded === "object" && decoded.id) {
-      const user = await prisma.user.findUnique({
-        where: {
-          id: decoded.id,
-        },
-      });
+      const user = await User.findOne({ _id: decoded.id });
 
       if (user) {
         req.userId = user.id;
