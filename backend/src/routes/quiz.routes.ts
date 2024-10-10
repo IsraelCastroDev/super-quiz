@@ -61,6 +61,18 @@ router.get(
   QuizController.getQuizzesFromUser
 );
 
+router.get(
+  "/:idQuiz",
+  authenticate,
+  param("idQuiz")
+    .notEmpty()
+    .withMessage("El id es requerido")
+    .isMongoId()
+    .withMessage("Id inválido"),
+  validateErrors,
+  QuizController.getQuiz
+);
+
 router.delete(
   "/:idQuiz",
   authenticate,
@@ -68,7 +80,7 @@ router.delete(
     .notEmpty()
     .withMessage("El id es requerido")
     .isMongoId()
-    .withMessage("El id debe ser un ObjectId"),
+    .withMessage("Id inválido"),
   validateErrors,
   QuizController.deleteQuiz
 );

@@ -126,6 +126,48 @@ export class QuizController {
     }
   };
 
+  static getQuiz = async (req: Request, res: Response) => {
+    try {
+      const { idQuiz } = req.params;
+
+      const userExists = await User.findOne({ email: req.userEmail });
+      if (!userExists) {
+        res.status(400).json({ message: "El usuario no existe" });
+        return;
+      }
+
+      const quizExists = await Quiz.findOne({ _id: idQuiz }).populate(
+        "questions"
+      );
+      if (!quizExists) {
+        res.status(400).json({ message: "El quiz no existe" });
+        return;
+      }
+
+      const quiz = {
+        _id: quizExists._id,
+        title: quizExists.title,
+        score: quizExists.score,
+        user: quizExists.user,
+        questions: quizExists.questions.map((question: any) => {
+          return {
+            _id: question._id,
+            name: question.name,
+            is_correct: question.is_correct,
+            quiz: question.quiz,
+          };
+        }),
+      };
+
+      res.status(201).json(quiz);
+      return;
+    } catch (error) {
+      console.log(error);
+      res.status(500).json({ message: "Error al obtener el quiz" });
+      return;
+    }
+  };
+
   static deleteQuiz = async (req: Request, res: Response) => {
     const { idQuiz } = req.params;
 
