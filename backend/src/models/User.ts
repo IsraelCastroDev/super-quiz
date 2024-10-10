@@ -1,5 +1,5 @@
 import mongoose, { Document, PopulatedDoc, Schema, Types } from "mongoose";
-import { QuizType } from "./Quiz";
+import Quiz, { QuizType } from "./Quiz";
 import { TokenType } from "./Token";
 
 export type UserType = Document & {
@@ -43,6 +43,19 @@ const UserSchema: Schema = new Schema(
   },
   { timestamps: true }
 );
+
+UserSchema.pre("findOneAndDelete", async function (next) {
+  const userId = this.getQuery()["_id"]; // Obtiene el ID del usuario que se está eliminando
+
+  try {
+    const quizzes = await Quiz.find({ user: userId });
+    await Promise.all(quizzes.map((quiz) => quiz.deleteOne()));
+    next();
+  } catch (error) {
+    console.log(error);
+    next(error as Error);
+  }
+});
 
 const User = mongoose.model<UserType>("User", UserSchema);
 export default User;

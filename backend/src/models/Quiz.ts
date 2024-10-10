@@ -1,4 +1,5 @@
 import mongoose, { Document, PopulatedDoc, Schema, Types } from "mongoose";
+import Question from "./Question";
 
 export type QuizType = Document & {
   title: string;
@@ -17,6 +18,19 @@ const QuizSchema: Schema = new Schema(
   },
   { timestamps: true }
 );
+
+QuizSchema.pre("findOneAndDelete", async function (next) {
+  const quizId = this.getQuery()["_id"];
+  console.log(quizId);
+
+  try {
+    await Question.deleteMany({ quiz: quizId });
+    next();
+  } catch (error) {
+    console.log(error);
+    next(error as Error);
+  }
+});
 
 const Quiz = mongoose.model<QuizType>("Quiz", QuizSchema);
 export default Quiz;
