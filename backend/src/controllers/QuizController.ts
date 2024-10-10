@@ -6,6 +6,7 @@ import Category from "../models/Category";
 import Question, { QuestionType } from "../models/Question";
 
 export class QuizController {
+  // Crea un nuevo quiz
   static createQuiz = async (req: Request, res: Response) => {
     const { title, categories, questions } = req.body;
 
@@ -79,9 +80,76 @@ export class QuizController {
       );
 
       res.status(201).json({ message: "Quiz creado exitosamente" });
+      return;
     } catch (error) {
       console.log(error);
       res.status(500).json({ message: "Error al crear el quiz" });
+      return;
+    }
+  };
+
+  // Obtener los quizzes del usuario
+  static getQuizzesFromUser = async (req: Request, res: Response) => {
+    try {
+      const userExists = await User.findOne({ email: req.userEmail });
+
+      if (!userExists) {
+        res.status(400).json({ message: "El usuario no existe" });
+        return;
+      }
+
+      const userQuizzes = await Quiz.find({ user: userExists._id }).populate(
+        "questions"
+      );
+
+      const quizzes = userQuizzes.map((quiz) => {
+        return {
+          _id: quiz._id,
+          title: quiz.title,
+          score: quiz.score,
+          questions: quiz.questions.map((question: any) => {
+            return {
+              id: question?._id,
+              name: question.name,
+              is_correct: question.is_correct,
+            };
+          }),
+        };
+      });
+
+      res.status(200).json(quizzes);
+      return;
+    } catch (error) {
+      console.log(error);
+      res.status(500).json({ message: "Error al obtener los quizzes" });
+      return;
+    }
+  };
+
+  static deleteQuiz = async (req: Request, res: Response) => {
+    const { idQuiz } = req.params;
+
+    try {
+      const userExists = await User.findOne({ email: req.userEmail });
+      if (!userExists) {
+        res.status(400).json({ message: "El usuario no existe" });
+        return;
+      }
+
+      const quizExists = await Quiz.findOne({ _id: idQuiz });
+      if (!quizExists) {
+        res.status(400).json({ message: "El quiz no existe" });
+        return;
+      }
+
+      await Quiz.findOneAndDelete({ user: userExists._id, _id: idQuiz });
+
+      res.status(200).json({ message: "Quiz eliminado exitosamente" });
+      return;
+    } catch (error) {
+      console.log(error);
+      res.status(500).json({ message: "Error al eliminar el quiz" });
+      return;
     }
   };
 }
