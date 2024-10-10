@@ -1,9 +1,10 @@
 import { Router } from "express";
 import { QuizController } from "../controllers/QuizController";
 import { authenticate } from "../middlewares/authenticate.middleware";
-import { body } from "express-validator";
+import { body, param } from "express-validator";
 import { QuestionType } from "../models/Question";
 import { CategoryType } from "../models/Category";
+import { validateErrors } from "../middlewares/validateErrors.middleware";
 
 const router = Router();
 
@@ -22,7 +23,7 @@ router.post(
     .withMessage("Las categorías deben ser un arreglo")
     .custom((value) => {
       value.forEach((category: CategoryType) => {
-        if (typeof category.name !== "string") {
+        if (typeof category !== "string") {
           throw new Error("Cada categoría debe ser una cadena de texto");
         }
       });
@@ -50,7 +51,26 @@ router.post(
       });
       return true;
     }),
+  validateErrors,
   QuizController.createQuiz
+);
+
+router.get(
+  "/get-quizzes-from-user",
+  authenticate,
+  QuizController.getQuizzesFromUser
+);
+
+router.delete(
+  "/:idQuiz",
+  authenticate,
+  param("idQuiz")
+    .notEmpty()
+    .withMessage("El id es requerido")
+    .isMongoId()
+    .withMessage("El id debe ser un ObjectId"),
+  validateErrors,
+  QuizController.deleteQuiz
 );
 
 export default router;
