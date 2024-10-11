@@ -30,7 +30,7 @@ export async function authenticate(
     }
   } catch (error) {
     console.log(error);
-    res.status(500).json({ message: "Error al autenticar" });
+    res.status(500).json({ message: "No estás autenticado" });
     return;
   }
 
