@@ -4,6 +4,7 @@ import Quiz from "../models/Quiz";
 import QuizCategory from "../models/QuizCategory";
 import Category from "../models/Category";
 import Question, { QuestionType } from "../models/Question";
+import { generateTokenQuiz } from "../utils/token";
 
 export class QuizController {
   // Crea un nuevo quiz
@@ -24,6 +25,7 @@ export class QuizController {
         score: 0,
         user: userExists._id,
         questions: [], // Inicialmente vacío
+        token: generateTokenQuiz(),
       });
 
       let questionIds: string[] = []; // Array para almacenar los IDs de las preguntas
@@ -79,7 +81,7 @@ export class QuizController {
         { $push: { quizzes: quiz._id } }
       );
 
-      res.status(201).json({ message: "Quiz creado exitosamente" });
+      res.status(201).json(quiz.token);
       return;
     } catch (error) {
       console.log(error);
@@ -160,6 +162,26 @@ export class QuizController {
       };
 
       res.status(201).json(quiz);
+      return;
+    } catch (error) {
+      console.log(error);
+      res.status(500).json({ message: "Error al obtener el quiz" });
+      return;
+    }
+  };
+
+  static getQuizByToken = async (req: Request, res: Response) => {
+    try {
+      const { token } = req.body;
+
+      const quiz = await Quiz.findOne({ token }).populate("questions");
+
+      if (!quiz) {
+        res.status(404).json({ message: "El token no existe" });
+        return;
+      }
+
+      res.status(200).json(quiz);
       return;
     } catch (error) {
       console.log(error);
