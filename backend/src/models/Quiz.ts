@@ -1,5 +1,6 @@
 import mongoose, { Document, PopulatedDoc, Schema, Types } from "mongoose";
 import Question from "./Question";
+import Token from "./Token";
 
 export type QuizType = Document & {
   title: string;
@@ -7,12 +8,14 @@ export type QuizType = Document & {
   created_at: Date;
   user: Types.ObjectId;
   questions: PopulatedDoc<QuizType & Document>[];
+  token?: string;
 };
 
 const QuizSchema: Schema = new Schema(
   {
     title: { type: String, required: true, trim: true },
     score: { type: Number, required: true, trim: true },
+    token: { type: String, trim: true },
     user: { type: Types.ObjectId, ref: "User" },
     questions: [{ type: Types.ObjectId, ref: "Question" }],
   },
@@ -25,6 +28,7 @@ QuizSchema.pre("findOneAndDelete", async function (next) {
 
   try {
     await Question.deleteMany({ quiz: quizId });
+    await Token.deleteMany({ quiz: quizId });
     next();
   } catch (error) {
     console.log(error);
