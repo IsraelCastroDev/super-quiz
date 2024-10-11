@@ -62,7 +62,7 @@ router.get(
 );
 
 router.get(
-  "/:idQuiz",
+  "/get-quiz/:idQuiz",
   authenticate,
   param("idQuiz")
     .notEmpty()
@@ -71,6 +71,17 @@ router.get(
     .withMessage("Id inválido"),
   validateErrors,
   QuizController.getQuiz
+);
+
+router.get(
+  "/get-quiz-by-token",
+  body("token")
+    .notEmpty()
+    .withMessage("Debes ingresar un token")
+    .isString()
+    .withMessage("El token debe ser un string alfanumérico"),
+  validateErrors,
+  QuizController.getQuizByToken
 );
 
 router.delete(
