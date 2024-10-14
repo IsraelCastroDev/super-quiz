@@ -4,9 +4,11 @@ import { UserFormData } from "../types";
 
 export const registerUser = async (formData: UserFormData) => {
   try {
-    await api.post("/users/create-account", {
+    const { data } = await api.post("/users/create-account", {
       ...formData,
     });
+
+    return data.message;
   } catch (error) {
     if (isAxiosError(error)) {
       throw new Error(error.response?.data.message);
