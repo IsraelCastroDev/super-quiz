@@ -1,0 +1,19 @@
+.nav_link {
+  --clippy: polygon(0 0, 0 0, 0 100%, 0% 100%);
+  font-weight: 700;
+}
+
+.nav_link::after {
+  content: "";
+  display: block;
+  width: 90%;
+  background-color: #334155;
+  height: 2px;
+  clip-path: var(--clippy);
+  transition: clip-path 0.3s ease-in-out;
+}
+
+.nav_link:hover {
+  --clippy: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+  color: #334155;
+}
