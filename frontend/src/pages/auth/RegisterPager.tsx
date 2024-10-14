@@ -6,9 +6,13 @@ import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/solid";
 import { useState } from "react";
 import { useMutation } from "@tanstack/react-query";
 import { registerUser } from "../../api/authAPI";
+import { useAppStore } from "../../store/useAppStore";
+import { useNavigate } from "react-router-dom";
 
 function RegisterPager() {
+  const addNotification = useAppStore((state) => state.addNotification);
   const [showPassword, setShowPassword] = useState(false);
+  const navigate = useNavigate();
 
   const {
     formState: { errors },
@@ -29,10 +33,19 @@ function RegisterPager() {
   const { mutate } = useMutation({
     mutationFn: registerUser,
     onSuccess(data) {
-      console.log(data);
+      addNotification({
+        title: data,
+        type: "success",
+      });
+      setTimeout(() => {
+        navigate("/");
+      }, 2000);
     },
     onError: (error) => {
-      console.log(error, "errorrrrrrrrrrr");
+      addNotification({
+        title: error.message,
+        type: "error",
+      });
     },
   });
 
