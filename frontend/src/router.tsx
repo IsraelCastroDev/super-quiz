@@ -1,7 +1,7 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import HomePage from "./pages/HomePage";
 import HomeLayout from "./layouts/HomeLayout";
-import RegisterPager from "./pages/auth/RegisterPager";
+import RegisterPage from "./pages/auth/RegisterPage";
 import LoginPage from "./pages/auth/LoginPage";
 
 function App() {
@@ -12,7 +12,7 @@ function App() {
           <Route element={<HomeLayout />}>
             <Route path="/" element={<HomePage />} index />
             <Route path="/iniciar-sesion" element={<LoginPage />} />
-            <Route path="/registrarse" element={<RegisterPager />} />
+            <Route path="/registrarse" element={<RegisterPage />} />
           </Route>
         </Routes>
       </BrowserRouter>
