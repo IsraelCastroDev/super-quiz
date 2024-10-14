@@ -1,5 +1,4 @@
 import { Link } from "react-router-dom";
-import "./Header.css";
 
 function Header() {
   return (
@@ -8,10 +7,10 @@ function Header() {
         Super Quiz
       </Link>
       <div className="flex items-center gap-4">
-        <Link to={"/iniciar-sesion"} className={"nav_link"}>
+        <Link to={"/iniciar-sesion"} className={"link"}>
           Iniciar Sesión
         </Link>
-        <Link to={"/registrarse"} className={"nav_link"}>
+        <Link to={"/registrarse"} className={"link"}>
           Registrarse
         </Link>
       </div>
