@@ -5,7 +5,7 @@ import { UserFormData } from "@/types";
 
 function RegisterPage() {
   const mutationRegisterUser = useRegisterUser();
-  const { mutate } = mutationRegisterUser;
+  const { mutate, isPending } = mutationRegisterUser;
 
   const onSubmit = (data: UserFormData) => {
     mutate(data);
@@ -17,7 +17,7 @@ function RegisterPage() {
         <Text as="h1" category="title" className="text-center">
           Regístrate y crea tus propios Super Quiz 🚀
         </Text>
-        <RegisterForm onSubmit={onSubmit} />
+        <RegisterForm onSubmit={onSubmit} isPending={isPending} />
       </div>
     </section>
   );
