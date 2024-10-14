@@ -6,9 +6,10 @@ import { UserFormData } from "@/types";
 
 interface Props {
   onSubmit: (data: UserFormData) => void;
+  isPending: boolean;
 }
 
-function RegisterForm({ onSubmit }: Props) {
+function RegisterForm({ onSubmit, isPending }: Props) {
   const [showPassword, setShowPassword] = useState(false);
 
   const validationRegisterUserForm = useValidationRegisterUserForm();
@@ -151,9 +152,10 @@ function RegisterForm({ onSubmit }: Props) {
       <div className="flex justify-center">
         <button
           type="submit"
-          className="bg-slate-700 hover:bg-slate-800 text-white p-3 rounded-md text-center cursor-pointer block w-full"
+          className="bg-slate-700 hover:bg-slate-800 text-white p-3 rounded-md text-center cursor-pointer block w-full disabled:opacity-50 disabled:cursor-not-allowed"
+          disabled={isPending}
         >
-          Crear cuenta
+          {isPending ? "Creando cuenta..." : "Crear cuenta"}
         </button>
       </div>
     </form>
