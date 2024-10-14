@@ -5,3 +5,28 @@
 body {
   @apply absolute inset-0 -z-10 h-full w-full bg-white bg-[linear-gradient(to_right,#f0f0f0_1px,transparent_1px),linear-gradient(to_bottom,#f0f0f0_1px,transparent_1px)] bg-[size:6rem_4rem] text-slate-700;
 }
+
+.link {
+  position: relative;
+  display: inline-block; /* Hace que el link ocupe solo el ancho de su contenido */
+  font-weight: 700;
+}
+
+.link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -2px; /* Ajusta la distancia del subrayado */
+  width: 0; /* Comienza desde 0 para la animación */
+  height: 2px;
+  background-color: #334155;
+  transition: width 0.3s ease-in-out; /* Transición de ancho */
+}
+
+.link:hover::after {
+  width: 90%; /* El subrayado se expande al 100% del texto */
+}
+
+.link:hover {
+  color: #334155;
+}
