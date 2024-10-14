@@ -1,13 +1,13 @@
-import { useForm } from "react-hook-form";
-import Text from "../../components/ui/Typography";
-import { UserFormData } from "../../types";
-import ErrorMessage from "../../components/ui/ErrorMessage";
-import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/solid";
 import { useState } from "react";
-import { useMutation } from "@tanstack/react-query";
-import { registerUser } from "../../api/authAPI";
-import { useAppStore } from "../../store/useAppStore";
 import { useNavigate } from "react-router-dom";
+import { useForm } from "react-hook-form";
+import { useMutation } from "@tanstack/react-query";
+import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/solid";
+import Text from "@/components/ui/Typography";
+import ErrorMessage from "@/components/ui/ErrorMessage";
+import { UserFormData } from "@/types";
+import { registerUser } from "@/api/authAPI";
+import { useAppStore } from "@/store/useAppStore";
 
 function RegisterPager() {
   const addNotification = useAppStore((state) => state.addNotification);

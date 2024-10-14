@@ -1,6 +1,6 @@
 import { isAxiosError } from "axios";
 import { api } from "./axiosConfig";
-import { UserFormData } from "../types";
+import { UserFormData } from "@/types";
 
 export const registerUser = async (formData: UserFormData) => {
   try {
