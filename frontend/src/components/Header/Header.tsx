@@ -3,7 +3,7 @@ import "./Header.css";
 
 function Header() {
   return (
-    <header className="py-2 px-14 flex flex-col md:flex-row justify-between items-center sticky top-0 z-50 bg-gray-200/50 backdrop-blur">
+    <header className="py-2 px-14 flex flex-col md:flex-row justify-between items-center sticky top-0 z-10 bg-gray-200/50 backdrop-blur">
       <Link to={"/"} className="text-3xl font-bold">
         Super Quiz
       </Link>
