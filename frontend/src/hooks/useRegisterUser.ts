@@ -16,9 +16,7 @@ export function useRegisterUser() {
         title: data,
         type: "success",
       });
-      setTimeout(() => {
-        navigate("/");
-      }, 2000);
+      navigate("/");
     },
     onError: (error) => {
       addNotification({
