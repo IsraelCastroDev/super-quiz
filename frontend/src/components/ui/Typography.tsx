@@ -19,7 +19,7 @@ function Text({ as: Element, category, children, className }: TextProps) {
       baseClass = "text-xl md:text-2xl font-bold";
       break;
     case "body":
-      baseClass = "text-lg md:text-xl font-bold";
+      baseClass = "text-sm md:text-base font-normal";
       break;
 
     default:
