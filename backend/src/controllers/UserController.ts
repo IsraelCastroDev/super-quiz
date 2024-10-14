@@ -62,7 +62,9 @@ export class UserController {
         token: token.token,
       });
 
-      res.status(201).json({ message: "Cuenta creada con exito" });
+      res
+        .status(201)
+        .json({ message: "Cuenta creada con exito, confirma tu cuenta" });
       return;
     } catch (error) {
       console.log("error al crear la cuenta", error);
