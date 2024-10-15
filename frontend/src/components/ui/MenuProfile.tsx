@@ -27,10 +27,10 @@ function MenuProfile({ setShowProfileMenu, handleLogout }: Props) {
       ref={menuRef}
       className="absolute bg-slate-100 right-0 top-16 left-[30rem] p-2 rounded border border-slate-700 text-slate-900"
     >
-      <ul>
+      <ul className="divide-y divide-slate-700">
         <li
           onClick={() => setShowProfileMenu(false)}
-          className="hover:bg-slate-200 p-2 border-b border-slate-700"
+          className="hover:bg-slate-200 p-2"
         >
           <Link to={"/perfil"}>
             <Text as="p" category="body">
@@ -44,7 +44,7 @@ function MenuProfile({ setShowProfileMenu, handleLogout }: Props) {
             handleLogout();
             setShowProfileMenu(false);
           }}
-          className="hover:bg-gray-300/50 p-2 border-b border-slate-700 cursor-pointer"
+          className="hover:bg-gray-300/50 p-2 cursor-pointer"
         >
           <Text as="p" category="body" className="font-bold">
             Cerrar sesión
