@@ -185,6 +185,32 @@ export class UserController {
     }
   };
 
+  // Validate Token
+  static validateToken = async (req: Request, res: Response) => {
+    try {
+      const { token } = req.body;
+
+      const tokenExists = await Token.findOne({ token });
+      if (!tokenExists) {
+        res.status(400).json({ message: "Token no existe" });
+        return;
+      }
+
+      // validar si el token ya ha expirado
+      const currentDate = new Date();
+      if (tokenExists.expired_at < currentDate) {
+        res.status(400).json({ message: "Token expirado" });
+        return;
+      }
+
+      res.status(200).json({ message: "Token correcto" });
+      return;
+    } catch (error) {
+      res.status(500).json({ message: "Error al validar el token" });
+      return;
+    }
+  };
+
   // Request Token To Recover Password
   static requestTokenToRecoverPassword = async (
     req: Request,
@@ -197,6 +223,28 @@ export class UserController {
 
       if (!user) {
         res.status(400).json({ message: "El usuario no existe" });
+        return;
+      }
+
+      if (!user.confirm) {
+        const expirationDate = new Date();
+        expirationDate.setHours(expirationDate.getHours() + 2);
+
+        const token = await Token.create({
+          token: generateToken(),
+          user: user._id,
+          expired_at: expirationDate,
+        });
+
+        await sendConfirmEmail({
+          name: user.name,
+          email: user.email,
+          token: token.token,
+        });
+        res.status(400).json({
+          message:
+            "Esta cuenta no ha sido confirmada, te acabamos de enviar un email de confirmación",
+        });
         return;
       }
 
@@ -226,8 +274,7 @@ export class UserController {
   // Reset Password
   static resetPassword = async (req: Request, res: Response) => {
     try {
-      const { password } = req.body;
-      const { token } = req.params;
+      const { password, token } = req.body;
 
       const tokenExists = await Token.findOne({ token });
 
