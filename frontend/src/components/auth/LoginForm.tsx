@@ -1,8 +1,9 @@
 import { UserLoginData } from "@/types";
 import { Link } from "react-router-dom";
-import ErrorMessage from "../ui/ErrorMessage";
 import { useValidationLoginUserForm } from "@/hooks/useAuthUser";
-import ButtonSubmit from "../ui/ButtonSubmit";
+import ButtonSubmit from "../ui/Form/ButtonSubmit";
+import InputField from "../ui/Form/InputField";
+import Form from "../ui/Form/Form";
 
 interface Props {
   onSubmit: (data: UserLoginData) => void;
@@ -17,36 +18,28 @@ function LoginForm({ onSubmit, isPending }: Props) {
   } = useValidationLoginUserForm();
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="space-y-3 w-full">
-      <div className="flex flex-col gap-2">
-        <label htmlFor="email">Correo electrónico:</label>
-        <input
-          type="email"
-          id="email"
-          placeholder="Por ej. ejemplo@correo.com"
-          className="p-2 border border-slate-700 shadow-sm rounded-md"
-          {...register("email", {
-            required: { value: true, message: "El correo es requerido" },
-          })}
-        />
-        {errors.email && <ErrorMessage>{errors.email.message}</ErrorMessage>}
-      </div>
+    <Form onSubmit={handleSubmit(onSubmit)}>
+      <InputField
+        id="email"
+        label="Correo electrónico:"
+        type="email"
+        placeholder="Por ej. ejemplo@correo.com"
+        register={register("email", {
+          required: { value: true, message: "El correo es requerido" },
+        })}
+        error={errors.email}
+      />
 
-      <div className="flex flex-col gap-2">
-        <label htmlFor="email">Contraseña:</label>
-        <input
-          type="password"
-          id="password"
-          placeholder="***************"
-          className="p-2 border border-slate-700 shadow-sm rounded-md"
-          {...register("password", {
-            required: { value: true, message: "La contraseña es requerida" },
-          })}
-        />
-        {errors.password && (
-          <ErrorMessage>{errors.password.message}</ErrorMessage>
-        )}
-      </div>
+      <InputField
+        id="password"
+        type="password"
+        label="Contraseña:"
+        placeholder="*********"
+        register={register("password", {
+          required: { value: true, message: "La contraseña es requerida" },
+        })}
+        error={errors.password}
+      />
 
       <ButtonSubmit isPending={isPending} messageLoading="Iniciando sesión...">
         Iniciar sesión
@@ -57,7 +50,7 @@ function LoginForm({ onSubmit, isPending }: Props) {
 
         <Link to={"/registrarse"}>¿No tienes una cuenta?</Link>
       </div>
-    </form>
+    </Form>
   );
 }
 export default LoginForm;
