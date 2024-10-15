@@ -1,6 +1,5 @@
 import mongoose, { Document, PopulatedDoc, Schema, Types } from "mongoose";
-import Quiz, { QuizType } from "./Quiz";
-import { TokenType } from "./Token";
+import Quiz from "./Question";
 
 export type UserType = Document & {
   name: string;
@@ -9,9 +8,9 @@ export type UserType = Document & {
   email: string;
   password: string;
   confirm: boolean;
-  quizzes: PopulatedDoc<QuizType & Document>[];
-  tokens: PopulatedDoc<TokenType & Document>[];
-  role: Types.ObjectId;
+  quizzes: Types.ObjectId[];
+  tokens: Types.ObjectId[];
+  role: Types.ObjectId[];
 };
 
 const UserSchema: Schema = new Schema(
