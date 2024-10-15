@@ -1,10 +1,12 @@
 import {
   confirmAccount,
   loginUser,
+  logoutUser,
   recoverPassword,
   resetPassword,
   validateToken,
 } from "@/api/authAPI";
+import { useAppPersists } from "@/store/useAppPersists";
 import { useAppStore } from "@/store/useAppStore";
 import { UserLoginData } from "@/types";
 import { useMutation } from "@tanstack/react-query";
@@ -13,13 +15,15 @@ import { useNavigate } from "react-router-dom";
 
 export function useLoginUser() {
   const addNotification = useAppStore((state) => state.addNotification);
+  const setUserAuth = useAppPersists((state) => state.setUserAuth);
   const navigate = useNavigate();
 
   const mutatationUserLogin = useMutation({
     mutationFn: loginUser,
     onSuccess: (data) => {
+      setUserAuth(data.user);
       addNotification({
-        title: data,
+        title: data.message,
         type: "success",
       });
       navigate("/");
@@ -33,6 +37,24 @@ export function useLoginUser() {
   });
 
   return mutatationUserLogin;
+}
+
+export function useLogoutUser() {
+  const addNotification = useAppStore((state) => state.addNotification);
+  const clearUserAuth = useAppPersists((state) => state.clearUserAuth);
+
+  const mutatationUserLogout = useMutation({
+    mutationFn: logoutUser,
+    onSuccess: (data) => {
+      clearUserAuth();
+      addNotification({ title: data, type: "success" });
+    },
+    onError: (error) => {
+      addNotification({ title: error.message, type: "error" });
+    },
+  });
+
+  return mutatationUserLogout;
 }
 
 export function useValidationLoginUserForm() {
