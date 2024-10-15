@@ -36,7 +36,7 @@ function Header() {
               )}
 
               <div className="flex items-center gap-2">
-                <h3 className="text-lg font-bold">{userAuth.name}</h3>
+                <h3 className="text-lg font-bold">{userAuth.username}</h3>
               </div>
             </div>
           </nav>
