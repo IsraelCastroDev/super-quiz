@@ -1,7 +1,10 @@
 import Text from "@/components/ui/Typography";
 import Button from "../components/ui/Button";
+import { useAppPersists } from "@/store/useAppPersists";
 
 function HomePage() {
+  const userAuth = useAppPersists((state) => state.userAuth);
+
   return (
     <>
       <section className="flex flex-col items-center justify-center h-[calc(100vh-10rem)]">
@@ -27,7 +30,9 @@ function HomePage() {
 
           <div className="flex items-center justify-center gap-2">
             <Button to={"/"}>¡Empieza a jugar ya!</Button>
-            <Button to={"/registrarse"}>Crea tu propio Super Quiz</Button>
+            <Button to={userAuth ? "/quiz/crear" : "/registrarse"}>
+              Crea tu propio Super Quiz
+            </Button>
           </div>
         </div>
       </section>
