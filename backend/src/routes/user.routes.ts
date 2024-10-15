@@ -2,6 +2,7 @@ import { Router } from "express";
 import { UserController } from "../controllers/UserController";
 import { body, param } from "express-validator";
 import { validateErrors } from "../middlewares/validateErrors.middleware";
+import { authenticate } from "../middlewares/authenticate.middleware";
 
 const router = Router();
 
@@ -82,6 +83,8 @@ router.post(
   validateErrors,
   UserController.login
 );
+
+router.post("/logout", authenticate, UserController.logout);
 
 router.post(
   "/request-token-to-recover-password",
