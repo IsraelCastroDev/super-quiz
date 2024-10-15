@@ -7,15 +7,15 @@ export async function authenticate(
   res: Response,
   next: NextFunction
 ) {
-  const { authToken } = req.cookies;
+  const { access_token } = req.cookies;
 
-  if (!authToken) {
+  if (!access_token) {
     res.status(401).json({ message: "No autorizado" });
     return;
   }
 
   try {
-    const decoded = jwt.verify(authToken, process.env.JWT_SECRET!);
+    const decoded = jwt.verify(access_token, process.env.JWT_SECRET!);
 
     if (typeof decoded === "object" && decoded.id) {
       const user = await User.findOne({ _id: decoded.id });
