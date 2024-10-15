@@ -22,7 +22,7 @@ export const loginUser = async (formData: UserLoginData) => {
       ...formData,
     });
 
-    return data.message;
+    return data;
   } catch (error) {
     if (isAxiosError(error)) {
       throw new Error(error.response?.data.message);
@@ -32,6 +32,18 @@ export const loginUser = async (formData: UserLoginData) => {
 
 type Error = {
   error: string;
+};
+
+export const logoutUser = async () => {
+  try {
+    const { data } = await api.post("/users/logout");
+
+    return data.message;
+  } catch (error) {
+    if (isAxiosError(error)) {
+      throw new Error(error.response?.data.message);
+    }
+  }
 };
 
 export const recoverPassword = async (email: UserLoginData["email"]) => {
