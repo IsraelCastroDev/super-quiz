@@ -95,7 +95,14 @@ router.post(
 );
 
 router.post(
-  "/reset-password/:token",
+  "/validate-token",
+  body("token").notEmpty().withMessage("El token es requerido"),
+  validateErrors,
+  UserController.validateToken
+);
+
+router.post(
+  "/reset-password",
   body("password")
     .notEmpty()
     .withMessage("La contraseña es requerida")
@@ -114,11 +121,11 @@ router.post(
       }
       return true;
     }),
-  param("token")
+  body("token")
     .notEmpty()
     .withMessage("El token es requerido")
-    .isNumeric()
-    .withMessage("El token debe ser un número"),
+    .isString()
+    .withMessage("El token debe ser una cadena de texto"),
   validateErrors,
   UserController.resetPassword
 );
