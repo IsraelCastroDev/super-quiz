@@ -1,7 +1,7 @@
 import { UserLoginData } from "@/types";
 import { Link } from "react-router-dom";
 import ErrorMessage from "../ui/ErrorMessage";
-import { useValidationLoginUserForm } from "@/hooks/useLoginUser";
+import { useValidationLoginUserForm } from "@/hooks/useAuthUser";
 
 interface Props {
   onSubmit: (data: UserLoginData) => void;

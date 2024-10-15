@@ -1,5 +1,5 @@
 import Text from "@/components/ui/Typography";
-import { useConfirmAccount } from "@/hooks/useLoginUser";
+import { useConfirmAccount } from "@/hooks/useAuthUser";
 import { PinInput, PinInputField } from "@chakra-ui/pin-input";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";

@@ -1,4 +1,4 @@
-import { useResetPassword } from "@/hooks/useLoginUser";
+import { useResetPassword } from "@/hooks/useAuthUser";
 import { EyeIcon, EyeSlashIcon } from "@heroicons/react/16/solid";
 import { useState } from "react";
 import ButtonSubmit from "../ui/ButtonSubmit";

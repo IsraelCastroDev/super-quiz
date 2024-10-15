@@ -1,5 +1,5 @@
 import Text from "@/components/ui/Typography";
-import { useRecoverPassword } from "@/hooks/useLoginUser";
+import { useRecoverPassword } from "@/hooks/useAuthUser";
 
 function RecoverPasswordPage() {
   const { mutate, isPending } = useRecoverPassword();

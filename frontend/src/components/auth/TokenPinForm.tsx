@@ -1,6 +1,6 @@
 import { PinInput, PinInputField } from "@chakra-ui/pin-input";
 import Text from "@/components/ui/Typography";
-import { useValidateToken } from "@/hooks/useLoginUser";
+import { useValidateToken } from "@/hooks/useAuthUser";
 import { useAppStore } from "@/store/useAppStore";
 
 function TokenPinForm() {
