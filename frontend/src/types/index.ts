@@ -11,3 +11,7 @@ export const UserSchema = z.object({
 
 export type UserFormData = z.infer<typeof UserSchema>;
 export type UserLoginData = Pick<UserFormData, "email" | "password">;
+export type UserResetPasswordData = Pick<
+  UserFormData,
+  "password" | "confirm_password"
+> & { token: string };
