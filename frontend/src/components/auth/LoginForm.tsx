@@ -2,6 +2,7 @@ import { UserLoginData } from "@/types";
 import { Link } from "react-router-dom";
 import ErrorMessage from "../ui/ErrorMessage";
 import { useValidationLoginUserForm } from "@/hooks/useAuthUser";
+import ButtonSubmit from "../ui/ButtonSubmit";
 
 interface Props {
   onSubmit: (data: UserLoginData) => void;
@@ -47,15 +48,9 @@ function LoginForm({ onSubmit, isPending }: Props) {
         )}
       </div>
 
-      <div className="flex justify-center">
-        <button
-          type="submit"
-          className="bg-slate-700 hover:bg-slate-800 text-white p-3 rounded-md text-center cursor-pointer block w-full disabled:opacity-50"
-          disabled={isPending}
-        >
-          {isPending ? "Cargando..." : "Iniciar sesión"}
-        </button>
-      </div>
+      <ButtonSubmit isPending={isPending} messageLoading="Iniciando sesión...">
+        Iniciar sesión
+      </ButtonSubmit>
 
       <div className="flex items-center justify-between">
         <Link to={"/recuperar-cuenta"}>¿Olvidaste tu contraseña?</Link>
