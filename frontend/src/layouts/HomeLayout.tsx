@@ -1,11 +1,9 @@
 import { Outlet } from "react-router-dom";
 import Header from "../components/Header";
-import Notification from "../components/ui/Notification";
 
 function HomeLayout() {
   return (
     <>
-      <Notification />
       <Header />
       <main className="px-2 py-4 md:px-14 md:py-8">
         <Outlet />
