@@ -7,6 +7,7 @@ import SendEmailRecoverPasswordPage from "./pages/auth/SendEmailRecoverPasswordP
 import Notification from "./components/ui/Notification";
 import ResetPasswordPage from "./pages/auth/ResetPasswordPage";
 import ConfirmAccountPage from "./pages/auth/ConfirmAccountPage";
+import PlainLayout from "./layouts/PlainLayout";
 
 function App() {
   return (
@@ -19,15 +20,18 @@ function App() {
             <Route path="/iniciar-sesion" element={<LoginPage />} />
             <Route path="/registrarse" element={<RegisterPage />} />
           </Route>
-          <Route path="/confirmar-cuenta" element={<ConfirmAccountPage />} />
-          <Route
-            path="/recuperar-cuenta"
-            element={<SendEmailRecoverPasswordPage />}
-          />
-          <Route
-            path="/recuperar-cuenta/cambiar-password"
-            element={<ResetPasswordPage />}
-          />
+
+          <Route element={<PlainLayout />}>
+            <Route path="/confirmar-cuenta" element={<ConfirmAccountPage />} />
+            <Route
+              path="/recuperar-cuenta"
+              element={<SendEmailRecoverPasswordPage />}
+            />
+            <Route
+              path="/recuperar-cuenta/cambiar-password"
+              element={<ResetPasswordPage />}
+            />
+          </Route>
         </Routes>
       </BrowserRouter>
     </>
