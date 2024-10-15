@@ -13,6 +13,7 @@ import { useAppPersists } from "./store/useAppPersists";
 import ProtectedRoute from "./components/auth/ProtectedRoute";
 import NotFoundPage from "./pages/NotFoundPage";
 import CategoryQuizPage from "./pages/quiz/CategoryQuizPage";
+import ProfilePage from "./pages/auth/user/ProfilePage";
 
 function App() {
   const userAuth = useAppPersists((state) => state.userAuth);
@@ -38,6 +39,7 @@ function App() {
               path="/quizzes/category/:slug"
               element={<CategoryQuizPage />}
             />
+            <Route path="/perfil" element={<ProfilePage />} />
             <Route path="*" element={<NotFoundPage />} />
           </Route>
 
