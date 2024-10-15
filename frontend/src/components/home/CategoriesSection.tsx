@@ -3,6 +3,7 @@ import Text from "../ui/Typography";
 import { getQuizCategories } from "@/api/quizAPI";
 import { Link } from "react-router-dom";
 import Loader from "../ui/Loader/Loader";
+import { convertStringToSlug } from "@/utils";
 
 function CategoriesSection() {
   const { data: categories, isLoading } = useQuery({
@@ -27,7 +28,9 @@ function CategoriesSection() {
                 key={category._id}
                 className="border border-slate-700 p-5 rounded"
               >
-                <Link to={`/quizzes/category/${category.name.toLowerCase()}`}>
+                <Link
+                  to={`/quizzes/category/${convertStringToSlug(category.name)}`}
+                >
                   <Text as="p" category="subtitle">
                     {category.name}
                   </Text>
