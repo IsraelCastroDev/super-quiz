@@ -6,7 +6,7 @@ import LoginPage from "./pages/auth/LoginPage";
 import SendEmailRecoverPasswordPage from "./pages/auth/SendEmailRecoverPasswordPage";
 import Notification from "./components/ui/Notification";
 import ResetPasswordPage from "./pages/auth/ResetPasswordPage";
-import ConfirmAccount from "./pages/auth/ConfirmAccount";
+import ConfirmAccountPage from "./pages/auth/ConfirmAccountPage";
 
 function App() {
   return (
@@ -19,7 +19,7 @@ function App() {
             <Route path="/iniciar-sesion" element={<LoginPage />} />
             <Route path="/registrarse" element={<RegisterPage />} />
           </Route>
-          <Route path="/confirmar-cuenta" element={<ConfirmAccount />} />
+          <Route path="/confirmar-cuenta" element={<ConfirmAccountPage />} />
           <Route
             path="/recuperar-cuenta"
             element={<SendEmailRecoverPasswordPage />}
