@@ -8,8 +8,14 @@ import Notification from "./components/ui/Notification";
 import ResetPasswordPage from "./pages/auth/ResetPasswordPage";
 import ConfirmAccountPage from "./pages/auth/ConfirmAccountPage";
 import PlainLayout from "./layouts/PlainLayout";
+import CreateQuizPage from "./pages/quiz/CreateQuizPage";
+import { useAppPersists } from "./store/useAppPersists";
+import ProtectedRoute from "./components/auth/ProtectedRoute";
+import NotFoundPage from "./pages/NotFoundPage";
 
 function App() {
+  const userAuth = useAppPersists((state) => state.userAuth);
+
   return (
     <>
       <BrowserRouter>
@@ -19,6 +25,15 @@ function App() {
             <Route path="/" element={<HomePage />} index />
             <Route path="/iniciar-sesion" element={<LoginPage />} />
             <Route path="/registrarse" element={<RegisterPage />} />
+            <Route
+              path="/quiz/crear"
+              element={
+                <ProtectedRoute isAllowed={!!userAuth}>
+                  <CreateQuizPage />
+                </ProtectedRoute>
+              }
+            />
+            <Route path="*" element={<NotFoundPage />} />
           </Route>
 
           <Route element={<PlainLayout />}>
