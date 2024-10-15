@@ -15,3 +15,4 @@ export type UserResetPasswordData = Pick<
   UserFormData,
   "password" | "confirm_password"
 > & { token: string };
+export type UserAuthData = Pick<UserFormData, "name" | "lastname" | "username">;
