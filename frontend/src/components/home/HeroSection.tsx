@@ -9,9 +9,9 @@ interface Props {
 function HeroSection({ userAuth }: Props) {
   return (
     <section className="flex flex-col items-center justify-center h-[calc(100vh-10rem)]">
-      <div className="absolute bottom-0 left-0 right-0 top-0 bg-[radial-gradient(circle_500px_at_50%_200px,#C9EBFF,transparent)]"></div>
+      <div className="absolute bottom-0 left-0 right-0 top-0 bg-[radial-gradient(circle_500px_at_50%_200px,#C9EBFF,transparent)] -z-10"></div>
 
-      <div className="max-w-[700px] mx-auto z-50 space-y-7">
+      <div className="max-w-[700px] mx-auto space-y-7">
         <div className="flex flex-col gap-4 justify-center items-center">
           <Text category="big" degraded={true} as="h2" className="text-center">
             ¿Puedes superar a Super Quiz?
