@@ -14,7 +14,7 @@ export async function sendConfirmEmail(user: IEmail) {
     text: "Confirma tu cuenta en Super Quiz",
     html: `<p>Hola ${user.name}, solo estás a un paso de divertirte en Super Quiz, confirma tu cuenta</p>
           <p>Visita el siguiente enlace:</>
-          <a href="${process.env.FRONTEND_URL}/auth/confirmar-cuenta">Confirmar Cuenta</a>
+          <a href="${process.env.FRONTEND_URL}/confirmar-cuenta">Confirmar Cuenta</a>
           <p>E ingresa el siguiente código: <b>${user.token}</b></p>
           <p>Este token expira en aproximadamente 2 horas</>
     `,
@@ -30,7 +30,7 @@ export async function sendResetPasswordEmail(user: IEmail) {
     text: "Recupera tu contraseña en Super Quiz",
     html: `<p>Hola ${user.name}, solo estás a un paso de recuparar tu contraseña en Super Quiz</p>
           <p>Visita el siguiente enlace:</>
-          <a href="${process.env.FRONTEND_URL}/auth/confirmar-cuenta">Confirmar Cuenta</a>
+          <a href="${process.env.FRONTEND_URL}/recuperar-cuenta/cambiar-password">Confirmar Cuenta</a>
           <p>E ingresa el siguiente código: <b>${user.token}</b></p>
           <p>Este token expira en aproximadamente 2 horas</>
     `,
