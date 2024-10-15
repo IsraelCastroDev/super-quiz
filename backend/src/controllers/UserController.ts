@@ -168,19 +168,44 @@ export class UserController {
       }
 
       const token = generateJWT({ id: userExists._id });
+      const user = {
+        name: userExists.name,
+        lastname: userExists.lastname,
+        username: userExists.username,
+      };
 
-      res.cookie("authToken", token, {
-        httpOnly: true,
-        secure: false,
-        sameSite: "strict",
-        maxAge: 7 * 24 * 60 * 60 * 1000,
-      });
-
-      res.status(200).json({ message: "Inicio de sesion exitoso" });
+      res
+        .cookie("access_token", token, {
+          httpOnly: true,
+          secure: process.env.NODE_ENV === "production",
+          sameSite: "strict",
+        })
+        .status(200)
+        .json({ message: "Inicio de sesion exitoso", user, token });
       return;
     } catch (error) {
       console.log(error);
       res.status(500).json({ message: "Error al iniciar sesion" });
+      return;
+    }
+  };
+
+  static logout = async (req: Request, res: Response) => {
+    try {
+      const { access_token } = req.cookies;
+
+      if (!access_token) {
+        res.status(400).json({ message: "Sesion no iniciada" });
+        return;
+      }
+
+      res
+        .clearCookie("access_token")
+        .status(200)
+        .json({ message: "Sesion cerrada" });
+      return;
+    } catch (error) {
+      res.status(500).json({ message: "Error al cerrar sesión" });
       return;
     }
   };
