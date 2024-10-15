@@ -12,6 +12,7 @@ import CreateQuizPage from "./pages/quiz/CreateQuizPage";
 import { useAppPersists } from "./store/useAppPersists";
 import ProtectedRoute from "./components/auth/ProtectedRoute";
 import NotFoundPage from "./pages/NotFoundPage";
+import CategoryQuizPage from "./pages/quiz/CategoryQuizPage";
 
 function App() {
   const userAuth = useAppPersists((state) => state.userAuth);
@@ -32,6 +33,10 @@ function App() {
                   <CreateQuizPage />
                 </ProtectedRoute>
               }
+            />
+            <Route
+              path="/quizzes/category/:slug"
+              element={<CategoryQuizPage />}
             />
             <Route path="*" element={<NotFoundPage />} />
           </Route>
