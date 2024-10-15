@@ -1,3 +1,4 @@
+import Text from "@/components/ui/Typography";
 import Button from "../components/ui/Button";
 
 function HomePage() {
@@ -8,14 +9,19 @@ function HomePage() {
 
         <div className="max-w-[700px] mx-auto z-50 space-y-7">
           <div className="flex flex-col gap-4 justify-center items-center">
-            <h2 className="text-4xl md:text-7xl font-bold text-pretty text-center bg-gradient-to-tl from-gray-950 via-sky-800 to-sky-950 bg-clip-text text-transparent">
+            <Text
+              category="big"
+              degraded={true}
+              as="h2"
+              className="text-center"
+            >
               ¿Puedes superar a Super Quiz?
-            </h2>
+            </Text>
             <div className="px-10 flex justify-center">
-              <p className="text-xl font-bold text-center">
+              <Text as="h3" category="subtitle" className="text-pretty">
                 Elige entre diversas categorías, temas de tu agrado, obtén un
                 puntaje y sube en el ranking de mejores jugadores.
-              </p>
+              </Text>
             </div>
           </div>
 
