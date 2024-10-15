@@ -1,11 +1,12 @@
 import { useResetPassword } from "@/hooks/useAuthUser";
 import { EyeIcon, EyeSlashIcon } from "@heroicons/react/16/solid";
 import { useState } from "react";
-import ButtonSubmit from "../ui/ButtonSubmit";
+import InputField from "../ui/Form/InputField";
+import ButtonSubmit from "../ui/Form/ButtonSubmit";
 import { useAppStore } from "@/store/useAppStore";
 import { useForm } from "react-hook-form";
 import { UserResetPasswordData } from "@/types";
-import ErrorMessage from "../ui/ErrorMessage";
+import Form from "../ui/Form/Form";
 
 function ResetPasswordForm() {
   const { mutate, isPending } = useResetPassword();
@@ -35,81 +36,41 @@ function ResetPasswordForm() {
   return (
     <div className="flex items-center justify-center h-screen">
       <div className="w-full px-10 py-5 border border-slate-700 shadow-md rounded-md space-y-3">
-        <form onSubmit={handleSubmit(onSubmit)} className="w-full space-y-3">
-          <div className="flex flex-col gap-2">
-            <label htmlFor="password">Nueva contraseña</label>
-            <div className="flex items-center p-2 border border-slate-700 shadow-sm rounded-md">
-              <input
-                type={showPassword ? "text" : "password"}
-                placeholder="*******************"
-                id="password"
-                className="w-full outline-none"
-                {...register("password", {
-                  required: {
-                    value: true,
-                    message: "La contraseño es requerida",
-                  },
-                  pattern: {
-                    value: /^(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{8,}$/,
-                    message:
-                      "La contraseña debe tener al menos 8 caracteres, una mayúscula y un número",
-                  },
-                })}
-              />
+        <Form onSubmit={handleSubmit(onSubmit)}>
+          <InputField
+            id="password"
+            label="Nueva contraseña:"
+            type="password"
+            placeholder="*********"
+            register={register("password", {
+              required: { value: true, message: "La contraseña es requerida" },
+              pattern: {
+                value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/,
+                message:
+                  "La contraseña debe tener al menos 8 caracteres, una mayúscula, una minúscula y un número",
+              },
+            })}
+            error={errors.password}
+            IconComponent={showPassword ? EyeIcon : EyeSlashIcon}
+            onIconClick={() => setShowPassword(!showPassword)}
+          />
 
-              <button
-                type="button"
-                onClick={() => setShowPassword(!showPassword)}
-              >
-                {showPassword ? (
-                  <EyeSlashIcon className="w-6 h-6" />
-                ) : (
-                  <EyeIcon className="w-6 h-6" />
-                )}
-              </button>
-            </div>
-            {errors.password && (
-              <ErrorMessage>{errors.password.message}</ErrorMessage>
-            )}
-          </div>
-
-          <div className="flex flex-col gap-2">
-            <label htmlFor="confirm_password">Confirmar nueva contraseña</label>
-            <div className="flex items-center p-2 border border-slate-700 shadow-sm rounded-md">
-              <input
-                type={showPassword ? "text" : "password"}
-                placeholder="*******************"
-                id="confirm_password"
-                className="w-full outline-none"
-                {...register("confirm_password", {
-                  required: {
-                    value: true,
-                    message: "La contraseño es requerida",
-                  },
-                  validate: (value) =>
-                    value === getValues("password") ||
-                    "Las contraseñas no coinciden",
-                })}
-              />
-
-              <button
-                type="button"
-                onClick={() => setShowPassword(!showPassword)}
-              >
-                {showPassword ? (
-                  <EyeSlashIcon className="w-6 h-6" />
-                ) : (
-                  <EyeIcon className="w-6 h-6" />
-                )}
-              </button>
-            </div>
-            {errors.confirm_password && (
-              <ErrorMessage>{errors.confirm_password.message}</ErrorMessage>
-            )}
-          </div>
+          <InputField
+            id="confirm_password"
+            label="Confirmar nueva contraseña:"
+            type="password"
+            placeholder="*********"
+            register={register("confirm_password", {
+              required: { value: true, message: "La contraseña es requerida" },
+              validate: (value) =>
+                value === getValues("password") ||
+                "Las contraseñas no coinciden",
+            })}
+            error={errors.confirm_password}
+          />
 
           <ButtonSubmit isPending={isPending}>Cambiar contraseña</ButtonSubmit>
-        </form>
+        </Form>
       </div>
     </div>
   );

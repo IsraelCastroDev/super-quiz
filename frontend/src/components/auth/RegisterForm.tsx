@@ -1,9 +1,10 @@
 import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/solid";
-import ErrorMessage from "../ui/ErrorMessage";
 import { useState } from "react";
 import { useValidationRegisterUserForm } from "@/hooks/useRegisterUser";
 import { UserFormData } from "@/types";
-import ButtonSubmit from "../ui/ButtonSubmit";
+import ButtonSubmit from "../ui/Form/ButtonSubmit";
+import InputField from "../ui/Form/InputField";
+import Form from "../ui/Form/Form";
 
 interface Props {
   onSubmit: (data: UserFormData) => void;
@@ -24,136 +25,90 @@ function RegisterForm({ onSubmit, isPending }: Props) {
   const handleShowPassword = () => setShowPassword(!showPassword);
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="space-y-3 w-full">
-      <div className="flex flex-col gap-2">
-        <label htmlFor="name">Nombre:</label>
-        <input
-          type="text"
-          id="name"
-          placeholder="Por ej. Luis Gustavo"
-          className="p-2 border border-slate-700 shadow-sm rounded-md"
-          {...register("name", {
-            required: { value: true, message: "El nombre es requerido" },
-          })}
-        />
-        {errors.name && <ErrorMessage>{errors.name.message}</ErrorMessage>}
-      </div>
+    <Form onSubmit={handleSubmit(onSubmit)}>
+      <InputField
+        id="name"
+        type="text"
+        label="Nombre:"
+        placeholder="Por ej. Luis Gustavo"
+        register={register("name", {
+          required: { value: true, message: "El nombre es requerido" },
+        })}
+        error={errors.name}
+      />
 
-      <div className="flex flex-col gap-2">
-        <label htmlFor="lastname">Apellido:</label>
-        <input
-          type="text"
-          id="lastanme"
-          placeholder="Por ej. Martínez"
-          className="p-2 border border-slate-700 shadow-sm rounded-md"
-          {...register("lastname", {
-            required: {
-              value: true,
-              message: "El apellido es requerido",
-            },
-          })}
-        />
-        {errors.lastname && (
-          <ErrorMessage>{errors.lastname.message}</ErrorMessage>
-        )}
-      </div>
+      <InputField
+        id="lastname"
+        type="text"
+        label="Apellido:"
+        placeholder="Por ej. Martínez"
+        register={register("lastname", {
+          required: { value: true, message: "El apellido es requerido" },
+        })}
+        error={errors.lastname}
+      />
 
-      <div className="flex flex-col gap-2">
-        <label htmlFor="username">Nombre de usuario:</label>
-        <input
-          type="text"
-          id="username"
-          placeholder="Por ej. luisgustavo11"
-          className="p-2 border border-slate-700 shadow-sm rounded-md"
-          {...register("username", {
-            required: {
-              value: true,
-              message: "El nombre de usuario es requerido",
-            },
-          })}
-        />
-        {errors.username && (
-          <ErrorMessage>{errors.username.message}</ErrorMessage>
-        )}
-      </div>
+      <InputField
+        id="username"
+        type="text"
+        label="Nombre de usuario:"
+        placeholder="Por ej. luisgustavo11"
+        register={register("username", {
+          required: {
+            value: true,
+            message: "El nombre de usuario es requerido",
+          },
+        })}
+        error={errors.username}
+      />
 
-      <div className="flex flex-col gap-2">
-        <label htmlFor="email">Correo electrónico:</label>
-        <input
-          type="email"
-          id="email"
-          placeholder="Por ej. ejemplo@correo.com"
-          className="p-2 border border-slate-700 shadow-sm rounded-md"
-          {...register("email", {
-            required: { value: true, message: "El correo es requerido" },
-          })}
-        />
-        {errors.email && <ErrorMessage>{errors.email.message}</ErrorMessage>}
-      </div>
+      <InputField
+        id="email"
+        type="email"
+        label="Correo electrónico:"
+        placeholder="Por ej. ejemplo@correo.com"
+        register={register("email", {
+          required: { value: true, message: "El correo es requerido" },
+          pattern: {
+            value: /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/,
+            message: "El email no es válido",
+          },
+        })}
+        error={errors.email}
+      />
 
-      <div className="flex flex-col gap-2">
-        <label htmlFor="password">Contraseña:</label>
-        <div className="flex items-center justify-between p-2 focus:border-2 focus:border-slate-800 border border-slate-700 shadow-sm rounded-md">
-          <input
-            type={showPassword ? "text" : "password"}
-            id="password"
-            placeholder="**********"
-            className="w-full outline-none"
-            {...register("password", {
-              required: {
-                value: true,
-                message: "La contraseña es requerida",
-              },
-            })}
-          />
-          <button type="button" onClick={handleShowPassword}>
-            {showPassword ? (
-              <EyeSlashIcon className="w-6 h-6" />
-            ) : (
-              <EyeIcon className="w-6 h-6" />
-            )}
-          </button>
-        </div>
-        {errors.password && (
-          <ErrorMessage>{errors.password.message}</ErrorMessage>
-        )}
-      </div>
+      <InputField
+        type={showPassword ? "text" : "password"}
+        label="Contraseña:"
+        id="password"
+        register={register("password", {
+          required: { value: true, message: "La contraseña es requerida" },
+        })}
+        error={errors.password}
+        placeholder="**********"
+        IconComponent={showPassword ? EyeSlashIcon : EyeIcon} // Cambia el ícono dinámicamente
+        onIconClick={handleShowPassword} // Maneja el clic en el ícono
+      />
 
-      <div className="flex flex-col gap-2">
-        <label htmlFor="confirm_password">Confirmar contraseña:</label>
-        <div className="flex items-center justify-between p-2 focus:border-2 focus:border-slate-800 border border-slate-700 shadow-sm rounded-md">
-          <input
-            type={showPassword ? "text" : "password"}
-            id="confirm_password"
-            placeholder="Ingresa nuevamente la contraseña"
-            className="w-full outline-none"
-            {...register("confirm_password", {
-              required: {
-                value: true,
-                message: "La confirmación es requerida",
-              },
-              validate: (value) =>
-                value === getValues("password") ||
-                "Las contraseñas no coinciden",
-            })}
-          />
-          <button type="button" onClick={handleShowPassword}>
-            {showPassword ? (
-              <EyeSlashIcon className="w-6 h-6" />
-            ) : (
-              <EyeIcon className="w-6 h-6" />
-            )}
-          </button>
-        </div>
-        {errors.confirm_password && (
-          <ErrorMessage>{errors.confirm_password.message}</ErrorMessage>
-        )}
-      </div>
+      <InputField
+        type={showPassword ? "text" : "password"}
+        label="Confirmar contraseña:"
+        id="confirm_password"
+        register={register("confirm_password", {
+          required: { value: true, message: "La confirmación es requerida" },
+          validate: (value) =>
+            value === getValues("password") || "Las contraseñas no coinciden",
+        })}
+        error={errors.confirm_password}
+        placeholder="Ingresa nuevamente la contraseña"
+        IconComponent={showPassword ? EyeSlashIcon : EyeIcon} // Cambia el ícono dinámicamente
+        onIconClick={handleShowPassword} // Maneja el clic en el ícono
+      />
 
       <ButtonSubmit isPending={isPending} messageLoading="Creando cuenta...">
         Crear cuenta
       </ButtonSubmit>
-    </form>
+    </Form>
   );
 }
 export default RegisterForm;
