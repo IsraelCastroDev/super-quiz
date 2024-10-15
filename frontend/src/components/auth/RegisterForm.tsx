@@ -5,6 +5,8 @@ import { UserFormData } from "@/types";
 import ButtonSubmit from "../ui/Form/ButtonSubmit";
 import InputField from "../ui/Form/InputField";
 import Form from "../ui/Form/Form";
+import { Link } from "react-router-dom";
+import Text from "../ui/Typography";
 
 interface Props {
   onSubmit: (data: UserFormData) => void;
@@ -108,6 +110,15 @@ function RegisterForm({ onSubmit, isPending }: Props) {
       <ButtonSubmit isPending={isPending} messageLoading="Creando cuenta...">
         Crear cuenta
       </ButtonSubmit>
+
+      <div className="text-center">
+        <Text as="p" category="body">
+          ¿Ya tienes una cuenta?{" "}
+          <Link to={"/iniciar-sesion"} className="underline font-bold">
+            Iniciar sesión
+          </Link>
+        </Text>
+      </div>
     </Form>
   );
 }
