@@ -216,4 +216,20 @@ export class QuizController {
       return;
     }
   };
+
+  static getCategories = async (req: Request, res: Response) => {
+    try {
+      const categories = await Category.find();
+
+      if (!categories) {
+        res.status(500).json({ message: "Error al obtener las categorias" });
+        return;
+      }
+
+      res.status(200).json(categories);
+    } catch (error) {
+      res.status(500).json({ message: "Error al obtener las categorias" });
+      return;
+    }
+  };
 }

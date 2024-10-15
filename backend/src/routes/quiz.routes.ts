@@ -96,4 +96,6 @@ router.delete(
   QuizController.deleteQuiz
 );
 
+router.get("/categories", QuizController.getCategories);
+
 export default router;
