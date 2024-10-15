@@ -5,6 +5,7 @@ import QuizCategory from "../models/QuizCategory";
 import Category from "../models/Category";
 import Question, { QuestionType } from "../models/Question";
 import { generateTokenQuiz } from "../utils/token";
+import Answer from "../models/Answer";
 
 export class QuizController {
   // Crea un nuevo quiz
@@ -22,7 +23,6 @@ export class QuizController {
       // Crear el quiz inicialmente sin las preguntas
       const quiz = await Quiz.create({
         title,
-        score: 0,
         user: userExists._id,
         questions: [], // Inicialmente vacío
         token: generateTokenQuiz(),
@@ -33,19 +33,43 @@ export class QuizController {
       if (questions && questions.length > 0) {
         // Crear preguntas y almacenar sus IDs
         const questionPromises = questions.map(async (q: QuestionType) => {
-          const question = await Question.create({
-            name: q.name,
-            is_correct: q.is_correct,
+          // Crear la pregunta
+          const newQuestion = await Question.create({
+            title: q.title,
             quiz: quiz._id, // Referencia al quiz
           });
-          questionIds.push(question._id as string); // Agregar el ID de la pregunta al array
+
+          let answerIds: string[] = []; // Para almacenar los IDs de las respuestas
+
+          // Crear respuestas asociadas a la pregunta (si hay)
+          if (q.answers && q.answers.length > 0) {
+            const answerPromises = q.answers.map(async (a: any) => {
+              const answer = await Answer.create({
+                name: a.name,
+                is_correct: a.is_correct,
+                question: newQuestion._id, // Relación con la pregunta
+              });
+              answerIds.push(answer._id as string); // Almacenar el ID de la respuesta
+            });
+
+            // Esperar a que todas las respuestas se creen
+            await Promise.all(answerPromises);
+
+            // Actualizar la pregunta con los IDs de las respuestas
+            await Question.updateOne(
+              { _id: newQuestion._id },
+              { $push: { answers: { $each: answerIds } } }
+            );
+          }
+
+          questionIds.push(newQuestion._id as string); // Agregar el ID de la pregunta al array
         });
 
         // Esperar a que todas las preguntas se creen
         await Promise.all(questionPromises);
       }
 
-      // Actualizar el quiz para incluir los IDs de las preguntas
+      // Actualizar el quiz para incluir los IDs de las preguntas creadas
       await Quiz.updateOne(
         { _id: quiz._id },
         { $push: { questions: { $each: questionIds } } }
@@ -81,12 +105,11 @@ export class QuizController {
         { $push: { quizzes: quiz._id } }
       );
 
-      res.status(201).json(quiz.token);
-      return;
+      // Retornar el token del quiz creado
+      res.status(201).json({ token: quiz.token });
     } catch (error) {
       console.log(error);
       res.status(500).json({ message: "Error al crear el quiz" });
-      return;
     }
   };
 
