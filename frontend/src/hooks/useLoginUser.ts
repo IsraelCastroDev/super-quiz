@@ -1,4 +1,10 @@
-import { loginUser } from "@/api/authAPI";
+import {
+  confirmAccount,
+  loginUser,
+  recoverPassword,
+  resetPassword,
+  validateToken,
+} from "@/api/authAPI";
 import { useAppStore } from "@/store/useAppStore";
 import { UserLoginData } from "@/types";
 import { useMutation } from "@tanstack/react-query";
@@ -38,4 +44,88 @@ export function useValidationLoginUserForm() {
   });
 
   return validationLoginUserForm;
+}
+
+export function useRecoverPassword() {
+  const addNotification = useAppStore((state) => state.addNotification);
+
+  const mutationRecoverPassword = useMutation({
+    mutationFn: recoverPassword,
+    onSuccess: (data) => {
+      addNotification({
+        title: data,
+        type: "success",
+      });
+    },
+    onError: (error) => {
+      addNotification({
+        title: error.message,
+        type: "error",
+      });
+    },
+  });
+
+  return mutationRecoverPassword;
+}
+
+export function useValidateToken() {
+  const addNotification = useAppStore((state) => state.addNotification);
+  const setShowTokenPinForm = useAppStore((state) => state.setShowTokenPinForm);
+
+  const mutationValidateToken = useMutation({
+    mutationFn: validateToken,
+    onSuccess: (data) => {
+      addNotification({
+        title: data,
+        type: "success",
+      });
+      setShowTokenPinForm(true);
+    },
+    onError: (error) => {
+      addNotification({
+        title: error.message,
+        type: "error",
+      });
+    },
+  });
+
+  return mutationValidateToken;
+}
+
+export function useResetPassword() {
+  const addNotification = useAppStore((state) => state.addNotification);
+
+  const mutationResetPassword = useMutation({
+    mutationFn: resetPassword,
+    onSuccess: (data) => {
+      addNotification({
+        title: data,
+        type: "success",
+      });
+    },
+    onError: (error) => {
+      addNotification({
+        title: error.message,
+        type: "error",
+      });
+    },
+  });
+
+  return mutationResetPassword;
+}
+
+export function useConfirmAccount() {
+  const addNotification = useAppStore((state) => state.addNotification);
+
+  const mutationConfirmAccount = useMutation({
+    mutationFn: confirmAccount,
+    onSuccess: (data) => {
+      addNotification({ title: data, type: "success" });
+    },
+    onError: (error) => {
+      addNotification({ title: error.message, type: "error" });
+    },
+  });
+
+  return mutationConfirmAccount;
 }
