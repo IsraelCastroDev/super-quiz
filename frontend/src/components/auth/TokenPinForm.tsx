@@ -1,7 +1,7 @@
 import { PinInput, PinInputField } from "@chakra-ui/pin-input";
-import Text from "@/components/ui/Typography";
 import { useValidateToken } from "@/hooks/useAuthUser";
 import { useAppStore } from "@/store/useAppStore";
+import { Text } from "@/components/ui";
 
 function TokenPinForm() {
   const { mutate } = useValidateToken();
@@ -20,7 +20,7 @@ function TokenPinForm() {
     <div className="flex items-center justify-center h-screen gap-4">
       <div className="flex flex-col gap-3">
         <div className="space-y-3">
-          <Text as="h1" category="brand" className="text-center">
+          <Text as="h1" category="big" className="text-center">
             Super Quiz
           </Text>
           <Text as="h2" category="title">

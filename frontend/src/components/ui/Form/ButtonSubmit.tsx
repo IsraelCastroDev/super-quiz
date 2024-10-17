@@ -4,7 +4,7 @@ interface Props {
   messageLoading?: string;
 }
 
-function ButtonSubmit({
+export function ButtonSubmit({
   children,
   isPending,
   messageLoading = "Cargando...",
@@ -21,4 +21,3 @@ function ButtonSubmit({
     </div>
   );
 }
-export default ButtonSubmit;

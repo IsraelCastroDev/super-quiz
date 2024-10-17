@@ -1,11 +1,9 @@
+import { useState } from "react";
+import { Link } from "react-router-dom";
 import { useLogoutUser } from "@/hooks/useAuthUser";
 import { useAppPersists } from "@/store/useAppPersists";
 import { UserCircleIcon } from "@heroicons/react/24/solid";
-import { Link } from "react-router-dom";
-import Loader from "./ui/Loader/Loader";
-import { useState } from "react";
-import MenuProfile from "./ui/MenuProfile";
-import Text from "./ui/Typography";
+import { Text, Loader, MenuProfile } from "@/components/ui";
 
 function Header() {
   const userAuth = useAppPersists((state) => state.userAuth);

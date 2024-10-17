@@ -1,7 +1,7 @@
 import { InputHTMLAttributes } from "react";
 import { FieldError, UseFormRegisterReturn } from "react-hook-form";
-import Label from "./Label";
-import ErrorMessage from "../ErrorMessage";
+import { Label } from "@/components/ui/Form";
+import { ErrorMessage } from "@/components/ui";
 
 interface Props extends InputHTMLAttributes<HTMLInputElement> {
   label: string;
@@ -12,7 +12,7 @@ interface Props extends InputHTMLAttributes<HTMLInputElement> {
   onIconClick?: () => void;
 }
 
-function InputField({
+export function InputField({
   label,
   id,
   error,
@@ -41,4 +41,3 @@ function InputField({
     </div>
   );
 }
-export default InputField;

@@ -1,4 +1,4 @@
-import BackLink from "@/components/ui/BackLink";
+import { BackLink } from "@/components/ui";
 import { Outlet } from "react-router-dom";
 
 function PlainLayout() {

@@ -4,7 +4,7 @@ interface ButtonProps extends LinkProps {
   children: React.ReactNode;
 }
 
-function Button({ children, ...props }: ButtonProps) {
+export function Button({ children, ...props }: ButtonProps) {
   return (
     <Link
       className="bg-slate-700 hover:bg-slate-800 text-white py-1 px-2 md:p-3 rounded-md text-center cursor-pointer block w-full"
@@ -14,5 +14,3 @@ function Button({ children, ...props }: ButtonProps) {
     </Link>
   );
 }
-
-export default Button;

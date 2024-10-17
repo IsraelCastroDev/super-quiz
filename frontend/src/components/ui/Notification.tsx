@@ -1,7 +1,7 @@
 import { XMarkIcon } from "@heroicons/react/24/solid";
 import { useAppStore } from "../../store/useAppStore";
 
-function Notification() {
+export function Notification() {
   const notification = useAppStore((state) => state.notification);
   const closeNotification = useAppStore((state) => state.closeNotification);
 
@@ -24,4 +24,3 @@ function Notification() {
     </>
   );
 }
-export default Notification;

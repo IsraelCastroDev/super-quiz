@@ -1,4 +1,4 @@
-import Text from "@/components/ui/Typography";
+import { Text } from "@/components/ui";
 import { useRecoverPassword } from "@/hooks/useAuthUser";
 
 function RecoverPasswordPage() {

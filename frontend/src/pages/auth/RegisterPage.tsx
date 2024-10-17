@@ -1,5 +1,5 @@
-import Text from "@/components/ui/Typography";
 import RegisterForm from "@/components/auth/RegisterForm";
+import { Text } from "@/components/ui";
 import { useRegisterUser } from "@/hooks/useRegisterUser";
 import { UserFormData } from "@/types";
 

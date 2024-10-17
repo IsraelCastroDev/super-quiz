@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 
-function BackLink() {
+export function BackLink() {
   return (
     <div className="absolute top-10 left-4">
       <Link
@@ -12,4 +12,3 @@ function BackLink() {
     </div>
   );
 }
-export default BackLink;

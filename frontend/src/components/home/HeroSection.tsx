@@ -1,6 +1,5 @@
 import { UserAuthData } from "@/types";
-import Button from "../ui/Button";
-import Text from "../ui/Typography";
+import { Button, Text } from "@/components/ui";
 
 interface Props {
   userAuth: UserAuthData | null;

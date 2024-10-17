@@ -1,4 +1,4 @@
-import Text from "@/components/ui/Typography";
+import { Text } from "@/components/ui";
 import { Link } from "react-router-dom";
 
 function NotFoundPage() {

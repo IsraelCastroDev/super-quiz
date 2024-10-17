@@ -9,7 +9,7 @@ interface TextProps {
   degraded?: boolean;
 }
 
-function Text({
+export function Text({
   as: Element,
   category,
   children,
@@ -42,5 +42,3 @@ function Text({
   }
   return <Element className={`${baseClass} ${className}`}>{children}</Element>;
 }
-
-export default Text;

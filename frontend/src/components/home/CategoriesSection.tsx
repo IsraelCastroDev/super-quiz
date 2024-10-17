@@ -1,6 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import Text from "../ui/Typography";
-import Loader from "../ui/Loader/Loader";
+import { Loader, Text } from "@/components/ui";
 import { getQuizCategories } from "@/api/quizAPI";
 import { Link } from "react-router-dom";
 import { convertStringToSlug } from "@/utils";

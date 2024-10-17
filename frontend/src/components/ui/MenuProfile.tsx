@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import Text from "./Typography";
+import { Text } from "@/components/ui";
 import { useEffect, useRef } from "react";
 
 interface Props {
@@ -7,7 +7,7 @@ interface Props {
   handleLogout: () => void;
 }
 
-function MenuProfile({ setShowProfileMenu, handleLogout }: Props) {
+export function MenuProfile({ setShowProfileMenu, handleLogout }: Props) {
   const menuRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -65,4 +65,3 @@ function MenuProfile({ setShowProfileMenu, handleLogout }: Props) {
     </div>
   );
 }
-export default MenuProfile;

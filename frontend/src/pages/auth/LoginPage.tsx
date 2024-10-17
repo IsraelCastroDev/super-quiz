@@ -1,5 +1,5 @@
 import LoginForm from "@/components/auth/LoginForm";
-import Text from "@/components/ui/Typography";
+import { Text } from "@/components/ui";
 import { useLoginUser } from "@/hooks/useAuthUser";
 import { UserLoginData } from "@/types";
 

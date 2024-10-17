@@ -1,12 +1,10 @@
 import { useResetPassword } from "@/hooks/useAuthUser";
 import { EyeIcon, EyeSlashIcon } from "@heroicons/react/16/solid";
 import { useState } from "react";
-import InputField from "../ui/Form/InputField";
-import ButtonSubmit from "../ui/Form/ButtonSubmit";
 import { useAppStore } from "@/store/useAppStore";
 import { useForm } from "react-hook-form";
 import { UserResetPasswordData } from "@/types";
-import Form from "../ui/Form/Form";
+import { Form, InputField, ButtonSubmit } from "@/components/ui/Form";
 
 function ResetPasswordForm() {
   const { mutate, isPending } = useResetPassword();

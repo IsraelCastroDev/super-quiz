@@ -1,4 +1,4 @@
-import Text from "@/components/ui/Typography";
+import { Text } from "@/components/ui";
 import { useConfirmAccount } from "@/hooks/useAuthUser";
 import { PinInput, PinInputField } from "@chakra-ui/pin-input";
 import { useState } from "react";
@@ -20,7 +20,7 @@ function ConfirmAccount() {
     <main>
       <section className="flex flex-col items-center justify-center h-screen gap-4 max-w-[500px] mx-auto">
         <div className="space-y-3">
-          <Text as="h1" category="brand" className="text-center">
+          <Text as="h1" category="big" className="text-center">
             Super Quiz
           </Text>
           <Text as="h2" category="title" className="text-center">

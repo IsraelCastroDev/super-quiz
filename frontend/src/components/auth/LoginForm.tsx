@@ -1,9 +1,7 @@
 import { UserLoginData } from "@/types";
 import { Link } from "react-router-dom";
 import { useValidationLoginUserForm } from "@/hooks/useAuthUser";
-import ButtonSubmit from "../ui/Form/ButtonSubmit";
-import InputField from "../ui/Form/InputField";
-import Form from "../ui/Form/Form";
+import { Form, InputField, ButtonSubmit } from "@/components/ui/Form";
 
 interface Props {
   onSubmit: (data: UserLoginData) => void;

@@ -1,12 +1,10 @@
-import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/solid";
 import { useState } from "react";
+import { Link } from "react-router-dom";
+import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/solid";
 import { useValidationRegisterUserForm } from "@/hooks/useRegisterUser";
 import { UserFormData } from "@/types";
-import ButtonSubmit from "../ui/Form/ButtonSubmit";
-import InputField from "../ui/Form/InputField";
-import Form from "../ui/Form/Form";
-import { Link } from "react-router-dom";
-import Text from "../ui/Typography";
+import { Text } from "@/components/ui";
+import { Form, InputField, ButtonSubmit } from "@/components/ui/Form";
 
 interface Props {
   onSubmit: (data: UserFormData) => void;
