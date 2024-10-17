@@ -1,5 +1,5 @@
 import { Text } from "@/components/ui";
-import { useRecoverPassword } from "@/hooks/useAuthUser";
+import { useRecoverPassword } from "@/hooks";
 
 export function SendEmailRecoverPasswordPage() {
   const { mutate, isPending } = useRecoverPassword();

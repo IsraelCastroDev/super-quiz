@@ -1,7 +1,7 @@
 import { BackLink } from "@/components/ui";
 import { Outlet } from "react-router-dom";
 
-function PlainLayout() {
+export function PlainLayout() {
   return (
     <>
       <BackLink />
@@ -11,4 +11,3 @@ function PlainLayout() {
     </>
   );
 }
-export default PlainLayout;

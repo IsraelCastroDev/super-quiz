@@ -1,12 +1,12 @@
-import { useResetPassword } from "@/hooks/useAuthUser";
+import { useResetPassword } from "@/hooks";
 import { EyeIcon, EyeSlashIcon } from "@heroicons/react/16/solid";
 import { useState } from "react";
-import { useAppStore } from "@/store/useAppStore";
+import { useAppStore } from "@/store";
 import { useForm } from "react-hook-form";
 import { UserResetPasswordData } from "@/types";
 import { Form, InputField, ButtonSubmit } from "@/components/ui/Form";
 
-function ResetPasswordForm() {
+export function ResetPasswordForm() {
   const { mutate, isPending } = useResetPassword();
   const tokenResetPassword = useAppStore((state) => state.tokenResetPassword);
   const [showPassword, setShowPassword] = useState(false);
@@ -73,4 +73,3 @@ function ResetPasswordForm() {
     </div>
   );
 }
-export default ResetPasswordForm;

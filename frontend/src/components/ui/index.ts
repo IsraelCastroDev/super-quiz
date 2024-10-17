@@ -5,3 +5,4 @@ export { MenuProfile } from "./MenuProfile";
 export { Notification } from "./Notification";
 export { Text } from "./Typography";
 export { Loader } from "./Loader/Loader";
+export { Container } from "./app/Container";

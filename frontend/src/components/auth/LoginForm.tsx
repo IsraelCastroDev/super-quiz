@@ -1,6 +1,6 @@
 import { UserLoginData } from "@/types";
 import { Link } from "react-router-dom";
-import { useValidationLoginUserForm } from "@/hooks/useAuthUser";
+import { useValidationLoginUserForm } from "@/hooks";
 import { Form, InputField, ButtonSubmit } from "@/components/ui/Form";
 
 interface Props {
@@ -8,7 +8,7 @@ interface Props {
   isPending: boolean;
 }
 
-function LoginForm({ onSubmit, isPending }: Props) {
+export function LoginForm({ onSubmit, isPending }: Props) {
   const {
     formState: { errors },
     handleSubmit,
@@ -51,4 +51,3 @@ function LoginForm({ onSubmit, isPending }: Props) {
     </Form>
   );
 }
-export default LoginForm;

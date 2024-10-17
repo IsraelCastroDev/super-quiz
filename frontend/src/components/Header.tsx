@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { useLogoutUser } from "@/hooks/useAuthUser";
-import { useAppPersists } from "@/store/useAppPersists";
+import { useLogoutUser } from "@/hooks";
+import { useAppPersists } from "@/store";
 import { UserCircleIcon } from "@heroicons/react/24/solid";
 import { Text, Loader, MenuProfile } from "@/components/ui";
 

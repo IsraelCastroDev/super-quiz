@@ -1,6 +1,6 @@
-import RegisterForm from "@/components/auth/RegisterForm";
+import { RegisterForm } from "@/components/auth";
 import { Text } from "@/components/ui";
-import { useRegisterUser } from "@/hooks/useRegisterUser";
+import { useRegisterUser } from "@/hooks";
 import { UserFormData } from "@/types";
 
 export function RegisterPage() {

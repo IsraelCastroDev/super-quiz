@@ -1,6 +1,6 @@
-import LoginForm from "@/components/auth/LoginForm";
+import { LoginForm } from "@/components/auth";
 import { Text } from "@/components/ui";
-import { useLoginUser } from "@/hooks/useAuthUser";
+import { useLoginUser } from "@/hooks";
 import { UserLoginData } from "@/types";
 
 export function LoginPage() {

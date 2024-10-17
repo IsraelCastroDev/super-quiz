@@ -1,5 +1,5 @@
 import { XMarkIcon } from "@heroicons/react/24/solid";
-import { useAppStore } from "../../store/useAppStore";
+import { useAppStore } from "@/store";
 
 export function Notification() {
   const notification = useAppStore((state) => state.notification);

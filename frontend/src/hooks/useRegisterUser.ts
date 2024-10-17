@@ -1,5 +1,5 @@
 import { registerUser } from "@/api/authAPI";
-import { useAppStore } from "@/store/useAppStore";
+import { useAppStore } from "@/store";
 import { UserFormData } from "@/types";
 import { useMutation } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";

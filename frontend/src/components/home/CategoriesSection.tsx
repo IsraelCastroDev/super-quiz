@@ -3,9 +3,9 @@ import { Loader, Text } from "@/components/ui";
 import { getQuizCategories } from "@/api/quizAPI";
 import { Link } from "react-router-dom";
 import { convertStringToSlug } from "@/utils";
-import Container from "../ui/app/Container";
+import { Container } from "../ui/";
 
-function CategoriesSection() {
+export function CategoriesSection() {
   const { data: categories, isLoading } = useQuery({
     queryKey: ["categories"],
     queryFn: getQuizCategories,
@@ -60,4 +60,3 @@ function CategoriesSection() {
     </Container>
   );
 }
-export default CategoriesSection;

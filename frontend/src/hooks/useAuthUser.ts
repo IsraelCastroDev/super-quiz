@@ -7,8 +7,7 @@ import {
   validateAuth,
   validateToken,
 } from "@/api/authAPI";
-import { useAppPersists } from "@/store/useAppPersists";
-import { useAppStore } from "@/store/useAppStore";
+import { useAppPersists, useAppStore } from "@/store";
 import { UserLoginData } from "@/types";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";

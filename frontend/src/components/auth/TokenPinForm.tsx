@@ -1,9 +1,9 @@
 import { PinInput, PinInputField } from "@chakra-ui/pin-input";
-import { useValidateToken } from "@/hooks/useAuthUser";
-import { useAppStore } from "@/store/useAppStore";
+import { useValidateToken } from "@/hooks";
+import { useAppStore } from "@/store";
 import { Text } from "@/components/ui";
 
-function TokenPinForm() {
+export function TokenPinForm() {
   const { mutate } = useValidateToken();
   const tokenResetPassword = useAppStore((state) => state.tokenResetPassword);
   const setTokenResetPassword = useAppStore(
@@ -46,4 +46,3 @@ function TokenPinForm() {
     </div>
   );
 }
-export default TokenPinForm;

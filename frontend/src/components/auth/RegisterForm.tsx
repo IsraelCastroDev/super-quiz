@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/solid";
-import { useValidationRegisterUserForm } from "@/hooks/useRegisterUser";
+import { useValidationRegisterUserForm } from "@/hooks";
 import { UserFormData } from "@/types";
 import { Text } from "@/components/ui";
 import { Form, InputField, ButtonSubmit } from "@/components/ui/Form";
@@ -11,7 +11,7 @@ interface Props {
   isPending: boolean;
 }
 
-function RegisterForm({ onSubmit, isPending }: Props) {
+export function RegisterForm({ onSubmit, isPending }: Props) {
   const [showPassword, setShowPassword] = useState(false);
 
   const validationRegisterUserForm = useValidationRegisterUserForm();
@@ -120,4 +120,3 @@ function RegisterForm({ onSubmit, isPending }: Props) {
     </Form>
   );
 }
-export default RegisterForm;
