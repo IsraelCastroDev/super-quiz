@@ -9,18 +9,24 @@ import ResetPasswordPage from "./pages/auth/ResetPasswordPage";
 import ConfirmAccountPage from "./pages/auth/ConfirmAccountPage";
 import PlainLayout from "./layouts/PlainLayout";
 import CreateQuizPage from "./pages/quiz/CreateQuizPage";
-import { useAppPersists } from "./store/useAppPersists";
 import ProtectedRoute from "./components/auth/ProtectedRoute";
 import NotFoundPage from "./pages/NotFoundPage";
 import CategoryQuizPage from "./pages/quiz/CategoryQuizPage";
 import ProfilePage from "./pages/auth/user/ProfilePage";
+import { useAppPersists } from "./store/useAppPersists";
+import { useValidateAuth } from "./hooks/useAuthUser";
+import { UserAuthData } from "./types";
+import { useEffect } from "react";
+import { useAppStore } from "./store/useAppStore";
 
 function App() {
   const userAuth = useAppPersists((state) => state.userAuth);
+  const setUserAuth = useAppPersists((state) => state.setUserAuth);
 
   return (
     <>
       <BrowserRouter>
+        <AuthHandler setUserAuth={setUserAuth} />
         <Notification />
         <Routes>
           <Route element={<HomeLayout />}>
@@ -61,3 +67,20 @@ function App() {
 }
 
 export default App;
+
+function AuthHandler({
+  setUserAuth,
+}: {
+  setUserAuth: (userAuth: UserAuthData | null) => void;
+}) {
+  const { data: userAuth, error } = useValidateAuth();
+  const addNotification = useAppStore((state) => state.addNotification);
+
+  useEffect(() => {
+    if (error) {
+      setUserAuth(null);
+    }
+  }, [setUserAuth, userAuth, error, addNotification]);
+
+  return null;
+}
