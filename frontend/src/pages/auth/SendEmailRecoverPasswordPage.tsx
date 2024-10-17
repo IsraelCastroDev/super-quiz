@@ -1,4 +1,5 @@
 import { Text } from "@/components/ui";
+import { ContainerForm } from "@/components/ui/Form";
 import { useRecoverPassword } from "@/hooks";
 
 export function SendEmailRecoverPasswordPage() {
@@ -21,7 +22,7 @@ export function SendEmailRecoverPasswordPage() {
         Super Quiz
       </Text>
 
-      <div className="max-w-[35rem] mx-auto px-10 py-5 border border-slate-700 shadow-md rounded-md mt-5 space-y-3">
+      <ContainerForm>
         <Text as="h2" category="subtitle" className="text-center">
           ¿Olvidaste tu contraseña?, te ayudamos a recuperarla
         </Text>
@@ -49,7 +50,7 @@ export function SendEmailRecoverPasswordPage() {
             </button>
           </form>
         </div>
-      </div>
+      </ContainerForm>
     </main>
   );
 }
