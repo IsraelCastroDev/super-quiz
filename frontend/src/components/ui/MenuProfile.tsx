@@ -25,7 +25,7 @@ function MenuProfile({ setShowProfileMenu, handleLogout }: Props) {
   return (
     <div
       ref={menuRef}
-      className="absolute bg-slate-100 right-0 top-16 left-[30rem] p-2 rounded border border-slate-700 text-slate-900"
+      className="absolute bg-slate-100 top-14 right-16 w-52 p-2 rounded border border-slate-700 text-slate-900"
     >
       <ul className="divide-y divide-slate-700">
         <li
@@ -35,6 +35,17 @@ function MenuProfile({ setShowProfileMenu, handleLogout }: Props) {
           <Link to={"/perfil"}>
             <Text as="p" category="body">
               Perfil
+            </Text>
+          </Link>
+        </li>
+
+        <li
+          onClick={() => setShowProfileMenu(false)}
+          className="hover:bg-slate-200 p-2"
+        >
+          <Link to={"/quiz/crear"}>
+            <Text as="p" category="body">
+              Crear quiz
             </Text>
           </Link>
         </li>
