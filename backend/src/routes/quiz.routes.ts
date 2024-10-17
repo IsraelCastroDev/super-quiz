@@ -2,7 +2,6 @@ import { Router } from "express";
 import { QuizController } from "../controllers/QuizController";
 import { authenticate } from "../middlewares/authenticate.middleware";
 import { body, param } from "express-validator";
-import { AnswerType } from "../models/Answer";
 import { validateErrors } from "../middlewares/validateErrors.middleware";
 import { QuestionType } from "../models/Question";
 
