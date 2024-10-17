@@ -133,4 +133,6 @@ router.post(
   UserController.resetPassword
 );
 
+router.get("/auth/me", authenticate, UserController.verifyAuth);
+
 export default router;
