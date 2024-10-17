@@ -4,7 +4,7 @@ import { PinInput, PinInputField } from "@chakra-ui/pin-input";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-function ConfirmAccount() {
+export function ConfirmAccountPage() {
   const [token, setToken] = useState("");
   const navigate = useNavigate();
 
@@ -46,4 +46,3 @@ function ConfirmAccount() {
     </main>
   );
 }
-export default ConfirmAccount;

@@ -1,16 +1,6 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import HomePage from "./pages/HomePage";
 import HomeLayout from "./layouts/HomeLayout";
-import RegisterPage from "./pages/auth/RegisterPage";
-import LoginPage from "./pages/auth/LoginPage";
-import SendEmailRecoverPasswordPage from "./pages/auth/SendEmailRecoverPasswordPage";
-import ResetPasswordPage from "./pages/auth/ResetPasswordPage";
-import ConfirmAccountPage from "./pages/auth/ConfirmAccountPage";
 import PlainLayout from "./layouts/PlainLayout";
-import CreateQuizPage from "./pages/quiz/CreateQuizPage";
-import NotFoundPage from "./pages/NotFoundPage";
-import CategoryQuizPage from "./pages/quiz/CategoryQuizPage";
-import ProfilePage from "./pages/auth/user/ProfilePage";
 import { useAppPersists } from "./store/useAppPersists";
 import { useValidateAuth } from "./hooks/useAuthUser";
 import { UserAuthData } from "./types";
@@ -18,6 +8,18 @@ import { useEffect } from "react";
 import { useAppStore } from "./store/useAppStore";
 import { Notification } from "./components/ui";
 import ProtectedRoute from "./components/auth/ProtectedRoute";
+import {
+  HomePage,
+  ConfirmAccountPage,
+  LoginPage,
+  NotFoundPage,
+  SendEmailRecoverPasswordPage,
+  RegisterPage,
+  ResetPasswordPage,
+  CategoryQuizPage,
+  CreateQuizPage,
+  ProfilePage,
+} from "./pages";
 
 function App() {
   const userAuth = useAppPersists((state) => state.userAuth);

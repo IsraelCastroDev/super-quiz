@@ -1,7 +1,7 @@
 import { Text } from "@/components/ui";
 import { useRecoverPassword } from "@/hooks/useAuthUser";
 
-function RecoverPasswordPage() {
+export function SendEmailRecoverPasswordPage() {
   const { mutate, isPending } = useRecoverPassword();
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -53,4 +53,3 @@ function RecoverPasswordPage() {
     </main>
   );
 }
-export default RecoverPasswordPage;

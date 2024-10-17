@@ -1,7 +1,7 @@
 import { Text } from "@/components/ui";
 import { Link } from "react-router-dom";
 
-function NotFoundPage() {
+export function NotFoundPage() {
   return (
     <section className="flex flex-col items-center justify-center h-[calc(100vh-10rem)]">
       <div className="max-w-[700px] mx-auto space-y-3">
@@ -21,4 +21,3 @@ function NotFoundPage() {
     </section>
   );
 }
-export default NotFoundPage;

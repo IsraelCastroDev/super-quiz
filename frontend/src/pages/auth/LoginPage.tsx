@@ -3,7 +3,7 @@ import { Text } from "@/components/ui";
 import { useLoginUser } from "@/hooks/useAuthUser";
 import { UserLoginData } from "@/types";
 
-function LoginPage() {
+export function LoginPage() {
   const { mutate, isPending } = useLoginUser();
   const onSubmit = (data: UserLoginData) => mutate(data);
 
@@ -18,4 +18,3 @@ function LoginPage() {
     </section>
   );
 }
-export default LoginPage;

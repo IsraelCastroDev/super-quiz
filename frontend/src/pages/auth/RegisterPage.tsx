@@ -3,7 +3,7 @@ import { Text } from "@/components/ui";
 import { useRegisterUser } from "@/hooks/useRegisterUser";
 import { UserFormData } from "@/types";
 
-function RegisterPage() {
+export function RegisterPage() {
   const mutationRegisterUser = useRegisterUser();
   const { mutate, isPending } = mutationRegisterUser;
 
@@ -22,4 +22,3 @@ function RegisterPage() {
     </section>
   );
 }
-export default RegisterPage;

@@ -2,7 +2,7 @@ import ResetPasswordForm from "@/components/auth/ResetPasswordForm";
 import TokenPinForm from "@/components/auth/TokenPinForm";
 import { useAppStore } from "@/store/useAppStore";
 
-function ResetPassword() {
+export function ResetPasswordPage() {
   const showFormResetPassword = useAppStore((state) => state.showTokenPinForm);
 
   return (
@@ -13,4 +13,3 @@ function ResetPassword() {
     </main>
   );
 }
-export default ResetPassword;
