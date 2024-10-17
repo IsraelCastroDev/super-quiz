@@ -7,7 +7,7 @@ interface ButtonProps extends LinkProps {
 function Button({ children, ...props }: ButtonProps) {
   return (
     <Link
-      className="bg-slate-700 hover:bg-slate-800 text-white p-3 rounded text-center cursor-pointer block"
+      className="bg-slate-700 hover:bg-slate-800 text-white py-1 px-2 md:p-3 rounded-md text-center cursor-pointer block w-full"
       {...props}
     >
       {children}
