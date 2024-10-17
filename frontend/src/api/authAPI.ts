@@ -127,3 +127,14 @@ export const resetPassword = async (formData: UserResetPasswordData) => {
     }
   }
 };
+
+export const validateAuth = async () => {
+  try {
+    const { data } = await api.get("/users/auth/me");
+    return data;
+  } catch (error) {
+    if (isAxiosError(error)) {
+      throw new Error(error.response?.data.message);
+    }
+  }
+};
