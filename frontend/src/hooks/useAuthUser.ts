@@ -4,12 +4,13 @@ import {
   logoutUser,
   recoverPassword,
   resetPassword,
+  validateAuth,
   validateToken,
 } from "@/api/authAPI";
 import { useAppPersists } from "@/store/useAppPersists";
 import { useAppStore } from "@/store/useAppStore";
 import { UserLoginData } from "@/types";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 
@@ -150,4 +151,14 @@ export function useConfirmAccount() {
   });
 
   return mutationConfirmAccount;
+}
+
+export function useValidateAuth() {
+  const queryValidateAuth = useQuery({
+    queryKey: ["auth"],
+    queryFn: validateAuth,
+    retry: false,
+  });
+
+  return queryValidateAuth;
 }
