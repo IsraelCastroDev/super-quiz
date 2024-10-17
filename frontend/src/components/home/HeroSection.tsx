@@ -16,7 +16,7 @@ function HeroSection({ userAuth }: Props) {
           <Text category="big" degraded={true} as="h2" className="text-center">
             ¿Puedes superar a Super Quiz?
           </Text>
-          <div className="px-10 flex justify-center">
+          <div className="px-0 md:px-10 flex justify-center">
             <Text as="h3" category="subtitle" className="text-pretty">
               Elige entre diversas categorías, temas de tu agrado, obtén un
               puntaje y sube en el ranking de mejores jugadores.
@@ -24,7 +24,7 @@ function HeroSection({ userAuth }: Props) {
           </div>
         </div>
 
-        <div className="flex items-center justify-center gap-2">
+        <div className="flex flex-col md:flex-row items-center justify-center gap-2 px-4">
           <Button to={"/"}>¡Empieza a jugar ya!</Button>
           <Button to={userAuth ? "/quiz/crear" : "/registrarse"}>
             Crea tu propio Super Quiz
