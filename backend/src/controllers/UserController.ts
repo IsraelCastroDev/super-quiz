@@ -330,4 +330,22 @@ export class UserController {
       return;
     }
   };
+
+  // verify auth
+  static verifyAuth = async (req: Request, res: Response) => {
+    try {
+      const user = await User.findOne({ email: req.userEmail });
+
+      if (!user) {
+        res.status(400).json({ message: "El usuario no existe" });
+        return;
+      }
+
+      res.status(200).json({ message: "Usuario autenticado" });
+      return;
+    } catch (error) {
+      res.status(500).json({ message: "Error al verificar la autenticación" });
+      return;
+    }
+  };
 }
