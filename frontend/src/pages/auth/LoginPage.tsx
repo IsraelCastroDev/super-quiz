@@ -1,5 +1,6 @@
 import { LoginForm } from "@/components/auth";
 import { Text } from "@/components/ui";
+import { ContainerForm } from "@/components/ui/Form";
 import { useLoginUser } from "@/hooks";
 import { UserLoginData } from "@/types";
 
@@ -9,12 +10,12 @@ export function LoginPage() {
 
   return (
     <section>
-      <div className="max-w-[35rem] mx-auto px-10 py-5 border border-slate-700 shadow-md rounded-md mt-5 space-y-3">
+      <ContainerForm>
         <Text as="h1" category="title" className="text-center">
           ¡Bienvenido de nuevo!
         </Text>
         <LoginForm onSubmit={onSubmit} isPending={isPending} />
-      </div>
+      </ContainerForm>
     </section>
   );
 }
