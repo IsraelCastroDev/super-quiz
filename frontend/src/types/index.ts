@@ -16,3 +16,39 @@ export type UserResetPasswordData = Pick<
   "password" | "confirm_password"
 > & { token: string };
 export type UserAuthData = Pick<UserFormData, "name" | "lastname" | "username">;
+
+export const CategorySchema = z.object({
+  _id: z.string(),
+  name: z.string(),
+  description: z.string(),
+});
+
+export const CategorySelectedFormSchema = z.object({
+  name: z.string(),
+  selected: z.boolean(),
+});
+
+export type Category = z.infer<typeof CategorySchema>;
+export type CategorySelectedForm = z.infer<typeof CategorySelectedFormSchema>;
+
+export const AnswerFormDataSchema = z.object({
+  title: z.string(),
+  is_correct: z.boolean(),
+});
+
+export const QuestionFormDataSchema = z.object({
+  title: z.string(),
+  answers: z.array(AnswerFormDataSchema),
+});
+
+export const CategoryFormDataSchema = z.object({
+  title: z.string(),
+});
+
+export const CreateQuizFormDataSchmea = z.object({
+  title: z.string(),
+  categories: z.array(CategoryFormDataSchema),
+  questions: z.array(QuestionFormDataSchema),
+});
+
+export type CreateQuiz = z.infer<typeof CreateQuizFormDataSchmea>;
