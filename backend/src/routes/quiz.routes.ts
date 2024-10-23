@@ -60,12 +60,12 @@ router.post(
         question.answers.forEach((answer: any) => {
           if (
             typeof answer !== "object" ||
-            !answer.name ||
-            typeof answer.name !== "string" ||
+            !answer.title ||
+            typeof answer.title !== "string" ||
             typeof answer.is_correct !== "boolean"
           ) {
             throw new Error(
-              "Cada respuesta debe ser un objeto con las propiedades 'name' (string) e 'is_correct' (boolean)"
+              "Cada respuesta debe ser un objeto con las propiedades 'title' (string) e 'is_correct' (boolean)"
             );
           }
         });
