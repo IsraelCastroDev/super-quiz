@@ -13,7 +13,7 @@ export function ButtonSubmit({
     <div className="flex justify-center w-full">
       <button
         type="submit"
-        className="bg-slate-700 hover:bg-slate-800 text-white p-3 rounded-md text-center cursor-pointer block w-full disabled:opacity-50"
+        className="bg-slate-700 hover:bg-slate-800 text-white p-3 rounded-md text-center cursor-pointer block w-full disabled:opacity-50 disabled:cursor-default"
         disabled={isPending}
       >
         {isPending ? messageLoading : children}
