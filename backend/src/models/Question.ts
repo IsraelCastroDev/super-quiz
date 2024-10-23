@@ -1,10 +1,4 @@
-import mongoose, {
-  Document,
-  Model,
-  PopulatedDoc,
-  Schema,
-  Types,
-} from "mongoose";
+import mongoose, { Document, Model, Schema, Types } from "mongoose";
 import Answer from "./Answer";
 import Token from "./Token";
 
