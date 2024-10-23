@@ -1,5 +1,5 @@
-type HtmlTag = "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "p";
-type Category = "title" | "subtitle" | "body" | "big";
+type HtmlTag = "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "p" | "label";
+type Category = "title" | "subtitle" | "body" | "big" | "label";
 
 interface TextProps {
   as: HtmlTag;
@@ -36,7 +36,9 @@ export function Text({
     case "body":
       baseClass = `${degradedClass} text-sm md:text-base font-normal`;
       break;
-
+    case "label":
+      baseClass = `${degradedClass} text-sm font-semibold`;
+      break;
     default:
       break;
   }
