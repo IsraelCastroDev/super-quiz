@@ -1,5 +1,5 @@
 interface Props {
-  onSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
+  onSubmit?: (event: React.FormEvent<HTMLFormElement>) => void;
   children: React.ReactNode;
 }
 
