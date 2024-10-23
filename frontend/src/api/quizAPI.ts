@@ -1,6 +1,7 @@
 import { isAxiosError } from "axios";
 import { api } from "./axiosConfig";
 import { QuizCategoryAPIResponseSchema } from "@/schemas";
+import { CreateQuiz } from "@/types";
 
 export const getQuizCategories = async () => {
   try {
@@ -12,6 +13,17 @@ export const getQuizCategories = async () => {
     } else {
       throw new Error(validateData.error.message);
     }
+  } catch (error) {
+    if (isAxiosError(error)) {
+      throw new Error(error.response?.data.message);
+    }
+  }
+};
+
+export const createQuiz = async (formData: CreateQuiz) => {
+  try {
+    const { data } = await api.post("/quizzes/create-quiz", formData);
+    return data;
   } catch (error) {
     if (isAxiosError(error)) {
       throw new Error(error.response?.data.message);
