@@ -45,7 +45,7 @@ export class QuizController {
           if (q.answers && q.answers.length > 0) {
             const answerPromises = q.answers.map(async (a: any) => {
               const answer = await Answer.create({
-                name: a.name,
+                title: a.title,
                 is_correct: a.is_correct,
                 question: newQuestion._id, // Relación con la pregunta
               });
