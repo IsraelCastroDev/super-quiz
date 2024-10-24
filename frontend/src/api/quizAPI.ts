@@ -1,6 +1,9 @@
 import { isAxiosError } from "axios";
 import { api } from "./axiosConfig";
-import { QuizCategoryAPIResponseSchema } from "@/schemas";
+import {
+  QuizCategoryAPIResponseSchema,
+  UserQuizzesAPIResponseSchema,
+} from "@/schemas";
 import { CreateQuiz } from "@/types";
 
 export const getQuizCategories = async () => {
@@ -24,6 +27,21 @@ export const createQuiz = async (formData: CreateQuiz) => {
   try {
     const { data } = await api.post("/quizzes/create-quiz", formData);
     return data;
+  } catch (error) {
+    if (isAxiosError(error)) {
+      throw new Error(error.response?.data.message);
+    }
+  }
+};
+
+export const getQuizFromUser = async () => {
+  try {
+    const { data } = await api.get("/quizzes/get-quizzes-from-user");
+    const validateData = UserQuizzesAPIResponseSchema.safeParse(data);
+
+    if (validateData.success) {
+      return validateData.data;
+    }
   } catch (error) {
     if (isAxiosError(error)) {
       throw new Error(error.response?.data.message);
