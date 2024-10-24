@@ -123,26 +123,29 @@ export class QuizController {
         return;
       }
 
-      const userQuizzes = await Quiz.find({ user: userExists._id }).populate(
-        "questions"
+      const userQuizzes = await Quiz.find({ user: userExists._id });
+
+      const quizzesWithCategories = await Promise.all(
+        userQuizzes.map(async (quiz) => {
+          const quizCategories = await QuizCategory.find({
+            quiz: quiz._id,
+          }).populate("category");
+
+          return {
+            _id: quiz._id,
+            title: quiz.title,
+            score: quiz.score,
+            categories: quizCategories.map((qc) => ({
+              category: qc.category,
+            })),
+            questions: quiz.questions.map((q) => ({
+              id: q._id,
+            })),
+          };
+        })
       );
 
-      const quizzes = userQuizzes.map((quiz) => {
-        return {
-          _id: quiz._id,
-          title: quiz.title,
-          score: quiz.score,
-          questions: quiz.questions.map((question: any) => {
-            return {
-              id: question?._id,
-              name: question.name,
-              is_correct: question.is_correct,
-            };
-          }),
-        };
-      });
-
-      res.status(200).json(quizzes);
+      res.status(200).json(quizzesWithCategories);
       return;
     } catch (error) {
       console.log(error);
