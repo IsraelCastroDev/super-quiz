@@ -275,4 +275,38 @@ export class QuizController {
       return;
     }
   };
+
+  // obtener quizzes por categoria
+  static getQuizzesByCategory = async (req: Request, res: Response) => {
+    const { categorie } = req.params;
+
+    try {
+      const categorieExists = await Category.findOne({ slug: categorie });
+      console.log(categorieExists);
+
+      if (!categorieExists) {
+        res.status(404).json({ message: "La categoría no existe" });
+        return;
+      }
+
+      const quizzes = await QuizCategory.find({
+        category: categorieExists._id,
+      })
+        .populate("quiz")
+        .populate("category");
+
+      if (!quizzes || quizzes.length === 0) {
+        res.status(404).json({
+          message: `No hay Super Quizzes en la categoría ${categorieExists.name}`,
+        });
+        return;
+      }
+
+      res.status(202).json(quizzes);
+      return;
+    } catch (error) {
+      console.log(error);
+      res.status(500).json({ message: "Error al obtener los datos" });
+    }
+  };
 }
