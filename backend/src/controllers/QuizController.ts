@@ -282,7 +282,6 @@ export class QuizController {
 
     try {
       const categorieExists = await Category.findOne({ slug: categorie });
-      console.log(categorieExists);
 
       if (!categorieExists) {
         res.status(404).json({ message: "La categoría no existe" });
