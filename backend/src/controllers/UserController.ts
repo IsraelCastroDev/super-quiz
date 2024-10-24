@@ -359,14 +359,13 @@ export class UserController {
         return;
       }
 
-      const userAuth = {
+      res.status(200).json({
         name: userExists.name,
         lastname: userExists.lastname,
         username: userExists.username,
         email: userExists.email,
-      };
-
-      res.status(200).json({ userAuth });
+        created_at: userExists.createdAt,
+      });
     } catch (error) {
       console.log(error);
       res.status(500).json({ message: "Error al obtener los datos." });
