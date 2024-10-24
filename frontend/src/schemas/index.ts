@@ -16,26 +16,27 @@ export const UserProfileAPIResponseSchema = z.object({
   created_at: z.string(),
 });
 
-export const UserQuizzesAPIResponseSchema = z.array(
-  z.object({
-    _id: z.string(),
-    title: z.string(),
-    score: z.number(),
-    categories: z.array(
-      z.object({
-        category: z.object({
-          _id: z.string(),
-          name: z.string(),
-          description: z.string(),
-        }),
-      })
-    ),
-    questions: z.array(
-      z.object({
-        id: z.string(),
-      })
-    ),
-  })
-);
+export const UserQuizSchema = z.object({
+  _id: z.string(),
+  title: z.string(),
+  score: z.number(),
+  categories: z.array(
+    z.object({
+      category: z.object({
+        _id: z.string(),
+        name: z.string(),
+        description: z.string(),
+      }),
+    })
+  ),
+  questions: z.array(
+    z.object({
+      id: z.string(),
+    })
+  ),
+});
+
+export const UserQuizzesAPIResponseSchema = z.array(UserQuizSchema);
 
 export type UserQuizzes = z.infer<typeof UserQuizzesAPIResponseSchema>;
+export type UserQuiz = z.infer<typeof UserQuizSchema>;
