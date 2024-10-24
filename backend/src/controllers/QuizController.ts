@@ -154,6 +154,7 @@ export class QuizController {
     }
   };
 
+  // obtener un quiz por su id
   static getQuiz = async (req: Request, res: Response) => {
     try {
       const { idQuiz } = req.params;
@@ -196,6 +197,7 @@ export class QuizController {
     }
   };
 
+  // obtener un quiz por su token
   static getQuizByToken = async (req: Request, res: Response) => {
     try {
       const { token } = req.body;
@@ -216,6 +218,7 @@ export class QuizController {
     }
   };
 
+  // eliminar un quiz
   static deleteQuiz = async (req: Request, res: Response) => {
     const { idQuiz } = req.params;
 
@@ -256,6 +259,7 @@ export class QuizController {
     }
   };
 
+  // obtener las categorias
   static getCategories = async (req: Request, res: Response) => {
     try {
       const categories = await Category.find();
