@@ -16,6 +16,12 @@ export type UserResetPasswordData = Pick<
   "password" | "confirm_password"
 > & { token: string };
 export type UserAuthData = Pick<UserFormData, "name" | "lastname" | "username">;
+export type UserProfileData = Omit<
+  UserFormData,
+  "password" | "confirm_password"
+> & {
+  created_at: string;
+};
 
 export const CategorySchema = z.object({
   _id: z.string(),
