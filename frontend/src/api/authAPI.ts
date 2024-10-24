@@ -1,6 +1,7 @@
 import { isAxiosError } from "axios";
 import { api } from "./axiosConfig";
 import { UserFormData, UserLoginData, UserResetPasswordData } from "@/types";
+import { UserProfileAPIResponseSchema } from "@/schemas";
 
 export const registerUser = async (formData: UserFormData) => {
   try {
@@ -132,6 +133,21 @@ export const validateAuth = async () => {
   try {
     const { data } = await api.get("/users/auth/me");
     return data;
+  } catch (error) {
+    if (isAxiosError(error)) {
+      throw new Error(error.response?.data.message);
+    }
+  }
+};
+
+export const getUserProfile = async () => {
+  try {
+    const { data } = await api.get("/users/profile");
+    const validateData = UserProfileAPIResponseSchema.safeParse(data);
+
+    if (validateData.success) {
+      return validateData.data;
+    }
   } catch (error) {
     if (isAxiosError(error)) {
       throw new Error(error.response?.data.message);
