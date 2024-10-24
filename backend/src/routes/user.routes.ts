@@ -6,6 +6,7 @@ import { authenticate } from "../middlewares/authenticate.middleware";
 
 const router = Router();
 
+// create account
 router.post(
   "/create-account",
   body("name")
@@ -50,6 +51,7 @@ router.post(
   UserController.createAccount
 );
 
+// confirm account
 router.post(
   "/confirm-account",
   body("token")
@@ -61,6 +63,7 @@ router.post(
   UserController.confirmAccount
 );
 
+// request new confirmation token
 router.post(
   "/request-new-confirmation-token",
   body("email")
@@ -72,6 +75,7 @@ router.post(
   UserController.requestNewConfirmationToken
 );
 
+// login
 router.post(
   "/login",
   body("email")
@@ -84,8 +88,10 @@ router.post(
   UserController.login
 );
 
+// logout
 router.post("/logout", authenticate, UserController.logout);
 
+// request token ti recover password
 router.post(
   "/request-token-to-recover-password",
   body("email")
@@ -97,6 +103,7 @@ router.post(
   UserController.requestTokenToRecoverPassword
 );
 
+// validate token
 router.post(
   "/validate-token",
   body("token").notEmpty().withMessage("El token es requerido"),
@@ -104,6 +111,7 @@ router.post(
   UserController.validateToken
 );
 
+// reset password
 router.post(
   "/reset-password",
   body("password")
@@ -133,6 +141,7 @@ router.post(
   UserController.resetPassword
 );
 
+// auth me
 router.get("/auth/me", authenticate, UserController.verifyAuth);
 
 export default router;
