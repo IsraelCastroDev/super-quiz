@@ -348,4 +348,28 @@ export class UserController {
       return;
     }
   };
+
+  // User Profile
+  static userProfile = async (req: Request, res: Response) => {
+    try {
+      const userExists = await User.findOne({ email: req.userEmail });
+
+      if (!userExists) {
+        res.status(404).json({ message: "Usuario no encontrado" });
+        return;
+      }
+
+      const userAuth = {
+        name: userExists.name,
+        lastname: userExists.lastname,
+        username: userExists.username,
+        email: userExists.email,
+      };
+
+      res.status(200).json({ userAuth });
+    } catch (error) {
+      console.log(error);
+      res.status(500).json({ message: "Error al obtener los datos." });
+    }
+  };
 }

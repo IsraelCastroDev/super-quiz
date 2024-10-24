@@ -144,4 +144,7 @@ router.post(
 // auth me
 router.get("/auth/me", authenticate, UserController.verifyAuth);
 
+// user profile
+router.get("/profile", authenticate, UserController.userProfile);
+
 export default router;
