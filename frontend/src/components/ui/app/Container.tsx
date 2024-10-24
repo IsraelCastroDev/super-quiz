@@ -1,7 +1,14 @@
+import { useLocation } from "react-router-dom";
+
 interface Props {
   children: React.ReactNode;
 }
 
 export function Container({ children }: Props) {
-  return <section className="mt-24 relative">{children}</section>;
+  const { pathname } = useLocation();
+  return (
+    <section className={`${pathname === "/" ? "mt-24" : "mt-4"} relative`}>
+      {children}
+    </section>
+  );
 }
