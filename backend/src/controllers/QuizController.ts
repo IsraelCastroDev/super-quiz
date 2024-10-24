@@ -244,6 +244,7 @@ export class QuizController {
       }
 
       // Finalmente, elimina el quiz
+      await QuizCategory.findOneAndDelete({ quiz: idQuiz });
       await Quiz.findOneAndDelete({ user: userExists._id, _id: idQuiz });
 
       res.status(200).json({ message: "Quiz eliminado exitosamente" });
