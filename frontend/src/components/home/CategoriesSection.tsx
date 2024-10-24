@@ -2,7 +2,6 @@ import { useQuery } from "@tanstack/react-query";
 import { Loader, Text } from "@/components/ui";
 import { getQuizCategories } from "@/api/quizAPI";
 import { Link } from "react-router-dom";
-import { convertStringToSlug } from "@/utils";
 import { Container } from "../ui/";
 
 export function CategoriesSection() {
@@ -30,11 +29,7 @@ export function CategoriesSection() {
                   key={category._id}
                   className="border border-slate-700 p-5 rounded"
                 >
-                  <Link
-                    to={`/quizzes/category/${convertStringToSlug(
-                      category.name
-                    )}`}
-                  >
+                  <Link to={`/quizzes/category/${category.slug}`}>
                     <Text as="p" category="subtitle">
                       {category.name}
                     </Text>
