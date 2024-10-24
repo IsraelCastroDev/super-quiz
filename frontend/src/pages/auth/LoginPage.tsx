@@ -9,7 +9,7 @@ export function LoginPage() {
   const onSubmit = (data: UserLoginData) => mutate(data);
 
   return (
-    <section>
+    <section className="h-[calc(100vh-9rem)] flex flex-col justify-center">
       <ContainerForm>
         <Text as="h1" category="title" className="text-center">
           ¡Bienvenido de nuevo!
