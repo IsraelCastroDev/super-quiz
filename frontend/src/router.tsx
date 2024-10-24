@@ -45,7 +45,14 @@ function App() {
               path="/quizzes/category/:slug"
               element={<CategoryQuizPage />}
             />
-            <Route path="/perfil" element={<ProfilePage />} />
+            <Route
+              path="/perfil"
+              element={
+                <ProtectedRoute isAllowed={!!userAuth}>
+                  <ProfilePage />
+                </ProtectedRoute>
+              }
+            />
             <Route path="*" element={<NotFoundPage />} />
           </Route>
 
