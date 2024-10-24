@@ -7,9 +7,11 @@ import {
   validateAuth,
   validateToken,
 } from "@/api/authAPI";
+import { deleteQuiz } from "@/api/quizAPI";
 import { useAppPersists, useAppStore } from "@/store";
 import { UserLoginData } from "@/types";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 
@@ -160,4 +162,32 @@ export function useValidateAuth() {
   });
 
   return queryValidateAuth;
+}
+
+export function useDeleteQuiz() {
+  const addNotification = useAppStore((state) => state.addNotification);
+  const queryClient = useQueryClient();
+  // Para rastrear el quiz que se está eliminando
+  const [deletingQuizId, setDeletingQuizId] = useState<string | null>(null);
+
+  const { mutate, isPending } = useMutation({
+    mutationFn: deleteQuiz,
+    onSuccess: (data) => {
+      addNotification({
+        title: data.message,
+        type: "success",
+      });
+      queryClient.invalidateQueries({ queryKey: ["user-quizzes"] });
+      setDeletingQuizId(null); // Resetear el ID del quiz que se estaba eliminando
+    },
+    onError: (error) => {
+      addNotification({
+        title: error.message,
+        type: "error",
+      });
+      setDeletingQuizId(null); // Resetear el ID del quiz en caso de error
+    },
+  });
+
+  return { deletingQuizId, setDeletingQuizId, mutate, isPending };
 }
