@@ -126,4 +126,15 @@ router.delete(
 // obtener las categorias
 router.get("/categories", QuizController.getCategories);
 
+// obtener quizzes por categoria
+router.get(
+  "/:categorie/quizzes",
+  param("categorie")
+    .notEmpty()
+    .withMessage("La categoría es obligatoria")
+    .isNumeric()
+    .withMessage("La categoría debe ser un string"),
+  QuizController.getQuizzesByCategory
+);
+
 export default router;
