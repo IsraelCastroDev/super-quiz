@@ -7,6 +7,7 @@ import { QuestionType } from "../models/Question";
 
 const router = Router();
 
+// crear quiz
 router.post(
   "/create-quiz",
   authenticate,
@@ -77,12 +78,14 @@ router.post(
   QuizController.createQuiz
 );
 
+// obtener quizzes del usuario
 router.get(
   "/get-quizzes-from-user",
   authenticate,
   QuizController.getQuizzesFromUser
 );
 
+// obtener un quiz por su id
 router.get(
   "/get-quiz/:idQuiz",
   authenticate,
@@ -95,6 +98,7 @@ router.get(
   QuizController.getQuiz
 );
 
+// obtener un quiz por su token
 router.get(
   "/get-quiz-by-token",
   body("token")
@@ -106,6 +110,7 @@ router.get(
   QuizController.getQuizByToken
 );
 
+// eliminar un quiz
 router.delete(
   "/:idQuiz",
   authenticate,
@@ -118,6 +123,7 @@ router.delete(
   QuizController.deleteQuiz
 );
 
+// obtener las categorias
 router.get("/categories", QuizController.getCategories);
 
 export default router;
