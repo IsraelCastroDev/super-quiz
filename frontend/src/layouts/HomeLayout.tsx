@@ -5,7 +5,7 @@ export function HomeLayout() {
   return (
     <>
       <Header />
-      <main className="px-2 py-4 md:px-14 md:py-8">
+      <main className="px-2 py-4 md:px-0 md:py-8">
         <Outlet />
       </main>
     </>
