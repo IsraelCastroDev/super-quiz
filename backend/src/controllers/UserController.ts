@@ -181,7 +181,7 @@ export class UserController {
           sameSite: "strict",
         })
         .status(200)
-        .json({ message: "Inicio de sesion exitoso", user, token });
+        .json({ message: "Inicio de sesion exitoso", user });
       return;
     } catch (error) {
       console.log(error);
