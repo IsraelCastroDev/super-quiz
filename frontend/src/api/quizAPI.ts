@@ -2,6 +2,7 @@ import { isAxiosError } from "axios";
 import { api } from "./axiosConfig";
 import {
   QuizCategoryAPIResponseSchema,
+  UserQuiz,
   UserQuizzesAPIResponseSchema,
 } from "@/schemas";
 import { CreateQuiz } from "@/types";
@@ -42,6 +43,17 @@ export const getQuizFromUser = async () => {
     if (validateData.success) {
       return validateData.data;
     }
+  } catch (error) {
+    if (isAxiosError(error)) {
+      throw new Error(error.response?.data.message);
+    }
+  }
+};
+
+export const deleteQuiz = async (idQuiz: UserQuiz["_id"]) => {
+  try {
+    const { data } = await api.delete(`/quizzes/${idQuiz}`);
+    return data;
   } catch (error) {
     if (isAxiosError(error)) {
       throw new Error(error.response?.data.message);
