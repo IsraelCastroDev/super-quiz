@@ -11,6 +11,8 @@ export type UserType = Document & {
   quizzes: Types.ObjectId[];
   tokens: Types.ObjectId[];
   role: Types.ObjectId[];
+  createdAt: Date;
+  updatedAt: Date;
 };
 
 const UserSchema: Schema = new Schema(
