@@ -1,11 +1,3 @@
-export const convertStringToSlug = (str: string): string => {
-  return str
-    .normalize("NFD")
-    .replace(/[\u0300-\u036f]/g, "")
-    .toLowerCase()
-    .replace(/\s+/g, "_");
-};
-
 export const formatDate = (dateStr: string): string => {
   const date = new Date(dateStr);
   const day = date.getUTCDate().toString().padStart(2, "0");
