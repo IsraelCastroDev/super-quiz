@@ -232,6 +232,18 @@ export class QuizController {
         return;
       }
 
+      // Extraer los IDs de las preguntas
+      const questionIds = quizExists.questions.map((q) => q.toString());
+
+      if (questionIds.length > 0) {
+        // Eliminar respuestas asociadas a las preguntas
+        await Answer.deleteMany({ question: { $in: questionIds } });
+
+        // Eliminar las preguntas
+        await Question.deleteMany({ _id: { $in: questionIds } });
+      }
+
+      // Finalmente, elimina el quiz
       await Quiz.findOneAndDelete({ user: userExists._id, _id: idQuiz });
 
       res.status(200).json({ message: "Quiz eliminado exitosamente" });
