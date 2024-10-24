@@ -13,7 +13,7 @@ export function UserProfileQuizzes({ userQuizzes, isLoading }: Props) {
     useDeleteQuiz();
 
   const handleDeleteQuiz = (idQuiz: UserQuiz["_id"]) => {
-    setDeletingQuizId(idQuiz); // Establecer el ID del quiz que se está eliminando
+    setDeletingQuizId(idQuiz);
     mutate(idQuiz);
   };
 
