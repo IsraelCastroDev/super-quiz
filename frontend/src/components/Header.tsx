@@ -1,25 +1,33 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useLogoutUser } from "@/hooks";
-import { useAppPersists } from "@/store";
+import { useAppPersists, useAppStore } from "@/store";
 import { UserCircleIcon } from "@heroicons/react/24/solid";
-import { Text, Loader, MenuProfile, Modal } from "@/components/ui";
+import {
+  Text,
+  Loader,
+  MenuProfile,
+  Modal,
+  ErrorMessage,
+} from "@/components/ui";
 import { ButtonSubmit, InputField } from "@components/ui/Form";
 import { useSearchQuiz } from "@/hooks/useSearchQuiz";
 
 function Header() {
+  const addNotification = useAppStore((state) => state.addNotification);
   const userAuth = useAppPersists((state) => state.userAuth);
   const [showProfileMenu, setShowProfileMenu] = useState(false);
 
   const { mutate, isPending } = useLogoutUser();
   const {
     data,
+    error,
+    quizError,
     handleCloseModal,
     handleOpenModal,
     handleSearchQuiz,
     isLoading,
     isModalOpen,
-    setSearchQuizCode,
   } = useSearchQuiz();
 
   console.log(data);
@@ -30,7 +38,18 @@ function Header() {
     e.stopPropagation();
     setShowProfileMenu(!showProfileMenu);
   };
+
   const handleLogout = () => mutate();
+
+  // useEffect para manejar errores de búsqueda
+  useEffect(() => {
+    if (quizError) {
+      addNotification({
+        title: quizError.message,
+        type: "error",
+      });
+    }
+  }, [quizError, addNotification]);
 
   return (
     <>
@@ -83,10 +102,8 @@ function Header() {
           onClose={handleCloseModal}
         >
           <form onSubmit={handleSearchQuiz} className="space-y-2">
-            <InputField
-              id="enter-code-quiz"
-              onChange={(e) => setSearchQuizCode(e.target.value)}
-            />
+            <InputField id="enter-code-quiz" name="quizCode" />
+            {error && <ErrorMessage>{error}</ErrorMessage>}
             <ButtonSubmit isPending={isLoading} messageLoading="Buscando">
               Buscar
             </ButtonSubmit>
