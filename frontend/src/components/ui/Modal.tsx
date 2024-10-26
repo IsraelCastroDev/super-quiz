@@ -3,12 +3,13 @@ import { Text } from "./Typography";
 import { useEffect } from "react";
 
 interface Props {
+  title?: string;
   children: React.ReactNode;
   isOpen: boolean;
   onClose: () => void;
 }
 
-export function Modal({ children, isOpen, onClose }: Props) {
+export function Modal({ title, children, isOpen, onClose }: Props) {
   useEffect(() => {
     if (isOpen) {
       document.body.classList.add("overflow-hidden");
@@ -30,9 +31,11 @@ export function Modal({ children, isOpen, onClose }: Props) {
         className="bg-white py-10 px-5 rounded-md shadow-lg relative"
         onClick={(e) => e.stopPropagation()} // Evitar cierre al hacer clic dentro del modal
       >
-        <Text as="h2" category="title" className="text-lg font-semibold">
-          Ingresa el código del Super Quiz
-        </Text>
+        {title && (
+          <Text as="h2" category="title" className="text-lg font-semibold">
+            {title}
+          </Text>
+        )}
 
         {children}
 
