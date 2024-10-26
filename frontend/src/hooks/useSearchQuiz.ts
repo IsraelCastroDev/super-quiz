@@ -4,10 +4,15 @@ import { useState } from "react";
 
 export function useSearchQuiz() {
   const [isModalOpen, setIsModalOpen] = useState(false); // Estado para el modal
-  const [searchQuizCode, setSearchQuizCode] = useState("");
+  const [searchQuizCode, setsearchQuizCode] = useState("");
   const [searchTriggered, setSearchTriggered] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
-  const { data, isLoading } = useQuery({
+  const {
+    data,
+    isLoading,
+    error: quizError,
+  } = useQuery({
     queryKey: ["search-quiz"],
     queryFn: () => getQuizByToken(searchQuizCode),
     enabled: searchTriggered,
@@ -18,14 +23,26 @@ export function useSearchQuiz() {
   const handleCloseModal = () => setIsModalOpen(false);
   const handleSearchQuiz = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    const formData = new FormData(e.currentTarget);
+    const quizCode = formData.get("quizCode") as string;
+
+    if (quizCode.trim() === "") {
+      setError("Código requerido");
+      setTimeout(() => setError(null), 2000);
+      return;
+    }
+
+    setsearchQuizCode(quizCode);
     setSearchTriggered(true);
     setTimeout(() => setIsModalOpen(false), 1000);
   };
 
   return {
     isModalOpen,
-    setSearchQuizCode,
     data,
+    error,
+    quizError,
     isLoading,
     handleOpenModal,
     handleCloseModal,
