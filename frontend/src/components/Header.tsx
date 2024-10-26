@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { useLogoutUser } from "@/hooks";
+import { useLogoutUser, useSearchQuiz } from "@/hooks";
 import { useAppPersists, useAppStore } from "@/store";
 import { UserCircleIcon } from "@heroicons/react/24/solid";
 import {
@@ -11,7 +11,6 @@ import {
   ErrorMessage,
 } from "@/components/ui";
 import { ButtonSubmit, InputField } from "@components/ui/Form";
-import { useSearchQuiz } from "@/hooks/useSearchQuiz";
 
 function Header() {
   const addNotification = useAppStore((state) => state.addNotification);
