@@ -5,13 +5,24 @@ import { useAppPersists } from "@/store";
 import { UserCircleIcon } from "@heroicons/react/24/solid";
 import { Text, Loader, MenuProfile, Modal } from "@/components/ui";
 import { ButtonSubmit, InputField } from "@components/ui/Form";
+import { useSearchQuiz } from "@/hooks/useSearchQuiz";
 
 function Header() {
   const userAuth = useAppPersists((state) => state.userAuth);
   const [showProfileMenu, setShowProfileMenu] = useState(false);
-  const [isModalOpen, setIsModalOpen] = useState(false); // Estado para el modal
 
   const { mutate, isPending } = useLogoutUser();
+  const {
+    data,
+    handleCloseModal,
+    handleOpenModal,
+    handleSearchQuiz,
+    isLoading,
+    isModalOpen,
+    setSearchQuizCode,
+  } = useSearchQuiz();
+
+  console.log(data);
 
   const handleShowProfileMenu = (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>
@@ -20,10 +31,6 @@ function Header() {
     setShowProfileMenu(!showProfileMenu);
   };
   const handleLogout = () => mutate();
-
-  const handleOpenModal = () => setIsModalOpen(true);
-
-  const handleCloseModal = () => setIsModalOpen(false);
 
   return (
     <>
@@ -75,9 +82,14 @@ function Header() {
           isOpen={isModalOpen}
           onClose={handleCloseModal}
         >
-          <form className="space-y-2">
-            <InputField id="enter-code-quiz" />
-            <ButtonSubmit>Buscar</ButtonSubmit>
+          <form onSubmit={handleSearchQuiz} className="space-y-2">
+            <InputField
+              id="enter-code-quiz"
+              onChange={(e) => setSearchQuizCode(e.target.value)}
+            />
+            <ButtonSubmit isPending={isLoading} messageLoading="Buscando">
+              Buscar
+            </ButtonSubmit>
           </form>
         </Modal>
       )}
