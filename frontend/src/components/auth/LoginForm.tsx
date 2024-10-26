@@ -43,10 +43,14 @@ export function LoginForm({ onSubmit, isPending }: Props) {
         Iniciar sesión
       </ButtonSubmit>
 
-      <div className="flex items-center justify-between">
-        <Link to={"/recuperar-cuenta"}>¿Olvidaste tu contraseña?</Link>
+      <div className="flex items-center justify-between gap-x-2">
+        <Link to={"/recuperar-cuenta"} className="hover:underline">
+          ¿Olvidaste tu contraseña?
+        </Link>
 
-        <Link to={"/registrarse"}>¿No tienes una cuenta?</Link>
+        <Link to={"/registrarse"} className="hover:underline">
+          ¿No tienes una cuenta?
+        </Link>
       </div>
     </Form>
   );
