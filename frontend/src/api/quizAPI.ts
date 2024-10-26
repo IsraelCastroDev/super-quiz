@@ -60,3 +60,14 @@ export const deleteQuiz = async (idQuiz: UserQuiz["_id"]) => {
     }
   }
 };
+
+export const getQuizByToken = async (quizCode: string) => {
+  try {
+    const { data } = await api.get(`/quizzes/get-quiz-by-token/${quizCode}`);
+    return data;
+  } catch (error) {
+    if (isAxiosError(error)) {
+      throw new Error(error.response?.data.message);
+    }
+  }
+};
