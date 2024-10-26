@@ -104,6 +104,8 @@ export function useValidateCreateQuestionForm() {
 
 export function useCreateQuiz() {
   const addNotification = useAppStore((state) => state.addNotification);
+  const [quizCode, setQuizCode] = useState<string | null>(null);
+  const [openModal, setOpenModal] = useState(false);
 
   const { mutate, isPending: quizCreateLoading } = useMutation({
     mutationFn: createQuiz,
@@ -112,15 +114,18 @@ export function useCreateQuiz() {
         title: "Quiz creado",
         type: "success",
       });
-      console.log(data);
+      setQuizCode(data.token);
+      setOpenModal(true);
     },
     onError: (error) => {
       addNotification({
         title: error.message,
         type: "error",
       });
+      setQuizCode(null);
+      setOpenModal(false);
     },
   });
 
-  return { mutate, quizCreateLoading };
+  return { mutate, quizCreateLoading, quizCode, openModal, setOpenModal };
 }
