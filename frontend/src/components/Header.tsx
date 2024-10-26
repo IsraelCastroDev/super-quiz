@@ -70,9 +70,13 @@ function Header() {
 
       {/* Modal */}
       {isModalOpen && (
-        <Modal isOpen={isModalOpen} onClose={handleCloseModal}>
+        <Modal
+          title="Ingresa el código del Super Quiz"
+          isOpen={isModalOpen}
+          onClose={handleCloseModal}
+        >
           <form className="space-y-2">
-            <InputField id="code-quiz" />
+            <InputField id="enter-code-quiz" />
             <ButtonSubmit>Buscar</ButtonSubmit>
           </form>
         </Modal>
