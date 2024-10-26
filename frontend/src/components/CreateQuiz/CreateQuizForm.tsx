@@ -7,6 +7,8 @@ import {
 } from "@/hooks";
 import { SelectedCategoriesForm } from "./SelectedCategoriesForm";
 import { QuestionInput } from "./QuestionInput";
+import { Modal } from "@components/ui";
+import { QuizCode } from "./QuizCode";
 
 interface Props {
   isPending: boolean;
@@ -34,7 +36,10 @@ export function CreateQuizForm({ categories, isPending }: Props) {
 
   const watchQuestions = watch("questions");
 
-  const { mutate, quizCreateLoading } = useCreateQuiz();
+  const { mutate, quizCreateLoading, quizCode, openModal, setOpenModal } =
+    useCreateQuiz();
+
+  const handleCloseModal = () => setOpenModal(false);
 
   const onSubmit = (formData: CreateQuiz) => {
     mutate(formData);
@@ -42,47 +47,59 @@ export function CreateQuizForm({ categories, isPending }: Props) {
   };
 
   return (
-    <Form onSubmit={handleSubmit(onSubmit)}>
-      {/*Title */}
-      <InputField
-        id="title"
-        label="Título de Super Quiz:"
-        placeholder="Ingrese el título de quiz"
-        register={register("title", {
-          required: { value: true, message: "El título es requerido" },
-          minLength: {
-            value: 3,
-            message: "El título debe tener al menos 3 caracteres",
-          },
-        })}
-        error={errors.title}
-      />
+    <>
+      <Form onSubmit={handleSubmit(onSubmit)}>
+        {/*Title */}
+        <InputField
+          id="title"
+          label="Título de Super Quiz:"
+          placeholder="Ingrese el título de quiz"
+          register={register("title", {
+            required: { value: true, message: "El título es requerido" },
+            minLength: {
+              value: 3,
+              message: "El título debe tener al menos 3 caracteres",
+            },
+          })}
+          error={errors.title}
+        />
 
-      {/*Seleccionar categorías */}
-      <SelectedCategoriesForm
-        isPending={isPending}
-        categories={categories}
-        handleSelectedCategory={handleSelectedCategory}
-        selectedCategories={selectedCategories}
-        handleDelete={handleDelete}
-        register={register}
-        isCategorySelected={isCategorySelected}
-        errors={errors}
-      />
+        {/*Seleccionar categorías */}
+        <SelectedCategoriesForm
+          isPending={isPending}
+          categories={categories}
+          handleSelectedCategory={handleSelectedCategory}
+          selectedCategories={selectedCategories}
+          handleDelete={handleDelete}
+          register={register}
+          isCategorySelected={isCategorySelected}
+          errors={errors}
+        />
 
-      {/*Ingresar quizzes */}
-      <QuestionInput
-        questionsFields={questionsFields}
-        appendQuestion={appendQuestion}
-        errors={errors}
-        removeQuestion={removeQuestion}
-        watchQuestions={watchQuestions}
-        register={register}
-      />
+        {/*Ingresar quizzes */}
+        <QuestionInput
+          questionsFields={questionsFields}
+          appendQuestion={appendQuestion}
+          errors={errors}
+          removeQuestion={removeQuestion}
+          watchQuestions={watchQuestions}
+          register={register}
+        />
 
-      <ButtonSubmit isPending={quizCreateLoading} messageLoading="Creando...">
-        Crear Quiz
-      </ButtonSubmit>
-    </Form>
+        <ButtonSubmit isPending={quizCreateLoading} messageLoading="Creando...">
+          Crear Quiz
+        </ButtonSubmit>
+      </Form>
+
+      {openModal && quizCode && (
+        <Modal
+          title="Código del Super Quiz"
+          isOpen={openModal}
+          onClose={handleCloseModal}
+        >
+          <QuizCode quizCode={quizCode} />
+        </Modal>
+      )}
+    </>
   );
 }
