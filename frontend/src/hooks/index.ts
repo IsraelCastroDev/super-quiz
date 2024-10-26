@@ -20,3 +20,5 @@ export {
   useSelectedCategory,
   useValidateCreateQuestionForm,
 } from "./useCreateQuiz";
+
+export { useSearchQuiz } from "./useSearchQuiz";
