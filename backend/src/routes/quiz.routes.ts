@@ -100,8 +100,8 @@ router.get(
 
 // obtener un quiz por su token
 router.get(
-  "/get-quiz-by-token",
-  body("token")
+  "/get-quiz-by-token/:token",
+  param("token")
     .notEmpty()
     .withMessage("Debes ingresar un token")
     .isString()
