@@ -200,7 +200,7 @@ export class QuizController {
   // obtener un quiz por su token
   static getQuizByToken = async (req: Request, res: Response) => {
     try {
-      const { token } = req.body;
+      const { token } = req.params;
 
       const quiz = await Quiz.findOne({ token }).populate("questions");
 
