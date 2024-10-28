@@ -178,7 +178,7 @@ export class UserController {
         .cookie("access_token", token, {
           httpOnly: true,
           secure: process.env.NODE_ENV === "production",
-          sameSite: "lax",
+          sameSite: "none",
         })
         .status(200)
         .json({ message: "Inicio de sesion exitoso", user });
