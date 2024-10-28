@@ -29,8 +29,8 @@ export async function authenticate(
       }
     }
   } catch (error) {
-    console.log(error);
-    res.status(500).json({ message: "No estás autenticado" });
+    console.error("Error de autenticación:", error);
+    res.status(401).json({ message: "No estás autenticado", error });
     return;
   }
 
