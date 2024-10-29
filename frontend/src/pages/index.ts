@@ -8,3 +8,4 @@ export { SendEmailRecoverPasswordPage } from "./auth/SendEmailRecoverPasswordPag
 export { CreateQuizPage } from "./quiz/CreateQuizPage";
 export { CategoryQuizPage } from "./quiz/CategoryQuizPage";
 export { ProfilePage } from "./auth/user/ProfilePage";
+export { QuizPage } from "./quiz/QuizPage";
