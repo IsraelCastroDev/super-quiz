@@ -15,6 +15,7 @@ import {
   CategoryQuizPage,
   CreateQuizPage,
   ProfilePage,
+  QuizPage,
 } from "./pages";
 import { ProtectedRoute } from "./components/auth";
 import { HomeLayout, PlainLayout } from "./layouts";
@@ -66,6 +67,7 @@ function App() {
               path="/recuperar-cuenta/cambiar-password"
               element={<ResetPasswordPage />}
             />
+            <Route path="/quiz/:quizTitle" element={<QuizPage />} />
           </Route>
         </Routes>
       </BrowserRouter>
