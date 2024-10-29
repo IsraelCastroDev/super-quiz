@@ -2,6 +2,7 @@ import { isAxiosError } from "axios";
 import { api } from "./axiosConfig";
 import {
   QuizCategoryAPIResponseSchema,
+  QuizSearchSchema,
   UserQuiz,
   UserQuizzesAPIResponseSchema,
 } from "@/schemas";
@@ -65,7 +66,11 @@ export const getQuizByToken = async (quizCode: string | undefined) => {
   try {
     if (quizCode) {
       const { data } = await api.get(`/quizzes/get-quiz-by-token/${quizCode}`);
-      return data;
+      const validateData = QuizSearchSchema.safeParse(data);
+
+      if (validateData.success) {
+        return data;
+      }
     }
     throw new Error("Ocurrió un error al enviar el código");
   } catch (error) {
