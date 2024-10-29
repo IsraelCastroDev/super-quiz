@@ -1,7 +1,7 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useLogoutUser, useSearchQuiz } from "@/hooks";
-import { useAppPersists, useAppStore } from "@/store";
+import { useAppPersists } from "@/store";
 import { UserCircleIcon } from "@heroicons/react/24/solid";
 import {
   Text,
@@ -13,7 +13,6 @@ import {
 import { ButtonSubmit, InputField } from "@components/ui/Form";
 
 function Header() {
-  const addNotification = useAppStore((state) => state.addNotification);
   const userAuth = useAppPersists((state) => state.userAuth);
   const [showProfileMenu, setShowProfileMenu] = useState(false);
 
@@ -21,7 +20,6 @@ function Header() {
   const {
     data,
     error,
-    quizError,
     handleCloseModal,
     handleOpenModal,
     handleSearchQuiz,
@@ -39,16 +37,6 @@ function Header() {
   };
 
   const handleLogout = () => mutate();
-
-  // useEffect para manejar errores de búsqueda
-  useEffect(() => {
-    if (quizError) {
-      addNotification({
-        title: quizError.message,
-        type: "error",
-      });
-    }
-  }, [quizError, addNotification]);
 
   return (
     <>
