@@ -61,10 +61,13 @@ export const deleteQuiz = async (idQuiz: UserQuiz["_id"]) => {
   }
 };
 
-export const getQuizByToken = async (quizCode: string) => {
+export const getQuizByToken = async (quizCode: string | undefined) => {
   try {
-    const { data } = await api.get(`/quizzes/get-quiz-by-token/${quizCode}`);
-    return data;
+    if (quizCode) {
+      const { data } = await api.get(`/quizzes/get-quiz-by-token/${quizCode}`);
+      return data;
+    }
+    throw new Error("Ocurrió un error al enviar el código");
   } catch (error) {
     if (isAxiosError(error)) {
       throw new Error(error.response?.data.message);
