@@ -2,6 +2,7 @@ import { getQuizByToken } from "@/api/quizAPI";
 import { useAppStore } from "@/store";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export function useSearchQuiz() {
   const addNotification = useAppStore((state) => state.addNotification);
@@ -9,6 +10,7 @@ export function useSearchQuiz() {
   const [searchQuizCode, setSearchQuizCode] = useState<string | undefined>("");
   const [searchTriggered, setSearchTriggered] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const navigate = useNavigate();
 
   const {
     data,
@@ -28,6 +30,12 @@ export function useSearchQuiz() {
       setSearchQuizCode("");
     }
   }, [quizError, searchTriggered, addNotification]);
+
+  useEffect(() => {
+    if (data && searchTriggered) {
+      navigate(`/quiz/${data.title}`);
+    }
+  }, [data, navigate, searchTriggered]);
 
   const handleOpenModal = () => setIsModalOpen(true);
   const handleCloseModal = () => setIsModalOpen(false);
