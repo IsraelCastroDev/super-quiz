@@ -1,10 +1,12 @@
 import { getQuizByToken } from "@/api/quizAPI";
+import { useAppStore } from "@/store";
 import { useQuery } from "@tanstack/react-query";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export function useSearchQuiz() {
+  const addNotification = useAppStore((state) => state.addNotification);
   const [isModalOpen, setIsModalOpen] = useState(false); // Estado para el modal
-  const [searchQuizCode, setsearchQuizCode] = useState("");
+  const [searchQuizCode, setSearchQuizCode] = useState<string | undefined>("");
   const [searchTriggered, setSearchTriggered] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -19,8 +21,17 @@ export function useSearchQuiz() {
     retry: 0,
   });
 
+  useEffect(() => {
+    if (quizError && searchTriggered) {
+      addNotification({ title: quizError.message, type: "error" });
+      setSearchTriggered(false);
+      setSearchQuizCode("");
+    }
+  }, [quizError, searchTriggered, addNotification]);
+
   const handleOpenModal = () => setIsModalOpen(true);
   const handleCloseModal = () => setIsModalOpen(false);
+
   const handleSearchQuiz = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -33,17 +44,16 @@ export function useSearchQuiz() {
       return;
     }
 
-    setsearchQuizCode(quizCode);
+    setSearchQuizCode(quizCode);
     setSearchTriggered(true);
-    setTimeout(() => setIsModalOpen(false), 1000);
   };
 
   return {
     isModalOpen,
     data,
     error,
-    quizError,
     isLoading,
+    searchQuizCode,
     handleOpenModal,
     handleCloseModal,
     handleSearchQuiz,
