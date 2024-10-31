@@ -18,7 +18,6 @@ function Header() {
 
   const { mutate, isPending } = useLogoutUser();
   const {
-    data,
     error,
     handleCloseModal,
     handleOpenModal,
@@ -26,8 +25,6 @@ function Header() {
     isLoading,
     isModalOpen,
   } = useSearchQuiz();
-
-  console.log(data);
 
   const handleShowProfileMenu = (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>
