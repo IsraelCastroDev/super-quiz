@@ -67,7 +67,7 @@ function App() {
               path="/recuperar-cuenta/cambiar-password"
               element={<ResetPasswordPage />}
             />
-            <Route path="/quiz/:quizTitle" element={<QuizPage />} />
+            <Route path="/quiz/:quiz" element={<QuizPage />} />
           </Route>
         </Routes>
       </BrowserRouter>
