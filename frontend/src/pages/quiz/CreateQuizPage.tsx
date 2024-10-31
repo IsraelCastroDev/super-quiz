@@ -1,7 +1,7 @@
 import { Text } from "@/components/ui";
 import { ContainerForm } from "@/components/ui/Form";
 import { useCategoriesQuiz } from "@/hooks/useCreateQuiz";
-import { CreateQuizForm } from "@/components/CreateQuiz";
+import { CreateQuizForm } from "@/components/quiz/CreateQuiz";
 
 export function CreateQuizPage() {
   const { data: categories, isPending } = useCategoriesQuiz();
