@@ -57,6 +57,11 @@ export const QuizSearchSchema = z.object({
   questions: z.array(QuestionSchema),
 });
 
+export const CheckQuizExistsSchema = z.object({
+  exists: z.boolean(),
+  quiz: z.string().optional(),
+});
+
 export const UserQuizzesAPIResponseSchema = z.array(UserQuizSchema);
 
 export type UserQuizzes = z.infer<typeof UserQuizzesAPIResponseSchema>;
