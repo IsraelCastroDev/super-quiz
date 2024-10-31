@@ -98,6 +98,18 @@ router.get(
   QuizController.getQuiz
 );
 
+// verificar si un quiz existe
+router.get(
+  "/check-quiz-exists/:token",
+  param("token")
+    .notEmpty()
+    .withMessage("Debes ingresar un token")
+    .isString()
+    .withMessage("El token debe ser un string alfanumérico"),
+  validateErrors,
+  QuizController.checkQuizExists
+);
+
 // obtener un quiz por su token
 router.get(
   "/get-quiz-by-token/:token",
