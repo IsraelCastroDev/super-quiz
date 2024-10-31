@@ -1,6 +1,7 @@
 import { isAxiosError } from "axios";
 import { api } from "./axiosConfig";
 import {
+  CheckQuizExistsSchema,
   QuizCategoryAPIResponseSchema,
   QuizSearchSchema,
   UserQuiz,
@@ -30,6 +31,26 @@ export const createQuiz = async (formData: CreateQuiz) => {
     const { data } = await api.post("/quizzes/create-quiz", formData);
     return data;
   } catch (error) {
+    if (isAxiosError(error)) {
+      throw new Error(error.response?.data.message);
+    }
+  }
+};
+
+export const checkQuizExists = async (token: string | undefined) => {
+  try {
+    if (token) {
+      const { data } = await api.get(`/quizzes/check-quiz-exists/${token}`);
+      const validateData = CheckQuizExistsSchema.safeParse(data);
+
+      if (validateData.success) {
+        return validateData.data;
+      }
+    } else {
+      throw new Error("El token es undefined");
+    }
+  } catch (error) {
+    console.log("error ---------> ", error);
     if (isAxiosError(error)) {
       throw new Error(error.response?.data.message);
     }
@@ -69,7 +90,7 @@ export const getQuizByToken = async (quizCode: string | undefined) => {
       const validateData = QuizSearchSchema.safeParse(data);
 
       if (validateData.success) {
-        return data;
+        return validateData.data;
       }
     }
     throw new Error("Ocurrió un error al enviar el código");
