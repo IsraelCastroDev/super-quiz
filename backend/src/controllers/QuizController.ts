@@ -197,6 +197,26 @@ export class QuizController {
     }
   };
 
+  // verificar si un quiz existe
+  static checkQuizExists = async (req: Request, res: Response) => {
+    try {
+      const { token } = req.params;
+
+      const quiz = await Quiz.findOne({ token });
+      if (!quiz) {
+        res.status(404).json({ exists: false });
+        return;
+      }
+
+      res.status(200).json({ exists: true, quiz: quiz._id });
+      return;
+    } catch (error) {
+      console.log(error);
+      res.status(500).json({ message: "Error al obtener el quiz" });
+      return;
+    }
+  };
+
   // obtener un quiz por su token
   static getQuizByToken = async (req: Request, res: Response) => {
     try {
