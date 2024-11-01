@@ -18,7 +18,7 @@ import {
   QuizPage,
 } from "./pages";
 import { ProtectedRoute } from "./components/auth";
-import { HomeLayout, PlainLayout } from "./layouts";
+import { HomeLayout, PlainLayout, QuizGameLayout } from "./layouts";
 
 function App() {
   const userAuth = useAppPersists((state) => state.userAuth);
@@ -67,7 +67,10 @@ function App() {
               path="/recuperar-cuenta/cambiar-password"
               element={<ResetPasswordPage />}
             />
-            <Route path="/quiz/:quiz" element={<QuizPage />} />
+          </Route>
+
+          <Route element={<QuizGameLayout />}>
+            <Route path="/quiz/:quiz" element={<QuizPage />} index />
           </Route>
         </Routes>
       </BrowserRouter>
