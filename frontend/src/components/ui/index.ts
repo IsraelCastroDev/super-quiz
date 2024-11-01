@@ -7,3 +7,5 @@ export { Text } from "./Typography";
 export { Loader } from "./Loader/Loader";
 export { Container } from "./app/Container";
 export { Modal } from "./Modal";
+export { Card } from "./Card";
+export { CardContent } from "./CardContent";
