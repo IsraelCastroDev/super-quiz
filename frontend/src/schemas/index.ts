@@ -37,6 +37,7 @@ export const UserQuizSchema = z.object({
       id: z.string(),
     })
   ),
+  duration: z.number(),
 });
 
 export const QuestionSchema = z.object({
