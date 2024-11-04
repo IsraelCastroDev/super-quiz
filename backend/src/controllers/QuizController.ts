@@ -142,6 +142,7 @@ export class QuizController {
             questions: quiz.questions.map((q) => ({
               id: q._id,
             })),
+            duration: quiz.duration,
           };
         })
       );
