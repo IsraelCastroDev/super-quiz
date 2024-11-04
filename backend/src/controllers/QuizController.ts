@@ -10,7 +10,7 @@ import Answer from "../models/Answer";
 export class QuizController {
   // Crea un nuevo quiz
   static createQuiz = async (req: Request, res: Response) => {
-    const { title, categories, questions } = req.body;
+    const { title, categories, questions, duration } = req.body;
 
     try {
       const userExists = await User.findOne({ email: req.userEmail });
@@ -25,6 +25,7 @@ export class QuizController {
         title,
         user: userExists._id,
         questions: [], // Inicialmente vacío
+        duration,
         token: generateTokenQuiz(),
       });
 
