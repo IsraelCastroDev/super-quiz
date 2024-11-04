@@ -1,15 +1,22 @@
 import { ButtonQuiz, Badge, BadgeGroup, StatCard } from "@/components/quiz/ui";
 import { Card, CardContent, Text } from "@/components/ui";
+import { Quiz, QuizCategory } from "@/schemas";
 import {
   BookOpenIcon,
+  ChartBarIcon,
   ClockIcon,
-  PencilIcon,
   StarIcon,
   TrophyIcon,
   UsersIcon,
 } from "@heroicons/react/24/solid";
 
-export function QuizPresentation() {
+interface Props {
+  handleShowQuiz: () => void;
+  quiz: Quiz | undefined;
+  categories: (QuizCategory | undefined)[] | undefined;
+}
+
+export function QuizPresentation({ handleShowQuiz, quiz, categories }: Props) {
   return (
     <div className="p-8 flex flex-col items-center justify-center relative">
       <div className="relative z-10 w-full max-w-4xl">
@@ -21,28 +28,42 @@ export function QuizPresentation() {
       <div className="w-full border border-slate-700 shadow-xl rounded-2xl overflow-hidden mt-5">
         <div className="p-5">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <div className="space-y-6">
+            <div className="space-y-6 w-full">
               <Text
                 as="h2"
                 category="title"
-                className="border-b-2 border-slate-500 pb-2"
+                className="border-b-2 border-slate-500 pb-2 w-full truncate"
+                title={quiz ? quiz.title : ""}
               >
-                Quiz de deportes
+                {quiz ? quiz.title : "Título no encontrado"}
               </Text>
 
               <BadgeGroup>
-                <Badge text="Deportes" />
-                <Badge text="Cultura" />
+                {categories ? (
+                  categories.map(
+                    (categorie) =>
+                      categorie && (
+                        <Badge key={categorie._id} text={categorie.name} />
+                      )
+                  )
+                ) : (
+                  <Text as="p" category="body">
+                    No hay categorías
+                  </Text>
+                )}
               </BadgeGroup>
 
               <div className="grid grid-cols-2 gap-4 text-sm">
-                <StatCard text="10 preguntas" IconComponent={BookOpenIcon} />
+                <StatCard
+                  text={`${quiz ? quiz.questions.length : "0"} preguntas`}
+                  IconComponent={BookOpenIcon}
+                />
                 <StatCard text="15 minutos" IconComponent={ClockIcon} />
                 <StatCard text="100 puntos" IconComponent={TrophyIcon} />
                 <StatCard text="1000+ jugadors" IconComponent={UsersIcon} />
               </div>
 
-              <ButtonQuiz />
+              <ButtonQuiz handleShowQuiz={handleShowQuiz} />
             </div>
 
             <div className="space-y-4">
@@ -75,7 +96,7 @@ export function QuizPresentation() {
             <Card>
               <CardContent>
                 <div className="flex items-center">
-                  <PencilIcon className="text-slate-600 mr-2 h-8 w-8" />
+                  <ChartBarIcon className="text-slate-600 mr-2 h-6 w-6" />
                   <span className="font-semibold text-slate-700">
                     Dificultad
                   </span>
@@ -87,7 +108,7 @@ export function QuizPresentation() {
             <Card>
               <CardContent>
                 <div className="flex items-center">
-                  <StarIcon className="text-slate-600 mr-2 h-8 w-8" />
+                  <StarIcon className="text-slate-600 mr-2 h-6 w-6" />
                   <span className="font-semibold text-slate-700">
                     Calificación
                   </span>
@@ -99,7 +120,7 @@ export function QuizPresentation() {
             <Card>
               <CardContent>
                 <div className="flex items-center">
-                  <TrophyIcon className="text-slate-600 mr-2 h-8 w-8" />
+                  <TrophyIcon className="text-slate-600 mr-2 h-6 w-6" />
                   <span className="font-semibold text-slate-700">
                     Completados
                   </span>
