@@ -1,7 +1,11 @@
 import { CreateQuiz } from "@/types";
 import { ErrorMessage, Text } from "@components/ui";
 import { InputField, Label } from "@components/ui/Form";
-import { CheckCircleIcon, PlusIcon } from "@heroicons/react/24/solid";
+import {
+  CheckCircleIcon,
+  PlusIcon,
+  TrashIcon,
+} from "@heroicons/react/24/solid";
 import {
   FieldArrayWithId,
   FieldErrors,
@@ -47,9 +51,9 @@ export function QuestionInput({
                   <button
                     type="button"
                     onClick={() => removeQuestion(indexQuestion)}
-                    className="bg-red-500 text-white px-3 py-2 mt-3 rounded-md"
+                    className="bg-red-500 text-white p-2 mt-3 rounded-md hover:bg-red-600"
                   >
-                    Eliminar
+                    <TrashIcon className="w-6 h-6" />
                   </button>
                 )}
               </div>
