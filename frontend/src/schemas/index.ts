@@ -58,6 +58,7 @@ export const QuizSearchSchema = z.object({
   user: z.string(),
   score: z.number(),
   token: z.string(),
+  duration: z.number(),
   questions: z.array(QuestionSchema),
   categories: z.array(
     z.object({
