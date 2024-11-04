@@ -1,4 +1,4 @@
-import { ButtonSubmit, Form, InputField } from "@components/ui/Form";
+import { ButtonSubmit, Form, InputField, Label } from "@components/ui/Form";
 import { Category, CreateQuiz } from "@/types";
 import {
   useValidateCreateQuestionForm,
@@ -29,12 +29,14 @@ export function CreateQuizForm({ categories, isPending }: Props) {
     errors,
     handleSubmit,
     reset,
+    setValue,
     questionsFields,
     appendQuestion,
     removeQuestion,
   } = useValidateCreateQuestionForm();
 
   const watchQuestions = watch("questions");
+  const watchDuration = watch("duration");
 
   const { mutate, quizCreateLoading, quizCode, openModal, setOpenModal } =
     useCreateQuiz();
@@ -85,6 +87,23 @@ export function CreateQuizForm({ categories, isPending }: Props) {
           watchQuestions={watchQuestions}
           register={register}
         />
+
+        <div className="space-y-2 border">
+          <Label text="Duración del Super Quiz (min. 15 - max 20 minutos)" />
+          <div className="border border-slate-700 rounded-md p-4">
+            <Label text={`${watchDuration} minutos`} htmlFor="duration" />
+            <input
+              type="range"
+              id="duration"
+              min={15}
+              max={20}
+              step={1}
+              value={watchDuration}
+              onChange={(e) => setValue("duration", parseInt(e.target.value))}
+              className="w-full"
+            />
+          </div>
+        </div>
 
         <ButtonSubmit isPending={quizCreateLoading} messageLoading="Creando...">
           Crear Quiz
