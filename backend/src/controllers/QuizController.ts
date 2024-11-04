@@ -218,16 +218,31 @@ export class QuizController {
   };
 
   // obtener un quiz por su token
-  static getQuizByToken = async (req: Request, res: Response) => {
+  static getQuizById = async (req: Request, res: Response) => {
     try {
-      const { token } = req.params;
+      const { quizId } = req.params;
 
-      const quiz = await Quiz.findOne({ token }).populate("questions");
+      const quizExists = await Quiz.findOne({ _id: quizId }).populate(
+        "questions"
+      );
 
-      if (!quiz) {
+      if (!quizExists) {
         res.status(404).json({ message: "El token no existe" });
         return;
       }
+
+      const categories = await QuizCategory.find({ quiz: quizExists._id });
+
+      const quiz = {
+        _id: quizExists._id,
+        title: quizExists.title,
+        score: quizExists.score,
+        user: quizExists.user,
+        questions: quizExists.questions,
+        token: quizExists.token,
+        categories,
+        __v: quizExists.__v,
+      };
 
       res.status(200).json(quiz);
       return;
