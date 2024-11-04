@@ -45,11 +45,16 @@ export function UserProfileQuizzes({ userQuizzes, isLoading }: Props) {
                   key={quiz._id}
                   className="border border-slate-700 p-2 max-w-80 rounded-md relative"
                 >
-                  <div className="flex items-center gap-x-2">
+                  <div className="flex flex-col gap-x-2">
                     <Text as="h2" category="body" className="font-semibold">
                       Título:
                     </Text>
-                    <Text as="p" category="body">
+                    <Text
+                      as="p"
+                      category="body"
+                      className="truncate"
+                      title={quiz.title}
+                    >
                       {quiz.title}
                     </Text>
                   </div>
@@ -63,19 +68,33 @@ export function UserProfileQuizzes({ userQuizzes, isLoading }: Props) {
                     </Text>
                   </div>
 
-                  <div>
+                  <div className="flex items-center gap-x-2">
                     <Text as="h2" category="body" className="font-semibold">
                       Categorías:
                     </Text>
-                    <ul className="flex flex-wrap gap-x-1">
-                      {quiz.categories.map((cat) => (
-                        <li key={cat.category._id}>
-                          <Text as="p" category="body">
-                            {cat.category.name},
-                          </Text>
-                        </li>
-                      ))}
-                    </ul>
+                    <Text as="p" category="body">
+                      {quiz.categories
+                        .map((cat) => cat.category.name)
+                        .join(", ")}
+                    </Text>
+                  </div>
+
+                  <div className="flex items-center gap-x-2">
+                    <Text as="h2" category="body" className="font-semibold">
+                      N° preguntas:
+                    </Text>
+                    <Text as="p" category="body">
+                      {quiz.questions.length}
+                    </Text>
+                  </div>
+
+                  <div className="flex items-center gap-x-2">
+                    <Text as="h2" category="body" className="font-semibold">
+                      Duración:
+                    </Text>
+                    <Text as="p" category="body">
+                      {quiz.duration} minutos
+                    </Text>
                   </div>
 
                   <button
