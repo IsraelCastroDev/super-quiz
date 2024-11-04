@@ -38,6 +38,7 @@ export const UserQuizSchema = z.object({
     })
   ),
   duration: z.number(),
+  token: z.string(),
 });
 
 export const QuestionSchema = z.object({
