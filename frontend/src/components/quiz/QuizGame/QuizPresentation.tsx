@@ -58,7 +58,10 @@ export function QuizPresentation({ handleShowQuiz, quiz, categories }: Props) {
                   text={`${quiz ? quiz.questions.length : "0"} preguntas`}
                   IconComponent={BookOpenIcon}
                 />
-                <StatCard text="15 minutos" IconComponent={ClockIcon} />
+                <StatCard
+                  text={`${quiz ? `${quiz.duration} minutos` : "0 minutos"}`}
+                  IconComponent={ClockIcon}
+                />
                 <StatCard text="100 puntos" IconComponent={TrophyIcon} />
                 <StatCard text="1000+ jugadors" IconComponent={UsersIcon} />
               </div>
@@ -75,15 +78,15 @@ export function QuizPresentation({ handleShowQuiz, quiz, categories }: Props) {
                 Preguntas de muestra
               </Text>
               <ul className="space-y-2">
-                {[1, 2, 3].map((index) => (
+                {quiz?.questions.slice(0, 2).map((q, index) => (
                   <li
-                    key={index}
+                    key={q._id}
                     className="bg-slate-100 p-3 rounded-lg shadow-sm border border-slate-200"
                   >
                     <p className="text-slate-700 flex items-center">
                       <StarIcon className="text-slate-500 mr-2 mt-1 w-6 h-6" />
                       <span>
-                        {index}. Pregunta de ejemplo {index}
+                        {index + 1}. {q.title}
                       </span>
                     </p>
                   </li>
@@ -96,7 +99,7 @@ export function QuizPresentation({ handleShowQuiz, quiz, categories }: Props) {
             <Card>
               <CardContent>
                 <div className="flex items-center">
-                  <ChartBarIcon className="text-slate-600 mr-2 h-6 w-6" />
+                  <ChartBarIcon className="text-slate-600 mr-2 h- w-6" />
                   <span className="font-semibold text-slate-700">
                     Dificultad
                   </span>
@@ -108,7 +111,7 @@ export function QuizPresentation({ handleShowQuiz, quiz, categories }: Props) {
             <Card>
               <CardContent>
                 <div className="flex items-center">
-                  <StarIcon className="text-slate-600 mr-2 h-6 w-6" />
+                  <StarIcon className="text-slate-600 mr-2 h- w-6" />
                   <span className="font-semibold text-slate-700">
                     Calificación
                   </span>
@@ -120,7 +123,7 @@ export function QuizPresentation({ handleShowQuiz, quiz, categories }: Props) {
             <Card>
               <CardContent>
                 <div className="flex items-center">
-                  <TrophyIcon className="text-slate-600 mr-2 h-6 w-6" />
+                  <TrophyIcon className="text-slate-600 mr-2 h- w-6" />
                   <span className="font-semibold text-slate-700">
                     Completados
                   </span>
