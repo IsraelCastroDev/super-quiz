@@ -3,6 +3,7 @@ import { api } from "./axiosConfig";
 import {
   CheckQuizExistsSchema,
   QuizCategoryAPIResponseSchema,
+  QuizCategorySchema,
   QuizSearchSchema,
   UserQuiz,
   UserQuizzesAPIResponseSchema,
@@ -18,6 +19,21 @@ export const getQuizCategories = async () => {
       return validateData.data;
     } else {
       throw new Error(validateData.error.message);
+    }
+  } catch (error) {
+    if (isAxiosError(error)) {
+      throw new Error(error.response?.data.message);
+    }
+  }
+};
+
+export const getCategorieById = async (categorieId: string) => {
+  try {
+    const { data } = await api.get(`/quizzes/categorie/${categorieId}`);
+    const validateData = QuizCategorySchema.safeParse(data);
+
+    if (validateData.success) {
+      return validateData.data;
     }
   } catch (error) {
     if (isAxiosError(error)) {
