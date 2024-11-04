@@ -1,3 +1,4 @@
+import { QuizCode } from "@/components/quiz/CreateQuiz/QuizCode";
 import { Loader, Text } from "@/components/ui";
 import { useDeleteQuiz } from "@/hooks/useAuthUser";
 import { UserQuiz, UserQuizzes } from "@/schemas";
@@ -49,14 +50,16 @@ export function UserProfileQuizzes({ userQuizzes, isLoading }: Props) {
                     <Text as="h2" category="body" className="font-semibold">
                       Título:
                     </Text>
-                    <Text
-                      as="p"
-                      category="body"
-                      className="truncate"
-                      title={quiz.title}
-                    >
-                      {quiz.title}
-                    </Text>
+                    <Link to={`/quiz/${quiz._id}`} className="hover:underline">
+                      <Text
+                        as="p"
+                        category="body"
+                        className="truncate"
+                        title={quiz.title}
+                      >
+                        {quiz.title}
+                      </Text>
+                    </Link>
                   </div>
 
                   <div className="flex items-center gap-x-2">
@@ -96,6 +99,8 @@ export function UserProfileQuizzes({ userQuizzes, isLoading }: Props) {
                       {quiz.duration} minutos
                     </Text>
                   </div>
+
+                  <QuizCode quizCode={quiz.token} />
 
                   <button
                     onClick={() => handleDeleteQuiz(quiz._id)}
