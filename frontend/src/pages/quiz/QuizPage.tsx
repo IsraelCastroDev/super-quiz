@@ -7,6 +7,7 @@ import { useParams } from "react-router-dom";
 
 export function QuizPage() {
   const [showQuiz, setShowQuiz] = useState(false);
+  const [showDialogConfirm, setShowDialogConfirm] = useState(false);
 
   const { quizId } = useParams<{ quizId: string }>();
 
@@ -31,14 +32,32 @@ export function QuizPage() {
   });
 
   const handleShowQuiz = () => setShowQuiz(true);
+  const handleHideQuiz = () => setShowQuiz(false);
+
+  const handleShowDialogConfirm = () => setShowDialogConfirm(true);
+  const handleHideDialogConfirm = () => setShowDialogConfirm(false);
 
   return (
-    <section>
+    <section className="relative">
       {!showQuiz && isLoading ? (
         <Loader />
+      ) : showQuiz ? (
+        <>
+          <button
+            type="button"
+            onClick={handleHideQuiz}
+            className="absolute top-0 left-0 bg-slate-700 p-2 text-white rounded-md font-semibold"
+          >
+            volver
+          </button>
+          <div>hola</div>
+        </>
       ) : (
         <QuizPresentation
           handleShowQuiz={handleShowQuiz}
+          handleShowDialogConfirm={handleShowDialogConfirm}
+          handleHideDialogConfirm={handleHideDialogConfirm}
+          showDialogConfirm={showDialogConfirm}
           quiz={quiz}
           categories={quizCategories}
         />
