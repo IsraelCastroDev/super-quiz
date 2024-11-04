@@ -311,6 +311,27 @@ export class QuizController {
     }
   };
 
+  // obtener categoria por su id
+  static getCategorieById = async (req: Request, res: Response) => {
+    try {
+      const { idCategory } = req.params;
+
+      const categorie = await Category.findOne({ _id: idCategory });
+
+      if (!categorie) {
+        res.status(404).json({ message: "Categoría no encontrado" });
+        return;
+      }
+
+      res.status(200).json(categorie);
+      return;
+    } catch (error) {
+      console.log(error);
+      res.status(500).json({ message: "Error al obtener categoría" });
+      return;
+    }
+  };
+
   // obtener quizzes por categoria
   static getQuizzesByCategory = async (req: Request, res: Response) => {
     const { categorie } = req.params;
