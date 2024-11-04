@@ -29,6 +29,12 @@ router.post(
       });
       return true;
     }),
+  body("duration")
+    .notEmpty()
+    .withMessage("La duración es obligatoria")
+    .isInt({ min: 15, max: 20 })
+    .withMessage("La duración debe ser un número entero entre 15 y 20")
+    .toInt(),
   body("questions")
     .notEmpty()
     .withMessage("Las preguntas son requeridas")
