@@ -69,11 +69,13 @@ export function useValidateCreateQuestionForm() {
     control,
     watch,
     reset,
+    setValue,
     formState: { errors },
   } = useForm<CreateQuiz>({
     defaultValues: {
       title: "",
       categories: [],
+      duration: 15,
       questions: Array.from({ length: 5 }, () => ({
         title: "",
         answers: Array.from({ length: 5 }, () => ({
@@ -96,6 +98,7 @@ export function useValidateCreateQuestionForm() {
     errors,
     watch,
     reset,
+    setValue,
     questionsFields,
     appendQuestion,
     removeQuestion,
