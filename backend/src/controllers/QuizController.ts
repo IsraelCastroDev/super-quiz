@@ -157,7 +157,7 @@ export class QuizController {
     }
   };
 
-  // obtener un quiz por su id
+  // obtener un quiz por su id - auth
   static getQuiz = async (req: Request, res: Response) => {
     try {
       const { idQuiz } = req.params;
@@ -189,6 +189,8 @@ export class QuizController {
             quiz: question.quiz,
           };
         }),
+        token: quizExists.token,
+        duration: quizExists.duration,
       };
 
       res.status(201).json(quiz);
@@ -220,7 +222,7 @@ export class QuizController {
     }
   };
 
-  // obtener un quiz por su token
+  // obtener un quiz por su id
   static getQuizById = async (req: Request, res: Response) => {
     try {
       const { quizId } = req.params;
@@ -243,6 +245,7 @@ export class QuizController {
         user: quizExists.user,
         questions: quizExists.questions,
         token: quizExists.token,
+        duration: quizExists.duration,
         categories,
         __v: quizExists.__v,
       };
