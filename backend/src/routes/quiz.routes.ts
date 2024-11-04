@@ -110,16 +110,16 @@ router.get(
   QuizController.checkQuizExists
 );
 
-// obtener un quiz por su token
+// obtener un quiz por su id
 router.get(
-  "/get-quiz-by-token/:token",
-  param("token")
+  "/get-quiz-by-id/:quizId",
+  param("quizId")
     .notEmpty()
-    .withMessage("Debes ingresar un token")
+    .withMessage("Debes ingresar el id del Super Quiz")
     .isString()
-    .withMessage("El token debe ser un string alfanumérico"),
+    .withMessage("El id debe ser un string alfanumérico"),
   validateErrors,
-  QuizController.getQuizByToken
+  QuizController.getQuizById
 );
 
 // eliminar un quiz
@@ -137,6 +137,9 @@ router.delete(
 
 // obtener las categorias
 router.get("/categories", QuizController.getCategories);
+
+// obtener categoria por su id
+router.get("/categorie/:idCategory", QuizController.getCategorieById);
 
 // obtener quizzes por categoria
 router.get(
