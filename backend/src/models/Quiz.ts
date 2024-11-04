@@ -5,6 +5,7 @@ export type QuizType = Document & {
   score?: number;
   user: Types.ObjectId;
   questions: Types.ObjectId[];
+  duration: number;
   token: string;
 };
 
@@ -13,6 +14,7 @@ export const QuizSchema: Schema = new Schema({
   score: { type: Number, default: 0 },
   user: { type: Types.ObjectId, ref: "User", required: true },
   questions: [{ type: Types.ObjectId, ref: "Question" }],
+  duration: { type: Number, required: true, default: 15 },
   token: { type: String, trim: true, required: true },
 });
 
