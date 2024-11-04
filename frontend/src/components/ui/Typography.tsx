@@ -1,7 +1,7 @@
 type HtmlTag = "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "p" | "label";
 type Category = "title" | "subtitle" | "body" | "big" | "label";
 
-interface TextProps {
+interface TextProps extends React.HTMLAttributes<HTMLElement> {
   as: HtmlTag;
   category: Category;
   children: React.ReactNode;
@@ -15,6 +15,7 @@ export function Text({
   children,
   className,
   degraded = false,
+  ...props
 }: TextProps) {
   let baseClass = "";
   const degradedClass = `${
@@ -42,5 +43,9 @@ export function Text({
     default:
       break;
   }
-  return <Element className={`${baseClass} ${className}`}>{children}</Element>;
+  return (
+    <Element className={`${baseClass} ${className}`} {...props}>
+      {children}
+    </Element>
+  );
 }
