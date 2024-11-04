@@ -1,6 +1,6 @@
 import { getCategorieById, getQuizById } from "@/api/quizAPI";
-import { QuizPresentation } from "@/components/quiz/QuizGame";
-import { Loader, Modal, Text } from "@/components/ui";
+import { QuizGame, QuizPresentation } from "@/components/quiz/QuizGame";
+import { Loader } from "@/components/ui";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import { useParams } from "react-router-dom";
@@ -48,39 +48,12 @@ export function QuizPage() {
       {!showQuiz && isLoading ? (
         <Loader />
       ) : showQuiz ? (
-        <>
-          <button
-            type="button"
-            onClick={handleShowDialogConfirm}
-            className="absolute top-0 left-0 bg-slate-700 p-2 text-white rounded-md font-semibold"
-          >
-            volver
-          </button>
-          <div>hola</div>
-
-          {showDialogConfirm && (
-            <Modal isOpen={showDialogConfirm} onClose={handleHideDialogConfirm}>
-              <Text as="h2" category="subtitle">
-                ¿Quieres abandonar el Super Quiz?
-              </Text>
-
-              <div className="flex items-center gap-x-2 mt-4">
-                <button
-                  onClick={handleHideQuiz}
-                  className="p-2 bg-slate-700 rounded-md text-white w-full hover:bg-slate-800"
-                >
-                  Sí, quiero volver
-                </button>
-                <button
-                  onClick={handleHideDialogConfirm}
-                  className="p-2 bg-gray-300 rounded-md text-black w-full hover:bg-gray-400"
-                >
-                  Cancelar
-                </button>
-              </div>
-            </Modal>
-          )}
-        </>
+        <QuizGame
+          handleHideDialogConfirm={handleHideDialogConfirm}
+          handleHideQuiz={handleHideQuiz}
+          handleShowDialogConfirm={handleShowDialogConfirm}
+          showDialogConfirm={showDialogConfirm}
+        />
       ) : (
         <QuizPresentation
           handleShowQuiz={handleShowQuiz}
