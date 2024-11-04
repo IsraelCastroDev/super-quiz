@@ -16,6 +16,7 @@ import {
   CreateQuizPage,
   ProfilePage,
   QuizPage,
+  QuizGame,
 } from "./pages";
 import { ProtectedRoute } from "./components/auth";
 import { HomeLayout, PlainLayout, QuizGameLayout } from "./layouts";
@@ -71,6 +72,7 @@ function App() {
 
           <Route element={<QuizGameLayout />}>
             <Route path="/quiz/:quizId" element={<QuizPage />} index />
+            <Route path="/quiz/:quizId/game" element={<QuizGame />} />
           </Route>
         </Routes>
       </BrowserRouter>
