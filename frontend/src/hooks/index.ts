@@ -22,3 +22,5 @@ export {
 } from "./useCreateQuiz";
 
 export { useSearchQuiz } from "./useSearchQuiz";
+
+export { useQuizGame, useQuizPresentation } from "./useQuizGame";
