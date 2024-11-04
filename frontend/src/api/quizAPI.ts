@@ -83,10 +83,10 @@ export const deleteQuiz = async (idQuiz: UserQuiz["_id"]) => {
   }
 };
 
-export const getQuizByToken = async (quizCode: string | undefined) => {
+export const getQuizById = async (quizId: string | undefined) => {
   try {
-    if (quizCode) {
-      const { data } = await api.get(`/quizzes/get-quiz-by-token/${quizCode}`);
+    if (quizId) {
+      const { data } = await api.get(`/quizzes/get-quiz-by-id/${quizId}`);
       const validateData = QuizSearchSchema.safeParse(data);
 
       if (validateData.success) {
