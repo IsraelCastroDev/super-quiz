@@ -143,6 +143,7 @@ export class QuizController {
               id: q._id,
             })),
             duration: quiz.duration,
+            token: quiz.token,
           };
         })
       );
