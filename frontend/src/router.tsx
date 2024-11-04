@@ -70,7 +70,7 @@ function App() {
           </Route>
 
           <Route element={<QuizGameLayout />}>
-            <Route path="/quiz/:quiz" element={<QuizPage />} index />
+            <Route path="/quiz/:quizId" element={<QuizPage />} index />
           </Route>
         </Routes>
       </BrowserRouter>
