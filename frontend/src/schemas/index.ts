@@ -7,6 +7,8 @@ export const QuizCategorySchema = z.object({
   description: z.string(),
 });
 
+export type QuizCategory = z.infer<typeof QuizCategorySchema>;
+
 export const QuizCategoryAPIResponseSchema = z.array(QuizCategorySchema);
 
 export const UserProfileAPIResponseSchema = z.object({
@@ -55,6 +57,16 @@ export const QuizSearchSchema = z.object({
   score: z.number(),
   token: z.string(),
   questions: z.array(QuestionSchema),
+  categories: z.array(
+    z.object({
+      _id: z.string(),
+      quiz: z.string(),
+      category: z.string(),
+      createdAt: z.string(),
+      updatedAt: z.string(),
+      __v: z.number(),
+    })
+  ),
 });
 
 export const CheckQuizExistsSchema = z.object({
@@ -63,6 +75,8 @@ export const CheckQuizExistsSchema = z.object({
 });
 
 export const UserQuizzesAPIResponseSchema = z.array(UserQuizSchema);
+
+export type Quiz = z.infer<typeof QuizSearchSchema>;
 
 export type UserQuizzes = z.infer<typeof UserQuizzesAPIResponseSchema>;
 export type UserQuiz = z.infer<typeof UserQuizSchema>;
