@@ -54,6 +54,7 @@ export const CategoryFormDataSchema = z.object({
 export const CreateQuizFormDataSchmea = z.object({
   title: z.string(),
   categories: z.array(CategoryFormDataSchema),
+  duration: z.number(),
   questions: z.array(QuestionFormDataSchema),
 });
 
