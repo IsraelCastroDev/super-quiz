@@ -10,3 +10,4 @@ export { Modal } from "./Modal";
 export { Card } from "./Card";
 export { CardContent } from "./CardContent";
 export { ProgressBar } from "./ProgressBar";
+export { Skeleton } from "./Skeleton";
