@@ -51,6 +51,18 @@ export const QuestionSchema = z.object({
   updatedAt: z.string(),
 });
 
+export const AnswerSchema = z.object({
+  _id: z.string(),
+  title: z.string(),
+  is_correct: z.boolean(),
+  question: z.string(),
+  __v: z.number(),
+});
+
+export const AnswesResponseSchema = z.array(AnswerSchema);
+
+export type Answer = z.infer<typeof AnswerSchema>;
+
 export const QuizSearchSchema = z.object({
   _id: z.string(),
   __v: z.number(),
