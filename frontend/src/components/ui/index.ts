@@ -9,3 +9,4 @@ export { Container } from "./app/Container";
 export { Modal } from "./Modal";
 export { Card } from "./Card";
 export { CardContent } from "./CardContent";
+export { ProgressBar } from "./ProgressBar";
