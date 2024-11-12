@@ -1,6 +1,7 @@
 import { isAxiosError } from "axios";
 import { api } from "./axiosConfig";
 import {
+  AnswesResponseSchema,
   CheckQuizExistsSchema,
   QuizCategoryAPIResponseSchema,
   QuizCategorySchema,
@@ -110,6 +111,21 @@ export const getQuizById = async (quizId: string | undefined) => {
       }
     }
     throw new Error("Ocurrió un error al enviar el código");
+  } catch (error) {
+    if (isAxiosError(error)) {
+      throw new Error(error.response?.data.message);
+    }
+  }
+};
+
+export const getAnswers = async (questionId: string) => {
+  try {
+    const { data } = await api.get(`/quizzes/questions/${questionId}/answers`);
+    const validateData = AnswesResponseSchema.safeParse(data);
+
+    if (validateData.success) {
+      return validateData.data;
+    }
   } catch (error) {
     if (isAxiosError(error)) {
       throw new Error(error.response?.data.message);
