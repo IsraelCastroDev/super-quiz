@@ -370,4 +370,24 @@ export class QuizController {
       res.status(500).json({ message: "Error al obtener los datos" });
     }
   };
+
+  // obtener respuestas de una pregunta
+  static getAnswersFromQuestion = async (req: Request, res: Response) => {
+    try {
+      const { questionId } = req.params;
+
+      const answers = await Answer.find({ question: questionId });
+
+      if (!answers) {
+        res.status(404).json({ message: "No se encontraron respuestas" });
+        return;
+      }
+
+      res.status(200).json(answers);
+      return;
+    } catch (error) {
+      console.log(error);
+      res.status(500).json({ message: "Error al cargar las respuestas" });
+    }
+  };
 }
