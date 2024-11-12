@@ -28,7 +28,7 @@ export function Modal({ title, children, isOpen, onClose }: Props) {
       onClick={onClose} // Cerrar al hacer clic fuera del modal
     >
       <div
-        className="bg-white py-10 px-5 rounded-md shadow-lg relative"
+        className="bg-white py-10 px-5 rounded-md shadow-lg relative max-w-3xl min-w-80 w-auto"
         onClick={(e) => e.stopPropagation()} // Evitar cierre al hacer clic dentro del modal
       >
         {title && (
