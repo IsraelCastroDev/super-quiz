@@ -1,9 +1,9 @@
 import { getQuizById } from "@/api/quizAPI";
 import { Answers } from "@/components/quiz/QuizGame";
-import { Loader, Modal, Text } from "@/components/ui";
+import { Loader, Modal, ProgressBar, Text } from "@/components/ui";
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/20/solid";
 import { useQuery } from "@tanstack/react-query";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useParams } from "react-router-dom";
 
@@ -62,6 +62,11 @@ export function QuizGame() {
     // Aquí puedes enviar `answersPayload` a un backend o manejarlo según sea necesario.
   };
 
+  const progressValue = useMemo(
+    () => (quiz ? ((nextIndex + 1) / quiz.questions.length) * 100 : 0),
+    [nextIndex, quiz]
+  );
+
   return (
     <section className="h-[calc(100vh-6rem)] flex justify-center items-center">
       {!quiz && isLoading ? (
@@ -75,10 +80,16 @@ export function QuizGame() {
                   return (
                     <div key={question._id}>
                       <div>
-                        <div key={question._id}>
+                        <div key={question._id} className="space-y-3">
                           <Text as="h2" category="title">
                             Pregunta {index + 1} de {quiz.questions.length}
                           </Text>
+
+                          <ProgressBar
+                            value={progressValue}
+                            className="bg-gray-300"
+                          />
+
                           <Text as="h3" category="subtitle">
                             {question.title}
                           </Text>
