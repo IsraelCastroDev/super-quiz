@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { Loader, Text } from "@/components/ui";
+import { Text, Skeleton } from "@/components/ui";
 import { getQuizCategories } from "@/api/quizAPI";
 import { Link } from "react-router-dom";
 import { Container } from "../ui/";
@@ -19,36 +19,42 @@ export function CategoriesSection() {
       </div>
 
       <div className="relative aspect-video">
-        {isLoading ? (
-          <Loader />
-        ) : (
-          <ul className="mt-5 grid grid-cols-[repeat(auto-fill,minmax(250px,1fr))] gap-5 bg-slate-100 p-5 rounded">
-            {categories && categories.length > 0 ? (
-              categories.map((category) => (
-                <li
-                  key={category._id}
-                  className="border border-slate-700 p-5 rounded"
-                >
-                  <Link to={`/quizzes/category/${category.slug}`}>
-                    <Text as="p" category="subtitle">
-                      {category.name}
-                    </Text>
-                  </Link>
-
-                  <Text as="p" category="body">
-                    {category.description}
+        <ul className="mt-5 grid grid-cols-[repeat(auto-fill,minmax(250px,1fr))] gap-5 bg-slate-100 p-5 rounded">
+          {isLoading ? (
+            Array.from({ length: 7 }).map((_, index) => (
+              <li
+                key={index}
+                className="border border-slate-700 p-5 rounded-md"
+              >
+                <Skeleton className="w-20 h-4 rounded-sm" />
+                <Skeleton className="w-full h-10 mt-4 rounded-sm" />
+              </li>
+            ))
+          ) : categories && categories.length > 0 ? (
+            categories.map((category) => (
+              <li
+                key={category._id}
+                className="border border-slate-700 p-5 rounded-md"
+              >
+                <Link to={`/quizzes/category/${category.slug}`}>
+                  <Text as="p" category="subtitle">
+                    {category.name}
                   </Text>
-                </li>
-              ))
-            ) : (
-              <li>
-                <Text as="p" category="subtitle">
-                  Aún no hay categorías
+                </Link>
+
+                <Text as="p" category="body">
+                  {category.description}
                 </Text>
               </li>
-            )}
-          </ul>
-        )}
+            ))
+          ) : (
+            <li>
+              <Text as="p" category="subtitle">
+                Aún no hay categorías
+              </Text>
+            </li>
+          )}
+        </ul>
       </div>
     </Container>
   );
