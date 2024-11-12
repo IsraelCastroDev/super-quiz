@@ -158,4 +158,10 @@ router.get(
   QuizController.getQuizzesByCategory
 );
 
+// obtener una respuesta por su idQuestions
+router.get(
+  "/questions/:questionId/answers",
+  QuizController.getAnswersFromQuestion
+);
+
 export default router;
