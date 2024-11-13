@@ -4,6 +4,7 @@ import { useDeleteQuiz } from "@/hooks/useAuthUser";
 import { UserQuiz, UserQuizzes } from "@/schemas";
 import { TrashIcon } from "@heroicons/react/24/solid";
 import { Link } from "react-router-dom";
+import { UserProfileQuizzesSkeleton } from "@/components/auth";
 
 interface Props {
   userQuizzes: UserQuizzes | undefined;
@@ -24,30 +25,9 @@ export function UserProfileQuizzes({ userQuizzes, isLoading }: Props) {
       {isLoading ? (
         <div>
           <Skeleton className="w-52 h-6 bg-gray-600" />
-
           <div className="grid grid-cols-[repeat(auto-fill,minmax(250px,1fr))] gap-3 border border-slate-700 px-3 py-5 rounded-md mt-5 relative">
             {Array.from({ length: 3 }).map((_, index) => (
-              <div
-                key={index}
-                className="space-y-3 border border-slate-700 rounded-md p-3"
-              >
-                <div className="space-y-2">
-                  <Skeleton className="w-24 h-4 rounded-md bg-gray-600" />
-                  <Skeleton className="w-full h-4 rounded-md bg-gray-600" />
-                </div>
-
-                <div className="flex gap-x-3">
-                  <Skeleton className="w-24 h-4 rounded-md bg-gray-600" />
-                  <Skeleton className="w-full h-4 rounded-md bg-gray-600" />
-                </div>
-
-                <div className="flex gap-x-3">
-                  <Skeleton className="w-24 h-4 rounded-md bg-gray-600" />
-                  <Skeleton className="w-full h-4 rounded-md bg-gray-600" />
-                </div>
-
-                <Skeleton className="w-full h-8 rounded-md bg-gray-600" />
-              </div>
+              <UserProfileQuizzesSkeleton key={index} />
             ))}
           </div>
         </div>
