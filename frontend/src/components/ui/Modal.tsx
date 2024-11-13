@@ -28,7 +28,7 @@ export function Modal({ title, children, isOpen, onClose }: Props) {
       onClick={onClose} // Cerrar al hacer clic fuera del modal
     >
       <div
-        className="bg-white py-10 px-5 rounded-md shadow-lg relative max-w-3xl min-w-80 w-auto"
+        className="bg-white py-10 px-5 rounded-md shadow-lg relative max-w-3xl min-w-96 w-auto"
         onClick={(e) => e.stopPropagation()} // Evitar cierre al hacer clic dentro del modal
       >
         {title && (
@@ -44,5 +44,28 @@ export function Modal({ title, children, isOpen, onClose }: Props) {
         </button>
       </div>
     </div>
+  );
+}
+
+interface ButtonModalPropa extends React.HTMLAttributes<HTMLButtonElement> {
+  children: React.ReactNode;
+  color: "slate" | "gray";
+  type: "submit" | "reset" | "button" | undefined;
+}
+
+export function ButtonModal({
+  children,
+  color = "slate",
+  type,
+  ...props
+}: ButtonModalPropa) {
+  return (
+    <button
+      type={type}
+      {...props}
+      className={`p-2 bg-${color}-700 rounded-md text-white w-full hover:bg-${color}-800`}
+    >
+      {children}
+    </button>
   );
 }
