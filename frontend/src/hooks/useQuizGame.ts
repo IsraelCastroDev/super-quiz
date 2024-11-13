@@ -135,8 +135,14 @@ export function useQuizGame(quizId: string | undefined) {
   };
 
   // modal
-  const handleShowDialogConfirm = () => setShowDialogConfirm(true);
-  const handleHideConfirm = () => setShowDialogConfirm(false);
+  const handleShowDialogConfirm = () => {
+    setStartTimer(false);
+    setShowDialogConfirm(true);
+  };
+  const handleHideConfirm = () => {
+    setStartTimer(true);
+    setShowDialogConfirm(false);
+  };
 
   const handleIncrementNextIndex = () => setNextIndex(nextIndex + 1);
   const handleDecreaseNextIndex = () => setNextIndex(nextIndex - 1);
