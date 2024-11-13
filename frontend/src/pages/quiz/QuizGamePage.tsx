@@ -163,7 +163,7 @@ export function QuizGame() {
 
           <div className="flex justify-between items-center gap-x-3 mt-4">
             <ButtonModal type="button" onClick={handleReloadData} color="slate">
-              Sí, estoy seguro
+              Intentar otra vez
             </ButtonModal>
 
             <Link
