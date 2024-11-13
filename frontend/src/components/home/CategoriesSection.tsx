@@ -26,8 +26,8 @@ export function CategoriesSection() {
                 key={index}
                 className="border border-slate-700 p-5 rounded-md"
               >
-                <Skeleton className="w-20 h-4 rounded-sm" />
-                <Skeleton className="w-full h-10 mt-4 rounded-sm" />
+                <Skeleton className="w-20 h-4 rounded-sm bg-gray-600" />
+                <Skeleton className="w-full h-10 mt-4 rounded-sm bg-gray-600" />
               </li>
             ))
           ) : categories && categories.length > 0 ? (
