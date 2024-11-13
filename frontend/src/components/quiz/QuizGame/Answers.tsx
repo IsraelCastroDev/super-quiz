@@ -28,8 +28,8 @@ export function Answers({ question, selectedAnswer, onAnswerChange }: Props) {
       {isLoading ? (
         Array.from({ length: 5 }).map((_, index) => (
           <div key={index} className="flex items-center gap-x-3">
-            <Skeleton className="w-3 h-3 rounded-full" />
-            <Skeleton className="w-80 h-3 rounded-sm" />
+            <Skeleton className="w-3 h-2 md:h-3 rounded-full" />
+            <Skeleton className="w-80 h-2 md:h-3 rounded-sm" />
           </div>
         ))
       ) : answers ? (
