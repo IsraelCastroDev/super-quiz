@@ -18,7 +18,7 @@ export function CategoriesSection() {
         </Text>
       </div>
 
-      <div className="relative aspect-video">
+      <div className="relative">
         <ul className="mt-5 grid grid-cols-[repeat(auto-fill,minmax(250px,1fr))] gap-5 bg-slate-100 p-5 rounded">
           {isLoading ? (
             Array.from({ length: 7 }).map((_, index) => (
