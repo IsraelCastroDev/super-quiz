@@ -1,10 +1,14 @@
 import { Answers } from "@/components/quiz/QuizGame";
 import { Loader, Modal, ProgressBar, Text } from "@/components/ui";
+import { ButtonModal } from "@/components/ui/Modal";
 import { useQuizGame } from "@/hooks";
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/20/solid";
 import { ClockIcon } from "@heroicons/react/24/solid";
+import { Link, useParams } from "react-router-dom";
 
 export function QuizGame() {
+  const { quizId } = useParams<{ quizId: string }>();
+
   const {
     quiz,
     isLoading,
@@ -15,6 +19,7 @@ export function QuizGame() {
     selectedAnswers,
     handleAnswerChange,
     handleShowDialogConfirm,
+    handleHideDialogGameOver,
     handleDecreaseNextIndex,
     handleIncrementNextIndex,
     showDialogConfirm,
@@ -22,7 +27,9 @@ export function QuizGame() {
     handleSubmit,
     onSubmit,
     setShowDialogConfirm,
-  } = useQuizGame();
+    handleReloadData,
+    showDialogGameOver,
+  } = useQuizGame(quizId);
 
   return (
     <section className="h-[calc(100vh-6rem)] flex justify-center items-center">
@@ -131,22 +138,41 @@ export function QuizGame() {
           </Text>
 
           <div className="flex flex-col md:flex-row w-full gap-x-4 mt-4">
-            <button
+            <ButtonModal
               type="button"
               onClick={() => {
                 handleSubmit(onSubmit)();
                 setShowDialogConfirm(false);
               }}
-              className="p-2 bg-slate-700 rounded-md text-white w-full hover:bg-slate-800"
+              color="slate"
             >
               Sí, estoy seguro
-            </button>
-            <button
-              onClick={handleHideConfirm}
-              className="p-2 bg-gray-300 rounded-md text-black w-full hover:bg-gray-400"
-            >
+            </ButtonModal>
+            <ButtonModal type="button" onClick={handleHideConfirm} color="gray">
               Cancelar
-            </button>
+            </ButtonModal>
+          </div>
+        </Modal>
+      )}
+
+      {showDialogGameOver && (
+        <Modal isOpen={showDialogGameOver} onClose={handleHideDialogGameOver}>
+          <Text as="h2" category="subtitle" className="text-center">
+            Se te ha agotado el tiempo
+          </Text>
+
+          <div className="flex justify-between items-center gap-x-3 mt-4">
+            <ButtonModal type="button" onClick={handleReloadData} color="slate">
+              Sí, estoy seguro
+            </ButtonModal>
+
+            <Link
+              to={`/quiz/${quizId}`}
+              onClick={handleHideDialogGameOver}
+              className="p-2 bg-gray-300 rounded-md text-black text-center w-full hover:bg-gray-400"
+            >
+              Volver
+            </Link>
           </div>
         </Modal>
       )}
