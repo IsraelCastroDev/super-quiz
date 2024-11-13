@@ -156,12 +156,16 @@ export function QuizGame() {
       )}
 
       {showDialogGameOver && (
-        <Modal isOpen={showDialogGameOver} onClose={handleHideDialogGameOver}>
-          <Text as="h2" category="subtitle" className="text-center">
-            Se te ha agotado el tiempo
+        <Modal
+          isOpen={showDialogGameOver}
+          onClose={handleHideDialogGameOver}
+          showCloseIcon={false}
+        >
+          <Text as="h2" category="title" className="text-center">
+            ¡ Se te ha agotado el tiempo!
           </Text>
 
-          <div className="flex justify-between items-center gap-x-3 mt-4">
+          <div className="flex flex-col md:flex-row justify-between items-center gap-3 mt-4">
             <ButtonModal type="button" onClick={handleReloadData} color="slate">
               Intentar otra vez
             </ButtonModal>
