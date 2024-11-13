@@ -2,14 +2,21 @@ import { XCircleIcon } from "@heroicons/react/24/solid";
 import { Text } from "./Typography";
 import { useEffect } from "react";
 
-interface Props {
+interface ModalProps {
   title?: string;
   children: React.ReactNode;
   isOpen: boolean;
+  showCloseIcon?: boolean;
   onClose: () => void;
 }
 
-export function Modal({ title, children, isOpen, onClose }: Props) {
+export function Modal({
+  title,
+  children,
+  isOpen,
+  onClose,
+  showCloseIcon = true,
+}: ModalProps) {
   useEffect(() => {
     if (isOpen) {
       document.body.classList.add("overflow-hidden");
@@ -28,7 +35,7 @@ export function Modal({ title, children, isOpen, onClose }: Props) {
       onClick={onClose} // Cerrar al hacer clic fuera del modal
     >
       <div
-        className="bg-white py-10 px-5 rounded-md shadow-lg relative max-w-3xl min-w-96 w-auto"
+        className="bg-white py-7 md:py-10 px-3 md:px-5 rounded-md shadow-lg relative max-w-3xl min-w-80 md:min-w-96 w-auto"
         onClick={(e) => e.stopPropagation()} // Evitar cierre al hacer clic dentro del modal
       >
         {title && (
@@ -39,9 +46,11 @@ export function Modal({ title, children, isOpen, onClose }: Props) {
 
         {children}
 
-        <button onClick={onClose} className="absolute top-1 right-1">
-          <XCircleIcon className="w-6 h-6 text-red-500" />
-        </button>
+        {showCloseIcon && (
+          <button onClick={onClose} className="absolute top-1 right-1">
+            <XCircleIcon className="w-6 h-6 text-red-500" />
+          </button>
+        )}
       </div>
     </div>
   );
