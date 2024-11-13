@@ -5,3 +5,5 @@ export { ResetPasswordForm } from "./ResetPasswordForm";
 export { TokenPinForm } from "./TokenPinForm";
 export { UserProfileData } from "./profile/UserProfileData";
 export { UserProfileQuizzes } from "./profile/UserProfileQuizzes";
+export { UserProfileQuizzesSkeleton } from "./profile/Skeletons/UserProfileQuizzesSkeleton";
+export { UserProfileDataSkeleton } from "./profile/Skeletons/UserProfileDataSkeleton";
