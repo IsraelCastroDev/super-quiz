@@ -72,7 +72,11 @@ export function ButtonModal({
     <button
       type={type}
       {...props}
-      className={`p-2 bg-${color}-700 rounded-md text-white w-full hover:bg-${color}-800`}
+      className={`p-2 ${
+        color === "gray"
+          ? "bg-gray-300 hover:bg-gray-400 text-black"
+          : "bg-slate-700 hover:bg-slate-700 text-white"
+      } rounded-md w-full`}
     >
       {children}
     </button>
