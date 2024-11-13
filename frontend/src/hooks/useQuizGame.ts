@@ -51,13 +51,16 @@ export function useQuizPresentation() {
   };
 }
 
-export function useQuizGame() {
-  const { quizId } = useParams<{ quizId: string }>();
+export function useQuizGame(quizId: string | undefined) {
   const [nextIndex, setNextIndex] = useState(0);
+
   const [selectedAnswers, setSelectedAnswers] = useState<
     { questionId: string; answerId: string }[]
   >([]);
+  // modal
   const [showDialogConfirm, setShowDialogConfirm] = useState(false);
+  const [showDialogGameOver, setShowDialogGameOver] = useState(false);
+
   // timer
   const [startTimer, setStartTimer] = useState(false);
   const [minutes, setMinutes] = useState(0);
@@ -65,6 +68,7 @@ export function useQuizGame() {
 
   const { handleSubmit } = useForm();
 
+  // evitar recargar de pagina casuales
   useEffect(() => {
     setStartTimer(true);
 
@@ -78,6 +82,7 @@ export function useQuizGame() {
     };
   }, []);
 
+  // cronometro
   useEffect(() => {
     let interval: NodeJS.Timeout | number | undefined = undefined;
 
@@ -86,6 +91,7 @@ export function useQuizGame() {
         setSeconds((prevSeconds) => {
           if (prevSeconds === 0) {
             if (minutes === 0) {
+              setShowDialogGameOver(true);
               setStartTimer(false);
               return 0;
             } else {
@@ -101,15 +107,21 @@ export function useQuizGame() {
     return () => clearInterval(interval);
   }, [startTimer, minutes]);
 
-  const { data: quiz, isLoading } = useQuery({
+  // traer datos de la api - quiz
+  const {
+    data: quiz,
+    isLoading,
+    refetch,
+  } = useQuery({
     queryKey: ["quizGame", quizId],
     queryFn: () => getQuizById(quizId),
     retry: 0,
   });
 
+  // setear los minutos
   useEffect(() => {
     if (quiz?.duration) {
-      setMinutes(quiz.duration);
+      setMinutes(2 - 2);
     }
   }, [quiz]);
 
@@ -122,11 +134,38 @@ export function useQuizGame() {
     });
   };
 
+  // modal
   const handleShowDialogConfirm = () => setShowDialogConfirm(true);
   const handleHideConfirm = () => setShowDialogConfirm(false);
 
   const handleIncrementNextIndex = () => setNextIndex(nextIndex + 1);
   const handleDecreaseNextIndex = () => setNextIndex(nextIndex - 1);
+
+  const handleHideDialogGameOver = () => {
+    setShowDialogGameOver(false);
+  };
+
+  // barra de progreso cantidad
+  const progressValue = useMemo(
+    () => (quiz ? ((nextIndex + 1) / quiz.questions.length) * 100 : 0),
+    [nextIndex, quiz]
+  );
+
+  // reiniciar data - intentar denuevo
+  const handleReloadData = () => {
+    // hacer una re-consulta para traer datos - reload
+    refetch();
+
+    // reinciar los states
+    setNextIndex(0);
+    setSelectedAnswers([]);
+
+    setStartTimer(true);
+    setMinutes(2 - 2);
+    setSeconds(60);
+
+    setShowDialogGameOver(false);
+  };
 
   const onSubmit = () => {
     if (selectedAnswers.length !== quiz?.questions.length) {
@@ -144,17 +183,13 @@ export function useQuizGame() {
     // Aquí puedes enviar `answersPayload` a un backend o manejarlo según sea necesario.
   };
 
-  const progressValue = useMemo(
-    () => (quiz ? ((nextIndex + 1) / quiz.questions.length) * 100 : 0),
-    [nextIndex, quiz]
-  );
-
   return {
     quiz,
     isLoading,
     progressValue,
     selectedAnswers,
     showDialogConfirm,
+    showDialogGameOver,
     seconds,
     minutes,
     nextIndex,
@@ -164,7 +199,9 @@ export function useQuizGame() {
     handleDecreaseNextIndex,
     handleIncrementNextIndex,
     handleHideConfirm,
+    handleHideDialogGameOver,
     handleShowDialogConfirm,
+    handleReloadData,
     setShowDialogConfirm,
   };
 }
