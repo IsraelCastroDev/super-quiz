@@ -121,7 +121,7 @@ export function useQuizGame(quizId: string | undefined) {
   // setear los minutos
   useEffect(() => {
     if (quiz?.duration) {
-      setMinutes(2 - 2);
+      setMinutes(quiz.duration - 1);
     }
   }, [quiz]);
 
@@ -161,7 +161,7 @@ export function useQuizGame(quizId: string | undefined) {
     setSelectedAnswers([]);
 
     setStartTimer(true);
-    setMinutes(2 - 2);
+    setMinutes(quiz ? quiz.duration : 0);
     setSeconds(60);
 
     setShowDialogGameOver(false);
