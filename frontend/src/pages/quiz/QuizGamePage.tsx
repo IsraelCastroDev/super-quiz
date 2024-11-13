@@ -2,6 +2,7 @@ import { getQuizById } from "@/api/quizAPI";
 import { Answers } from "@/components/quiz/QuizGame";
 import { Loader, Modal, ProgressBar, Text } from "@/components/ui";
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/20/solid";
+import { ClockIcon } from "@heroicons/react/24/solid";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
@@ -81,9 +82,18 @@ export function QuizGame() {
                     <div key={question._id}>
                       <div>
                         <div key={question._id} className="space-y-3">
-                          <Text as="h2" category="title">
-                            Pregunta {index + 1} de {quiz.questions.length}
-                          </Text>
+                          <div className="flex items-center justify-between">
+                            <Text as="h2" category="title">
+                              Pregunta {index + 1} de {quiz.questions.length}
+                            </Text>
+
+                            <div className="flex items-center gap-x-1">
+                              <ClockIcon className="w-6 h-6 text-slate-700" />
+                              <Text as="p" category="subtitle">
+                                {quiz.duration.toString().padStart(2, "0")}:00
+                              </Text>
+                            </div>
+                          </div>
 
                           <ProgressBar
                             value={progressValue}
