@@ -4,6 +4,7 @@ import { ButtonModal } from "@/components/ui/Modal";
 import { useQuizGame } from "@/hooks";
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/20/solid";
 import { ClockIcon } from "@heroicons/react/24/solid";
+import { useMemo } from "react";
 import { Link, useParams } from "react-router-dom";
 
 export function QuizGame() {
@@ -30,6 +31,11 @@ export function QuizGame() {
     handleReloadData,
     showDialogGameOver,
   } = useQuizGame(quizId);
+
+  const nextQuestionAvailable = useMemo(
+    () => selectedAnswers.length === nextIndex,
+    [nextIndex, selectedAnswers.length]
+  );
 
   return (
     <section className="h-[calc(100vh-6rem)] flex justify-center items-center">
@@ -100,6 +106,7 @@ export function QuizGame() {
                                 handleIncrementNextIndex();
                               }}
                               className="flex items-center justify-center text-center bg-slate-700 text-white p-2 w-full rounded-md font-semibold gap-x-2 hover:bg-slate-800 transition-colors duration-300 ease-in-out disabled:opacity-50"
+                              disabled={nextQuestionAvailable}
                             >
                               Siguiente
                               <ChevronRightIcon className="w-5 h-5 text-white" />
