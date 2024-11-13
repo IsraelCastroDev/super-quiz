@@ -15,22 +15,60 @@ export function QuizGame() {
     { questionId: string; answerId: string }[]
   >([]);
   const [showDialogConfirm, setShowDialogConfirm] = useState(false);
+  // timer
+  const [startTimer, setStartTimer] = useState(false);
+  const [minutes, setMinutes] = useState(0);
+  const [seconds, setSeconds] = useState(60);
 
   const { handleSubmit } = useForm();
 
   useEffect(() => {
+    setStartTimer(true);
+
     const handleBeforeUnload = (e: BeforeUnloadEvent) => {
       e.preventDefault();
     };
     window.addEventListener("beforeunload", handleBeforeUnload);
-    return () => window.removeEventListener("beforeunload", handleBeforeUnload);
+    return () => {
+      window.removeEventListener("beforeunload", handleBeforeUnload);
+      setStartTimer(false);
+    };
   }, []);
+
+  useEffect(() => {
+    let interval: NodeJS.Timeout | number | undefined = undefined;
+
+    if (startTimer) {
+      interval = setInterval(() => {
+        setSeconds((prevSeconds) => {
+          if (prevSeconds === 0) {
+            if (minutes === 0) {
+              setStartTimer(false);
+              return 0;
+            } else {
+              setMinutes((prevMinutes) => prevMinutes - 1);
+              return 59;
+            }
+          }
+          return prevSeconds - 1;
+        });
+      }, 1000);
+    }
+
+    return () => clearInterval(interval);
+  }, [startTimer, minutes]);
 
   const { data: quiz, isLoading } = useQuery({
     queryKey: ["quizGame", quizId],
     queryFn: () => getQuizById(quizId),
     retry: 0,
   });
+
+  useEffect(() => {
+    if (quiz?.duration) {
+      setMinutes(quiz.duration);
+    }
+  }, [quiz]);
 
   const handleAnswerChange = (questionId: string, answerId: string) => {
     setSelectedAnswers((prev) => {
@@ -90,7 +128,8 @@ export function QuizGame() {
                             <div className="flex items-center gap-x-1">
                               <ClockIcon className="w-6 h-6 text-slate-700" />
                               <Text as="p" category="subtitle">
-                                {quiz.duration.toString().padStart(2, "0")}:00
+                                {minutes.toString().padStart(2, "0")}:
+                                {seconds.toString().padStart(2, "0")}
                               </Text>
                             </div>
                           </div>
@@ -175,7 +214,7 @@ export function QuizGame() {
 
           <div className="flex flex-col md:flex-row w-full gap-x-4 mt-4">
             <button
-              type="submit"
+              type="button"
               onClick={() => {
                 handleSubmit(onSubmit)();
                 setShowDialogConfirm(false);
