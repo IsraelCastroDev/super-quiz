@@ -1,110 +1,28 @@
-import { getQuizById } from "@/api/quizAPI";
 import { Answers } from "@/components/quiz/QuizGame";
 import { Loader, Modal, ProgressBar, Text } from "@/components/ui";
+import { useQuizGame } from "@/hooks";
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/20/solid";
 import { ClockIcon } from "@heroicons/react/24/solid";
-import { useQuery } from "@tanstack/react-query";
-import { useEffect, useMemo, useState } from "react";
-import { useForm } from "react-hook-form";
-import { useParams } from "react-router-dom";
 
 export function QuizGame() {
-  const { quizId } = useParams<{ quizId: string }>();
-  const [nextIndex, setNextIndex] = useState(0);
-  const [selectedAnswers, setSelectedAnswers] = useState<
-    { questionId: string; answerId: string }[]
-  >([]);
-  const [showDialogConfirm, setShowDialogConfirm] = useState(false);
-  // timer
-  const [startTimer, setStartTimer] = useState(false);
-  const [minutes, setMinutes] = useState(0);
-  const [seconds, setSeconds] = useState(60);
-
-  const { handleSubmit } = useForm();
-
-  useEffect(() => {
-    setStartTimer(true);
-
-    const handleBeforeUnload = (e: BeforeUnloadEvent) => {
-      e.preventDefault();
-    };
-    window.addEventListener("beforeunload", handleBeforeUnload);
-    return () => {
-      window.removeEventListener("beforeunload", handleBeforeUnload);
-      setStartTimer(false);
-    };
-  }, []);
-
-  useEffect(() => {
-    let interval: NodeJS.Timeout | number | undefined = undefined;
-
-    if (startTimer) {
-      interval = setInterval(() => {
-        setSeconds((prevSeconds) => {
-          if (prevSeconds === 0) {
-            if (minutes === 0) {
-              setStartTimer(false);
-              return 0;
-            } else {
-              setMinutes((prevMinutes) => prevMinutes - 1);
-              return 59;
-            }
-          }
-          return prevSeconds - 1;
-        });
-      }, 1000);
-    }
-
-    return () => clearInterval(interval);
-  }, [startTimer, minutes]);
-
-  const { data: quiz, isLoading } = useQuery({
-    queryKey: ["quizGame", quizId],
-    queryFn: () => getQuizById(quizId),
-    retry: 0,
-  });
-
-  useEffect(() => {
-    if (quiz?.duration) {
-      setMinutes(quiz.duration);
-    }
-  }, [quiz]);
-
-  const handleAnswerChange = (questionId: string, answerId: string) => {
-    setSelectedAnswers((prev) => {
-      const updatedAnswers = prev.filter(
-        (answer) => answer.questionId !== questionId
-      );
-      return [...updatedAnswers, { questionId, answerId }];
-    });
-  };
-
-  const handleShowDialogConfirm = () => setShowDialogConfirm(true);
-  const handleHideConfirm = () => setShowDialogConfirm(false);
-
-  const handleIncrementNextIndex = () => setNextIndex(nextIndex + 1);
-  const handleDecreaseNextIndex = () => setNextIndex(nextIndex - 1);
-
-  const onSubmit = () => {
-    if (selectedAnswers.length !== quiz?.questions.length) {
-      alert("Por favor responde a todas las preguntas antes de finalizar.");
-      return;
-    }
-
-    const answersPayload = selectedAnswers.map((answer) => ({
-      question: answer.questionId,
-      answer: answer.answerId,
-    }));
-
-    console.log("Respuestas enviadas:", answersPayload);
-
-    // Aquí puedes enviar `answersPayload` a un backend o manejarlo según sea necesario.
-  };
-
-  const progressValue = useMemo(
-    () => (quiz ? ((nextIndex + 1) / quiz.questions.length) * 100 : 0),
-    [nextIndex, quiz]
-  );
+  const {
+    quiz,
+    isLoading,
+    nextIndex,
+    minutes,
+    seconds,
+    progressValue,
+    selectedAnswers,
+    handleAnswerChange,
+    handleShowDialogConfirm,
+    handleDecreaseNextIndex,
+    handleIncrementNextIndex,
+    showDialogConfirm,
+    handleHideConfirm,
+    handleSubmit,
+    onSubmit,
+    setShowDialogConfirm,
+  } = useQuizGame();
 
   return (
     <section className="h-[calc(100vh-6rem)] flex justify-center items-center">
