@@ -23,9 +23,15 @@ export function HeroSection({ userAuth }: Props) {
           </div>
         </div>
 
-        <div className="flex flex-col md:flex-row items-center justify-center gap-2 px-4">
-          <Button to={"/"}>¡Empieza a jugar ya!</Button>
-          <Button to={userAuth ? "/quiz/crear" : "/registrarse"}>
+        <div className="flex flex-col md:flex-row items-center justify-center gap-4 px-4">
+          <Button to={"/"} variant="solid" size="lg">
+            ¡Empieza a jugar ya!
+          </Button>
+          <Button
+            to={userAuth ? "/quiz/crear" : "/registrarse"}
+            variant="solid"
+            size="lg"
+          >
             Crea tu propio Super Quiz
           </Button>
         </div>
