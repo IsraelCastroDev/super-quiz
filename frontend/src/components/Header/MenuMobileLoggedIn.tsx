@@ -46,7 +46,7 @@ export function MonuMobileLoggedIn({ userAuth, handleLogout }: Props) {
                 <Text as="h2" category="subtitle">
                   Ingresa un código
                 </Text>
-                <input className="font-semibold w-full bg-gray-300 rounded-md p-2 outline-none flex-1" />
+                <input className="font-semibold w-full bg-gray-300 border border-slate-900 rounded-md p-2 outline-none flex-1" />
               </div>
 
               <SheetClose asChild>
