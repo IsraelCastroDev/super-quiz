@@ -9,6 +9,7 @@ import { SelectedCategoriesForm } from "./SelectedCategoriesForm";
 import { QuestionInput } from "./QuestionInput";
 import { Modal } from "@components/ui";
 import { QuizCode } from "./QuizCode";
+import { Slider } from "@/components/ui/Slider";
 
 interface Props {
   isPending: boolean;
@@ -47,6 +48,8 @@ export function CreateQuizForm({ categories, isPending }: Props) {
     mutate(formData);
     reset();
   };
+
+  console.log(watchDuration);
 
   return (
     <>
@@ -92,15 +95,14 @@ export function CreateQuizForm({ categories, isPending }: Props) {
           <Label text="Duración del Super Quiz (min. 15 - max 20 minutos)" />
           <div className="border border-slate-700 rounded-md p-4">
             <Label text={`${watchDuration} minutos`} htmlFor="duration" />
-            <input
-              type="range"
+            <Slider
               id="duration"
               min={15}
               max={20}
+              value={[watchDuration]}
               step={1}
-              value={watchDuration}
-              onChange={(e) => setValue("duration", parseInt(e.target.value))}
-              className="w-full"
+              onValueChange={(value) => setValue("duration", value[0])}
+              className="h-14"
             />
           </div>
         </div>
