@@ -11,3 +11,17 @@ export { Card } from "./Card";
 export { CardContent } from "./CardContent";
 export { ProgressBar } from "./ProgressBar";
 export { Skeleton } from "./Skeleton";
+export {
+  Sheet,
+  SheetPortal,
+  SheetOverlay,
+  SheetTrigger,
+  SheetClose,
+  SheetContent,
+  SheetHeader,
+  SheetFooter,
+  SheetTitle,
+  SheetDescription,
+} from "./Sheet";
+
+export { Separator } from "./Separator";
