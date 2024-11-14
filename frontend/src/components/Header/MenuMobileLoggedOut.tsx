@@ -1,4 +1,5 @@
 import {
+  Button,
   Sheet,
   SheetClose,
   SheetContent,
@@ -43,25 +44,15 @@ export default function MenuMobileLoggedOut() {
 
             <div className="flex flex-col gap-3">
               <SheetClose asChild className="max-w-72 w-full mx-auto">
-                <Link
-                  to={"/iniciar-sesion"}
-                  className={
-                    "bg-slate-700 hover:bg-slate-800 text-white py-3 px-4 rounded-3xl w-full text-center"
-                  }
-                >
+                <Button to={"/iniciar-sesion"} variant="solid" size="sm">
                   Iniciar Sesión
-                </Link>
+                </Button>
               </SheetClose>
 
               <SheetClose asChild className="max-w-72 w-full mx-auto">
-                <Link
-                  to={"/registrarse"}
-                  className={
-                    "border border-slate-900 hover:bg-white py-3 px-4 rounded-3xl text-black w-full text-center transition-colors duration-300 ease-linear"
-                  }
-                >
+                <Button to={"/registrarse"} variant="outline" size="sm">
                   Registrarse
-                </Link>
+                </Button>
               </SheetClose>
             </div>
           </div>
