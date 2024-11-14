@@ -1,3 +1,9 @@
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/Tooltip";
 import { useAppStore } from "@/store";
 import { Text } from "@components/ui";
 import { ClipboardIcon } from "@heroicons/react/24/solid";
@@ -32,13 +38,20 @@ export function QuizCode({ quizCode, variant = "gray" }: Props) {
           {quizCode}
         </Text>
 
-        <button
-          onClick={handleCopy}
-          className="absolute right-1 top-2"
-          title="copiar token"
-        >
-          <ClipboardIcon className="w-6 h-6" />
-        </button>
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <button onClick={handleCopy} className="absolute right-1 top-2">
+                <ClipboardIcon className="w-6 h-6" />
+              </button>
+            </TooltipTrigger>
+            <TooltipContent>
+              <Text as="p" category="body">
+                Copiar en el portapapeles
+              </Text>
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
       </div>
     </>
   );
