@@ -15,7 +15,7 @@ export function UserProfileData({ userProfileData, isLoading }: Props) {
       {isLoading ? (
         <UserProfileDataSkeleton />
       ) : userProfileData ? (
-        <div className="border border-slate-700 p-3 mt-5 relative space-y-4 rounded-md">
+        <>
           <div className="flex gap-x-2 items-center">
             <Text as="p" category="title">
               Mi perfil
@@ -26,48 +26,50 @@ export function UserProfileData({ userProfileData, isLoading }: Props) {
             </Text>
           </div>
 
-          <Form>
-            <div className="grid grid-cols-1 md:grid-cols-[repeat(auto-fill,minmax(450px,1fr))] gap-x-3 gap-y-4">
-              <InputField
-                id="name"
-                label="Nombre"
-                value={userProfileData.name}
-                disabled
-              />
-              <InputField
-                id="lastname"
-                label="Apellido"
-                value={userProfileData.lastname}
-                disabled
-              />
+          <div className="border border-slate-700 p-3 mt-5 relative space-y-4 rounded-md">
+            <Form>
+              <div className="grid grid-cols-1 md:grid-cols-[repeat(auto-fill,minmax(450px,1fr))] gap-x-3 gap-y-4">
+                <InputField
+                  id="name"
+                  label="Nombre"
+                  value={userProfileData.name}
+                  disabled
+                />
+                <InputField
+                  id="lastname"
+                  label="Apellido"
+                  value={userProfileData.lastname}
+                  disabled
+                />
 
-              <InputField
-                id="username"
-                label="Nombre de usuario"
-                value={userProfileData.username}
-                disabled
-              />
+                <InputField
+                  id="username"
+                  label="Nombre de usuario"
+                  value={userProfileData.username}
+                  disabled
+                />
 
-              <InputField
-                id="email"
-                label="Email"
-                value={userProfileData.email}
-                disabled
-              />
+                <InputField
+                  id="email"
+                  label="Email"
+                  value={userProfileData.email}
+                  disabled
+                />
 
-              <InputField
-                id="created_at"
-                label="Fecha de registro"
-                value={formatDate(userProfileData.created_at)}
-                disabled
-              />
-            </div>
+                <InputField
+                  id="created_at"
+                  label="Fecha de registro"
+                  value={formatDate(userProfileData.created_at)}
+                  disabled
+                />
+              </div>
 
-            <div className="max-w-80 mx-auto">
-              <ButtonSubmit>Enviar</ButtonSubmit>
-            </div>
-          </Form>
-        </div>
+              <div className="max-w-80 mx-auto">
+                <ButtonSubmit>Enviar</ButtonSubmit>
+              </div>
+            </Form>
+          </div>
+        </>
       ) : (
         <Text as="h2" category="subtitle" className="text-center">
           No hay datos
