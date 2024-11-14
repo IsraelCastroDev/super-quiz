@@ -47,7 +47,10 @@ function Header() {
           </Text>
         </Link>
         <div className="hidden sm:block">
-          <button onClick={handleOpenModal} className="font-semibold">
+          <button
+            onClick={handleOpenModal}
+            className="font-semibold border border-slate-900 p-2 bg-white rounded-md"
+          >
             Ingresa a un Super Quiz
           </button>
         </div>

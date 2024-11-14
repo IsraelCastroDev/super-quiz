@@ -34,7 +34,7 @@ export default function MenuMobileLoggedOut() {
               <Text as="h2" category="subtitle">
                 Ingresa un código
               </Text>
-              <input className="font-semibold w-full bg-gray-300 rounded-md p-2 outline-none flex-1" />
+              <input className="font-semibold w-full bg-gray-300 rounded-md border border-slate-900 p-2 outline-none flex-1" />
             </div>
 
             <div className="flex flex-col gap-3">
