@@ -3,8 +3,10 @@ import {
   Sheet,
   SheetClose,
   SheetContent,
+  SheetDescription,
   SheetFooter,
   SheetHeader,
+  SheetTitle,
   SheetTrigger,
   Text,
 } from "@/components/ui";
@@ -33,9 +35,12 @@ export function MonuMobileLoggedIn({ userAuth, handleLogout }: Props) {
 
         <SheetContent side={"right"} className="w-[80%] bg-gray-200 md:hidden">
           <SheetHeader>
-            <Text as="h1" category="big">
+            <SheetTitle className="text-4xl md:text-6xl">
               ¡Hola {userAuth.name}!
-            </Text>
+            </SheetTitle>
+            <SheetDescription className="text-lg">
+              !Que gusto verte otra vez¡
+            </SheetDescription>
           </SheetHeader>
 
           <Separator className="bg-slate-900 my-3" />

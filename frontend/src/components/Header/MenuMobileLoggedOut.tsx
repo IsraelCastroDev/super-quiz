@@ -2,8 +2,10 @@ import {
   Sheet,
   SheetClose,
   SheetContent,
+  SheetDescription,
   SheetFooter,
   SheetHeader,
+  SheetTitle,
   SheetTrigger,
   Text,
 } from "@/components/ui";
@@ -22,11 +24,13 @@ export default function MenuMobileLoggedOut() {
 
         <SheetContent side={"right"} className="w-[80%] bg-gray-200 md:hidden">
           <SheetHeader>
-            <Link to={"/"}>
-              <Text as="h1" category="big">
-                Super Quiz
-              </Text>
-            </Link>
+            <SheetTitle className="text-4xl md:text-6xl">
+              <Link to={"/"}>Super Quiz</Link>
+            </SheetTitle>
+
+            <SheetDescription className="text-lg">
+              ¡Bienvenido, inicia sesión o regístrate!
+            </SheetDescription>
           </SheetHeader>
 
           <div className="space-y-6 mt-4">
