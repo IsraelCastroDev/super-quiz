@@ -2,27 +2,17 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useLogoutUser, useSearchQuiz } from "@/hooks";
 import { useAppPersists } from "@/store";
-import {
-  ArrowRightCircleIcon,
-  Bars3Icon,
-  PlusCircleIcon,
-  UserCircleIcon,
-} from "@heroicons/react/24/solid";
+import { UserCircleIcon } from "@heroicons/react/24/solid";
 import {
   Text,
   Loader,
   MenuProfile,
   Modal,
   ErrorMessage,
-  Sheet,
-  SheetTrigger,
-  SheetContent,
-  SheetHeader,
-  SheetClose,
-  Separator,
-  SheetFooter,
 } from "@/components/ui";
 import { ButtonSubmit, InputField } from "@components/ui/Form";
+import { MonuMobileLoggedIn } from "@/components/Header/MenuMobileLoggedIn";
+import MenuMobileLoggedOut from "./MenuMobileLoggedOut";
 
 function Header() {
   const userAuth = useAppPersists((state) => state.userAuth);
@@ -83,94 +73,10 @@ function Header() {
             </div>
 
             {/*MODO MOBILE  - AUTH*/}
-            <div className="block md:hidden">
-              <Sheet>
-                <SheetTrigger asChild className="z-50">
-                  <button className="outline-none">
-                    <UserCircleIcon className="w-10 h-10" />
-                  </button>
-                </SheetTrigger>
-
-                <SheetContent
-                  side={"right"}
-                  className="w-[80%] bg-gray-200 md:hidden"
-                >
-                  <SheetHeader>
-                    <Text as="h1" category="big">
-                      ¡Hola {userAuth.name}!
-                    </Text>
-                  </SheetHeader>
-
-                  <Separator className="bg-slate-900 my-3" />
-
-                  <div className="space-y-3 mt-4">
-                    <div className="flex flex-col items-start gap-2">
-                      <div className="flex flex-col items-start gap-2 sm:hidden w-full">
-                        <Text as="h2" category="subtitle">
-                          Ingresa un código
-                        </Text>
-                        <input className="font-semibold w-full bg-gray-300 rounded-md p-2 outline-none flex-1" />
-                      </div>
-
-                      <SheetClose asChild>
-                        <Link
-                          to={"/perfil"}
-                          className="flex items-center gap-2"
-                        >
-                          <UserCircleIcon className="w-8 h-8" />
-                          <Text as="h2" category="subtitle">
-                            Perfil
-                          </Text>
-                        </Link>
-                      </SheetClose>
-
-                      <SheetClose asChild>
-                        <Link
-                          to={"/quiz/crear"}
-                          className="flex items-center gap-2"
-                        >
-                          <PlusCircleIcon className="w-8 h-8" />
-                          <Text as="h2" category="subtitle">
-                            Crear un Super Quiz
-                          </Text>
-                        </Link>
-                      </SheetClose>
-                    </div>
-
-                    <Separator className="bg-slate-900 my-3" />
-                    <SheetClose asChild>
-                      <button
-                        onClick={() => handleLogout()}
-                        className="flex items-center gap-2"
-                      >
-                        <ArrowRightCircleIcon className="w-8 h-8" />
-                        <Text as="h2" category="subtitle">
-                          Cerrar sesión
-                        </Text>
-                      </button>
-                    </SheetClose>
-                  </div>
-
-                  <SheetFooter className="mt-10">
-                    <Text
-                      as="h1"
-                      category="body"
-                      className="font-semibold text-center"
-                    >
-                      Desarrollado por{" "}
-                      <Link
-                        to={"https://www.linkedin.com/in/juan-castro-chozo/"}
-                        target="_blank"
-                        rel="nooponer noreferrer"
-                        className="underline"
-                      >
-                        Israel Castro
-                      </Link>
-                    </Text>
-                  </SheetFooter>
-                </SheetContent>
-              </Sheet>
-            </div>
+            <MonuMobileLoggedIn
+              userAuth={userAuth}
+              handleLogout={handleLogout}
+            />
           </nav>
         ) : (
           <nav className="flex items-center gap-4">
@@ -189,79 +95,8 @@ function Header() {
               </Link>
             </div>
 
-            {/*MODO MOBILE */}
-            <div className="block md:hidden">
-              <Sheet>
-                <SheetTrigger asChild className="z-50">
-                  <button className="outline-none">
-                    <Bars3Icon className="w-8 h-8" />
-                  </button>
-                </SheetTrigger>
-
-                <SheetContent
-                  side={"right"}
-                  className="w-[80%] bg-gray-200 md:hidden"
-                >
-                  <SheetHeader>
-                    <Link to={"/"}>
-                      <Text as="h1" category="big">
-                        Super Quiz
-                      </Text>
-                    </Link>
-                  </SheetHeader>
-
-                  <div className="space-y-6 mt-4">
-                    <div className="flex flex-col items-start sm:hidden gap-2">
-                      <Text as="h2" category="subtitle">
-                        Ingresa un código
-                      </Text>
-                      <input className="font-semibold w-full bg-gray-300 rounded-md p-2 outline-none flex-1" />
-                    </div>
-
-                    <div className="flex flex-col gap-3">
-                      <SheetClose asChild className="max-w-72 w-full mx-auto">
-                        <Link
-                          to={"/iniciar-sesion"}
-                          className={
-                            "bg-slate-700 hover:bg-slate-800 text-white py-3 px-4 rounded-3xl w-full text-center"
-                          }
-                        >
-                          Iniciar Sesión
-                        </Link>
-                      </SheetClose>
-
-                      <SheetClose asChild className="max-w-72 w-full mx-auto">
-                        <Link
-                          to={"/registrarse"}
-                          className={
-                            "border border-slate-900 hover:bg-white py-3 px-4 rounded-3xl text-black w-full text-center transition-colors duration-300 ease-linear"
-                          }
-                        >
-                          Registrarse
-                        </Link>
-                      </SheetClose>
-                    </div>
-                  </div>
-                  <SheetFooter className="mt-10">
-                    <Text
-                      as="h1"
-                      category="body"
-                      className="font-semibold text-center"
-                    >
-                      Desarrollado por{" "}
-                      <Link
-                        to={"https://www.linkedin.com/in/juan-castro-chozo/"}
-                        target="_blank"
-                        rel="nooponer noreferrer"
-                        className="underline"
-                      >
-                        Israel Castro
-                      </Link>
-                    </Text>
-                  </SheetFooter>
-                </SheetContent>
-              </Sheet>
-            </div>
+            {/*MODO MOBILE - NO AUTH */}
+            <MenuMobileLoggedOut />
           </nav>
         )}
       </header>
