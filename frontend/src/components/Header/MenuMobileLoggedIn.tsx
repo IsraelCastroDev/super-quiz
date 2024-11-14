@@ -54,7 +54,7 @@ export function MonuMobileLoggedIn({ userAuth, handleLogout }: Props) {
                 <input className="font-semibold w-full bg-gray-300 border border-slate-900 rounded-md p-2 outline-none flex-1" />
               </div>
 
-              <SheetClose asChild>
+              <SheetClose asChild className="w-full">
                 <Link to={"/perfil"} className="flex items-center gap-2">
                   <UserCircleIcon className="w-8 h-8" />
                   <Text as="h2" category="subtitle">
@@ -63,7 +63,7 @@ export function MonuMobileLoggedIn({ userAuth, handleLogout }: Props) {
                 </Link>
               </SheetClose>
 
-              <SheetClose asChild>
+              <SheetClose asChild className="w-full">
                 <Link to={"/quiz/crear"} className="flex items-center gap-2">
                   <PlusCircleIcon className="w-8 h-8" />
                   <Text as="h2" category="subtitle">
@@ -74,7 +74,7 @@ export function MonuMobileLoggedIn({ userAuth, handleLogout }: Props) {
             </div>
 
             <Separator className="bg-slate-900 my-3" />
-            <SheetClose asChild>
+            <SheetClose asChild className="w-full">
               <button
                 onClick={() => handleLogout()}
                 className="flex items-center gap-2"
