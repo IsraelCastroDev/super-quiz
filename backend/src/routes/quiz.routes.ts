@@ -4,6 +4,7 @@ import { authenticate } from "../middlewares/authenticate.middleware";
 import { body, param } from "express-validator";
 import { validateErrors } from "../middlewares/validateErrors.middleware";
 import { QuestionType } from "../models/Question";
+import type { SubmitQuizData } from "../types";
 
 const router = Router();
 
@@ -162,6 +163,43 @@ router.get(
 router.get(
   "/questions/:questionId/answers",
   QuizController.getAnswersFromQuestion
+);
+
+router.post(
+  "/score",
+  body("quizData")
+    .isObject()
+    .withMessage("La data debe ser un objeto")
+    .custom((value: SubmitQuizData) => {
+      if (!value.quizId || typeof value.quizId !== "string") {
+        throw new Error("El objeto debe contener un 'quizId' válido (string)");
+      }
+
+      if (!value.answers || !Array.isArray(value.answers)) {
+        throw new Error("La propiedad 'answers' debe ser un array de objetos");
+      }
+
+      if (value.answers.length === 0) {
+        throw new Error("La propiedad answers no puede estar vacia");
+      }
+
+      value.answers.forEach((answer, index) => {
+        if (!answer.answerId || typeof answer.answerId !== "string") {
+          throw new Error(
+            `La respuesta en la posición ${index} debe tener un 'answerId' válido (string)`
+          );
+        }
+
+        if (!answer.questionId || typeof answer.questionId !== "string") {
+          throw new Error(
+            `La respuesta en la posición ${index} debe tener un 'questionId' válido (string)`
+          );
+        }
+      });
+
+      return true;
+    }),
+  QuizController.calculateResultQuiz
 );
 
 export default router;
