@@ -12,6 +12,9 @@ export function QuizGame() {
 
   const {
     quiz,
+    score,
+    showModalResult,
+    isPending,
     isLoading,
     nextIndex,
     minutes,
@@ -25,6 +28,7 @@ export function QuizGame() {
     handleIncrementNextIndex,
     showDialogConfirm,
     handleHideConfirm,
+    handleHideModalResult,
     handleSubmit,
     onSubmit,
     setShowDialogConfirm,
@@ -33,9 +37,11 @@ export function QuizGame() {
   } = useQuizGame(quizId);
 
   const nextQuestionAvailable = useMemo(
-    () => selectedAnswers.length === nextIndex,
-    [nextIndex, selectedAnswers.length]
+    () => selectedAnswers?.answers?.length === nextIndex,
+    [nextIndex, selectedAnswers?.answers]
   );
+
+  if (isPending) return <Loader />;
 
   return (
     <section className="h-[calc(100vh-6rem)] flex justify-center items-center">
@@ -76,7 +82,7 @@ export function QuizGame() {
                           <Answers
                             question={question}
                             selectedAnswer={
-                              selectedAnswers.find(
+                              selectedAnswers?.answers?.find(
                                 (a) => a.questionId === question._id
                               )?.answerId
                             }
@@ -93,7 +99,8 @@ export function QuizGame() {
                               onClick={handleShowDialogConfirm}
                               className="flex items-center justify-center text-center cursor-pointer bg-slate-700 text-white p-2 w-full rounded-md font-semibold gap-x-2 hover:bg-slate-800 transition-colors duration-300 ease-in-out disabled:opacity-50 disabled:cursor-default"
                               disabled={
-                                selectedAnswers.length !== quiz.questions.length
+                                selectedAnswers?.answers?.length !==
+                                quiz.questions.length
                               }
                             >
                               Finalizar
@@ -106,7 +113,7 @@ export function QuizGame() {
                                 handleIncrementNextIndex();
                               }}
                               className="flex items-center justify-center text-center bg-slate-700 text-white p-2 w-full rounded-md font-semibold gap-x-2 hover:bg-slate-800 transition-colors duration-300 ease-in-out disabled:opacity-50"
-                              disabled={nextQuestionAvailable}
+                              disabled={!!nextQuestionAvailable}
                             >
                               Siguiente
                               <ChevronRightIcon className="w-5 h-5 text-white" />
@@ -184,6 +191,20 @@ export function QuizGame() {
             >
               Volver
             </Link>
+          </div>
+        </Modal>
+      )}
+
+      {showModalResult && (
+        <Modal isOpen={showModalResult} onClose={handleHideModalResult}>
+          <Text as="h2" category="title">
+            Tu resultado es:
+          </Text>
+
+          <div className="w-full text-center p-2">
+            <Text as="h3" category="big">
+              {score} puntos
+            </Text>
           </div>
         </Modal>
       )}
