@@ -1,5 +1,11 @@
-import { getCategorieById, getQuizById } from "@/api/quizAPI";
-import { useQuery } from "@tanstack/react-query";
+import {
+  getCategorieById,
+  getQuizById,
+  submitUserAnswers,
+} from "@/api/quizAPI";
+import { useAppStore } from "@/store";
+import type { SubmitQuizData } from "@/types";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { useEffect, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate, useParams } from "react-router-dom";
@@ -52,23 +58,45 @@ export function useQuizPresentation() {
 }
 
 export function useQuizGame(quizId: string | undefined) {
+  const addNotification = useAppStore((state) => state.addNotification);
+
   const [nextIndex, setNextIndex] = useState(0);
 
-  const [selectedAnswers, setSelectedAnswers] = useState<
-    { questionId: string; answerId: string }[]
-  >([]);
+  const [selectedAnswers, setSelectedAnswers] = useState<SubmitQuizData>(null);
   // modal
   const [showDialogConfirm, setShowDialogConfirm] = useState(false);
   const [showDialogGameOver, setShowDialogGameOver] = useState(false);
+  const [showModalResult, setShowModalResult] = useState(false);
 
   // timer
   const [startTimer, setStartTimer] = useState(false);
   const [minutes, setMinutes] = useState(0);
   const [seconds, setSeconds] = useState(60);
 
+  const [score, setScore] = useState(0);
+
   const { handleSubmit } = useForm();
 
-  // evitar recargar de pagina casuales
+  const { mutate, isPending } = useMutation({
+    mutationFn: submitUserAnswers,
+    onSuccess: (data) => {
+      setScore(data.score);
+      setShowModalResult(true);
+
+      // reinciar los states
+      setNextIndex(0);
+      setSelectedAnswers(null);
+
+      setStartTimer(false);
+      setSeconds(60);
+    },
+    onError: (error) => {
+      addNotification({ title: error.message, type: "error" });
+      setShowModalResult(false);
+    },
+  });
+
+  // evitar recargar de pagina casualmente
   useEffect(() => {
     setStartTimer(true);
 
@@ -127,10 +155,14 @@ export function useQuizGame(quizId: string | undefined) {
 
   const handleAnswerChange = (questionId: string, answerId: string) => {
     setSelectedAnswers((prev) => {
-      const updatedAnswers = prev.filter(
+      const updatedAnswers = (prev?.answers || []).filter(
         (answer) => answer.questionId !== questionId
       );
-      return [...updatedAnswers, { questionId, answerId }];
+
+      return {
+        quizId: quiz ? quiz._id : "",
+        answers: [...updatedAnswers, { questionId, answerId }],
+      };
     });
   };
 
@@ -151,6 +183,8 @@ export function useQuizGame(quizId: string | undefined) {
     setShowDialogGameOver(false);
   };
 
+  const handleHideModalResult = () => setShowModalResult(false);
+
   // barra de progreso cantidad
   const progressValue = useMemo(
     () => (quiz ? ((nextIndex + 1) / quiz.questions.length) * 100 : 0),
@@ -164,7 +198,7 @@ export function useQuizGame(quizId: string | undefined) {
 
     // reinciar los states
     setNextIndex(0);
-    setSelectedAnswers([]);
+    setSelectedAnswers(null);
 
     setStartTimer(true);
     setMinutes(quiz ? quiz.duration : 0);
@@ -174,24 +208,37 @@ export function useQuizGame(quizId: string | undefined) {
   };
 
   const onSubmit = () => {
-    if (selectedAnswers.length !== quiz?.questions.length) {
-      alert("Por favor responde a todas las preguntas antes de finalizar.");
-      return;
+    if (selectedAnswers?.answers) {
+      if (selectedAnswers?.answers.length !== quiz?.questions.length) {
+        alert("Por favor responde a todas las preguntas antes de finalizar.");
+        return;
+      }
     }
 
-    const answersPayload = selectedAnswers.map((answer) => ({
-      question: answer.questionId,
-      answer: answer.answerId,
-    }));
+    const answersPayload =
+      selectedAnswers?.answers?.map((answer) => ({
+        answerId: answer.answerId,
+        questionId: answer.questionId,
+      })) || null;
 
-    console.log("Respuestas enviadas:", answersPayload);
+    const userQuizPayload = {
+      quizData: {
+        quizId: quiz ? quiz._id : "",
+        answers: answersPayload,
+      },
+    };
 
-    // Aquí puedes enviar `answersPayload` a un backend o manejarlo según sea necesario.
+    console.log("Respuestas enviadas:", userQuizPayload);
+
+    mutate(userQuizPayload);
   };
 
   return {
     quiz,
+    score,
+    showModalResult,
     isLoading,
+    isPending,
     progressValue,
     selectedAnswers,
     showDialogConfirm,
@@ -207,6 +254,7 @@ export function useQuizGame(quizId: string | undefined) {
     handleHideConfirm,
     handleHideDialogGameOver,
     handleShowDialogConfirm,
+    handleHideModalResult,
     handleReloadData,
     setShowDialogConfirm,
   };
