@@ -76,7 +76,10 @@ export function QuizPresentation({
                     text={`${quiz ? `${quiz.duration} minutos` : "0 minutos"}`}
                     IconComponent={ClockIcon}
                   />
-                  <StatCard text="100 puntos" IconComponent={TrophyIcon} />
+                  <StatCard
+                    text={`${quiz ? quiz.questions.length * 100 : 0} puntos`}
+                    IconComponent={TrophyIcon}
+                  />
                   <StatCard text="1000+ jugadors" IconComponent={UsersIcon} />
                 </div>
 
@@ -108,7 +111,6 @@ export function QuizPresentation({
                 </ul>
               </div>
             </div>
-
             <div className="mt-8 grid grid-cols-1 sm:grid-cols-3 gap-4">
               <Card>
                 <CardContent>
@@ -146,6 +148,9 @@ export function QuizPresentation({
                 </CardContent>
               </Card>
             </div>
+            <Text as="p" category="body" className="mt-4">
+              Cada pregunta vale 100 puntos*
+            </Text>
           </div>
         </div>
       </div>
