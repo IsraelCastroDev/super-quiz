@@ -9,7 +9,7 @@ import {
   UserQuiz,
   UserQuizzesAPIResponseSchema,
 } from "@/schemas";
-import { CreateQuiz } from "@/types";
+import { CreateQuiz, SubmitQuizDataRequest } from "@/types";
 
 export const getQuizCategories = async () => {
   try {
@@ -126,6 +126,17 @@ export const getAnswers = async (questionId: string) => {
     if (validateData.success) {
       return validateData.data;
     }
+  } catch (error) {
+    if (isAxiosError(error)) {
+      throw new Error(error.response?.data.message);
+    }
+  }
+};
+
+export const submitUserAnswers = async (payload: SubmitQuizDataRequest) => {
+  try {
+    const { data } = await api.post("/quizzes/score", payload);
+    return data;
   } catch (error) {
     if (isAxiosError(error)) {
       throw new Error(error.response?.data.message);
