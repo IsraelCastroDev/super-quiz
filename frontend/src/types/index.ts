@@ -59,3 +59,17 @@ export const CreateQuizFormDataSchmea = z.object({
 });
 
 export type CreateQuiz = z.infer<typeof CreateQuizFormDataSchmea>;
+
+export type SubmitQuizData = {
+  quizId: string;
+  answers:
+    | {
+        answerId: string;
+        questionId: string;
+      }[]
+    | null;
+} | null;
+
+export type SubmitQuizDataRequest = {
+  quizData: SubmitQuizData;
+};
