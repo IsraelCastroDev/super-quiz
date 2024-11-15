@@ -6,6 +6,7 @@ import Category from "../models/Category";
 import Question, { QuestionType } from "../models/Question";
 import { generateTokenQuiz } from "../utils/token";
 import Answer from "../models/Answer";
+import { SubmitQuizData } from "../types";
 
 export class QuizController {
   // Crea un nuevo quiz
@@ -388,6 +389,48 @@ export class QuizController {
     } catch (error) {
       console.log(error);
       res.status(500).json({ message: "Error al cargar las respuestas" });
+    }
+  };
+
+  static calculateResultQuiz = async (req: Request, res: Response) => {
+    try {
+      const { quizData }: { quizData: SubmitQuizData } = req.body;
+      const { quizId, answers } = quizData;
+
+      const quizExists = await Quiz.findOne({ _id: quizId });
+
+      if (!quizExists) {
+        res.status(404).json({ message: "El quiz no existe" });
+        return;
+      }
+
+      let score = 0;
+
+      for (const answer of answers) {
+        const { questionId, answerId } = answer;
+        const question = await Question.findOne({ _id: questionId });
+
+        if (!question) {
+          res.status(404).json({ message: "Pregunta no encontrada" });
+          return;
+        }
+
+        const correctAnswerId = question.answers.find(
+          (ans) => ans._id.toString() === answerId
+        );
+
+        const correctAnswer = await Answer.findOne({ _id: correctAnswerId });
+
+        if (correctAnswer?.is_correct) {
+          score += 100;
+        }
+      }
+
+      res.status(200).json({ score });
+    } catch (error) {
+      console.log(error);
+      res.status(500).json({ message: "Error al obtener el resultado" });
+      return;
     }
   };
 }
