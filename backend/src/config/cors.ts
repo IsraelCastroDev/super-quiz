@@ -8,7 +8,7 @@ export const corsConfig: CorsOptions = {
       whiteList.push(undefined);
     }
 
-    if (whiteList.includes(origin) || !origin) {
+    if (whiteList.includes(origin)) {
       callback(null, true);
     } else {
       callback(new Error("No permitido por CORS"));
