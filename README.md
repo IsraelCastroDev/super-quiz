@@ -1,2 +1,3 @@
 # 📓 Aplicación de Quiz 📓
-Proximamente...
+
+Aún sigo desarrollándolo 😀
