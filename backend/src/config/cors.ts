@@ -8,6 +8,8 @@ export const corsConfig: CorsOptions = {
       whiteList.push(undefined);
     }
 
+    console.log("WhiteList: ", whiteList);
+
     if (whiteList.includes(origin) || !origin) {
       callback(null, true);
     } else {
