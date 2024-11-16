@@ -23,7 +23,10 @@ export default function MenuMobileLoggedOut() {
           </button>
         </SheetTrigger>
 
-        <SheetContent side={"right"} className="w-[80%] bg-gray-200 md:hidden">
+        <SheetContent
+          side={"right"}
+          className="w-[85%] sm:w-[80%] bg-gray-200 md:hidden"
+        >
           <SheetHeader>
             <SheetTitle className="text-4xl md:text-6xl">
               <Link to={"/"}>Super Quiz</Link>
@@ -43,14 +46,14 @@ export default function MenuMobileLoggedOut() {
             </div>
 
             <div className="flex flex-col gap-3">
-              <SheetClose asChild className="max-w-72 w-full mx-auto">
-                <Button to={"/iniciar-sesion"} variant="solid" size="sm">
+              <SheetClose asChild>
+                <Button to={"/iniciar-sesion"} variant="solid" size="md">
                   Iniciar Sesión
                 </Button>
               </SheetClose>
 
-              <SheetClose asChild className="max-w-72 w-full mx-auto">
-                <Button to={"/registrarse"} variant="outline" size="sm">
+              <SheetClose asChild>
+                <Button to={"/registrarse"} variant="outline" size="md">
                   Registrarse
                 </Button>
               </SheetClose>
