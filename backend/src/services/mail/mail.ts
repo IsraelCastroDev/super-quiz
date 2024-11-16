@@ -15,7 +15,7 @@ export async function sendConfirmEmail(user: IEmail) {
 
     sendSmtEmail.to = [{ email: user.email, name: user.name }];
 
-    sendSmtEmail.htmlContent = `<h1 style="border-bottom: 1px solid black;">Confirma tu cuenta en Super Quiz</h1><p>Hola ${user.name}, solo estás a un paso de divertirte en Super Quiz, confirma tu cuenta</p><p>Visita el siguiente enlace: </p><a href="${process.env.FRONTEND_URL}/confirmar-cuenta">Confirmar Cuenta</a><p>E ingresa el siguiente código: <b>${user.token}</b></p><p>Este token expira en aproximadamente 2 horas</>`;
+    sendSmtEmail.htmlContent = `<h1 style="border-bottom: 1px solid black;">Confirma tu cuenta en Super Quiz</h1><p>Hola ${user.name}, solo estás a un paso de divertirte en Super Quiz, confirma tu cuenta</p><p>Visita el siguiente enlace: </p><a href="${process.env.FRONTEND_URL}/confirmar-cuenta">Confirmar Cuenta</a><p>E ingresa el siguiente código: <b style="font-size: 2rem;">${user.token}</b></p><p>Este token expira en aproximadamente 2 horas</>`;
 
     sendSmtEmail.sender = {
       email: "israelcastro1007@gmail.com",
@@ -37,7 +37,7 @@ export async function sendResetPasswordEmail(user: IEmail) {
 
     sendSmtEmail.to = [{ email: user.email, name: user.name }];
 
-    sendSmtEmail.htmlContent = `<p>Hola ${user.name}, solo estás a un paso de recuparar tu contraseña en Super Quiz</p><p>Visita el siguiente enlace:</><a href="${process.env.FRONTEND_URL}/recuperar-cuenta cambiar-password">Cambiar contraseña</a><p>E ingresa el siguiente código: <b>${user.token}</b></p><p>Este token expira en aproximadamente 2 horas</>
+    sendSmtEmail.htmlContent = `<p>Hola ${user.name}, solo estás a un paso de recuparar tu contraseña en Super Quiz</p><p>Visita el siguiente enlace:</><a href="${process.env.FRONTEND_URL}/recuperar-cuenta cambiar-password">Cambiar contraseña</a><p>E ingresa el siguiente código: <b style="font-size: 2rem;">${user.token}</b></p><p>Este token expira en aproximadamente 2 horas</>
     `;
 
     sendSmtEmail.sender = {
