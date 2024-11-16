@@ -26,7 +26,7 @@ export function Text({
 
   switch (category) {
     case "big":
-      baseClass = `${degradedClass} text-5xl md:text-6xl font-bold`;
+      baseClass = `${degradedClass} text-5xl sm:text-6xl md:text-7xl font-bold`;
       break;
     case "title":
       baseClass = `${degradedClass} text-2xl md:text-3xl font-bold`;
