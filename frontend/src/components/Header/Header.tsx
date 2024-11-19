@@ -40,7 +40,7 @@ function Header() {
   return (
     <>
       {isPending && <Loader />}
-      <header className="max-w-[70rem] mx-auto py-2 px-5 md:px-10 lg:px-15 flex flex-row justify-between items-center sticky top-1 z-10 bg-gray-200/50 backdrop-blur-sm border border-slate-700 rounded-md">
+      <header className="max-w-[70rem] mx-auto py-2 px-5 md:px-10 lg:px-15 flex flex-row justify-between items-center sticky top-2 z-10 bg-gray-200/50 backdrop-blur-sm border border-slate-700 rounded-full">
         <Link to={"/"}>
           <Text as="h1" category="title">
             Super Quiz
